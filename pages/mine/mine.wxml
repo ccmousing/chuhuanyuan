@@ -1,0 +1,57 @@
+<!-- 我的花园 · 1:1 对应原型 ⑦ 我的花园
+     页面上的数字全部来自本机存储，没有写死的演示数据 -->
+<view class="mine-top">
+  <view class="sbar" style="height:{{statusBarHeight}}px"></view>
+  <view class="rw" bindtap="editProfile">
+    <view class="av serif">{{avatar}}</view>
+    <view>
+      <view class="nm serif">{{nick}}</view>
+      <view class="sb">{{sub}}</view>
+    </view>
+    <view class="edit">编辑</view>
+  </view>
+  <view class="stats">
+    <view wx:for="{{stats}}" wx:key="l">
+      <view class="b serif">{{item.n}}</view>
+      <view class="l">{{item.l}}</view>
+    </view>
+  </view>
+</view>
+
+<view class="pad tab-pad">
+  <view class="hd">我的花园 · 成长档案</view>
+  <view class="box">
+    <view class="bar-row">
+      <text>仪式进度</text>
+      <view><text class="bar-num">{{progress.reached}} / 7</text> {{progress.done ? '已完成' : '进行中'}}</view>
+    </view>
+    <view class="bar"><view class="bar-fill" style="width:{{progress.percent}}%"></view></view>
+
+    <view class="cert" bindtap="goBlessing" wx:if="{{progress.done}}">
+      出花园纪念证书可生成　<text class="cert-a">去制作 / 保存 →</text>
+    </view>
+    <view class="cert" wx:else>
+      走完七步仪式后，可生成纪念证书　<text class="cert-a" bindtap="editYear">填写年份 →</text>
+    </view>
+  </view>
+
+  <view class="hd">徽章收藏</view>
+  <view class="badges">
+    <view class="badge {{item.locked ? 'lock' : ''}}" wx:for="{{badges}}" wx:key="id">
+      <text class="e">{{item.e}}</text>
+      <view class="n">{{item.n}}</view>
+      <view class="h">{{item.hint}}</view>
+    </view>
+  </view>
+
+  <view class="hd">我的</view>
+  <view class="box plist">
+    <view class="r {{item.off ? 'off' : ''}}" wx:for="{{menu}}" wx:key="t" data-act="{{item.act}}" bindtap="onMenu">
+      <text class="e">{{item.e}}</text>
+      <text class="t">{{item.t}}</text>
+      <text class="v">{{item.v}}</text>
+    </view>
+  </view>
+
+  <view class="notice center">仅在本机保存昵称与进度，不收集手机号、真实姓名与位置 · 可一键清除</view>
+</view>

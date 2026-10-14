@@ -1,0 +1,6 @@
+{
+  "desc": "小程序索引配置。详见官方文档 sitemap 一节。",
+  "rules": [
+    { "action": "allow", "page": "*" }
+  ]
+}

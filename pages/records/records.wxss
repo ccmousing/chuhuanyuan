@@ -1,0 +1,55 @@
+/* 学习记录 · 阅读记录 + 错题本 */
+
+/* ===== tab 切换 ===== */
+.rtabs { display: flex; padding: 20rpx 32rpx 0; }
+.rt {
+  flex: 1;
+  text-align: center;
+  font-size: 27rpx;
+  color: #6B5D52;
+  padding: 16rpx 0;
+  border-bottom: 4rpx solid transparent;
+}
+.rt.on {
+  color: #C8443C;
+  font-weight: 600;
+  border-bottom-color: #C8443C;
+}
+
+/* ===== 阅读进度统计卡 ===== */
+.sum { text-align: center; padding: 40rpx 28rpx; margin-top: 24rpx; }
+.sum-n { font-size: 64rpx; font-weight: 700; color: #2B2320; }
+.sum-u { font-size: 28rpx; color: #A0937F; font-weight: 400; }
+.sum-l { font-size: 24rpx; color: #A0937F; margin-top: 6rpx; }
+.sum .bar { margin-top: 24rpx; }
+.bar { height: 12rpx; border-radius: 6rpx; background: rgba(43, 35, 32, 0.08); overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 6rpx; background: linear-gradient(90deg, #B98D3E, #C8443C); }
+
+/* ===== 已读 / 未读 小标 ===== */
+.flag {
+  flex: none;
+  font-size: 21rpx;
+  padding: 4rpx 18rpx;
+  border-radius: 999rpx;
+  margin-left: 16rpx;
+  background: rgba(43, 35, 32, 0.05);
+  color: #A0937F;
+}
+.flag.on { background: rgba(63, 140, 118, 0.12); color: #3F8C76; }
+
+/* ===== 错题次数缩略块 ===== */
+.wr-n {
+  background: rgba(200, 68, 60, 0.1);
+  color: #C8443C;
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.retry { margin-top: 28rpx; }
+
+/* ===== 空态 ===== */
+.s-empty { padding: 100rpx 40rpx; text-align: center; }
+.se-e { font-size: 72rpx; line-height: 1.2; }
+.se-t { font-size: 30rpx; font-weight: 600; color: #2B2320; margin-top: 20rpx; }
+.se-s { font-size: 24rpx; color: #A0937F; line-height: 1.7; margin-top: 14rpx; }
+.se-btn { margin: 40rpx auto 0; width: 320rpx; }

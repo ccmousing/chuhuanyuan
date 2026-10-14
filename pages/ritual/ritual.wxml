@@ -1,0 +1,32 @@
+<!-- 仪式体验 · 1:1 对应原型 ③ 七步仪式 -->
+<view class="rit-top">
+  <view class="sbar" style="height:{{statusBarHeight}}px"></view>
+  <view class="k">仪 式 体 验</view>
+  <view class="rt-title serif">走一遍出花园</view>
+
+  <view class="pdot">
+    <view class="pd {{index <= step ? 'f' : ''}}" wx:for="{{steps}}" wx:key="n"></view>
+  </view>
+  <view class="rt-meta">
+    <text>第 <text class="b">{{step + 1}}</text> / 7 步</text>
+    <text>{{steps[step].n}}</text>
+  </view>
+</view>
+
+<view class="rit-card">
+  <view class="no serif">{{no}}</view>
+  <view class="rc-title serif">{{steps[step].n}}</view>
+  <view class="lb">做 法</view>
+  <view class="rc-p">{{steps[step].do}}</view>
+  <view class="mean">寓意：{{steps[step].mean}}</view>
+</view>
+
+<view class="pad tab-pad">
+  <view class="row">
+    <view class="btnL ghost" bindtap="onPrev">上一步</view>
+    <view class="btnL" bindtap="onNext">{{step === 6 ? '礼成 · 生成证书' : '下一步'}}</view>
+  </view>
+  <view class="hint" wx:if="{{resumed && step > 0}}">已恢复到上次进度 · 第 {{step + 1}} 步</view>
+  <view class="hint" wx:else>走完七步可解锁「出花园纪念证书」</view>
+  <view class="reset" wx:if="{{step > 0}}" bindtap="onReset">重新走一遍</view>
+</view>

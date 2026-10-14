@@ -1,0 +1,97 @@
+<!-- 文化馆 · 对应原型 ② 文化科普馆
+     分段点击跳转：data-k 与区块 id 一一对应
+     搜索（B1）：kw 非空时整个切换到搜索结果视图 -->
+
+<view class="searchbar">
+  <text class="sb-ic">🔍</text>
+  <input class="sb-in" placeholder="搜索：木屐 / 花水 / 公婆母…"
+         value="{{kw}}" bindinput="onSearch" confirm-type="search" />
+  <text class="sb-clr" wx:if="{{kw}}" bindtap="clearSearch">✕</text>
+</view>
+
+<!-- ============ 搜索结果 ============ -->
+<block wx:if="{{kw}}">
+  <view class="pad tab-pad">
+    <view wx:if="{{results.length}}" class="box">
+      <view class="li" wx:for="{{results}}" wx:key="id" data-id="{{item.id}}" bindtap="goArticle">
+        <view class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
+        <view class="li-tx">
+          <text class="li-b">{{item.title}}</text>
+          <text class="li-s">{{item.snippet}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="s-empty">
+      <view class="se-e">🔍</view>
+      <view class="se-t">没有找到「{{kw}}」相关的文章</view>
+      <view class="se-s">试试「木屐」「花水」「公婆母」「鸡头」「状元」这些词</view>
+    </view>
+  </view>
+</block>
+
+<!-- ============ 常规内容 ============ -->
+<block wx:else>
+  <view class="segs">
+    <view class="seg {{seg === item.k ? 'on' : ''}}"
+          wx:for="{{segs}}" wx:key="k"
+          data-k="{{item.k}}" bindtap="onSegTap">{{item.n}}</view>
+  </view>
+
+  <view class="pad tab-pad">
+    <view id="ct-1" class="quote serif {{flash === 'ct-1' ? 'flash' : ''}}">「一枝今已出花园」</view>
+    <view class="box">
+      <view class="def"><text class="def-k">出花园</text>是潮汕地区独有的成人礼俗，由古代冠笄之礼演变而来。潮汕人认为十五虚岁前孩子受「公婆母」庇佑，生活在花园里；举行出花园仪式，即拜谢神恩、跨出花园墙，正式成人。</view>
+      <view class="tags">
+        <text class="tagL">十五虚岁</text>
+        <text class="tagL g">农历七月初七</text>
+        <text class="tagL j">省级非遗 2018</text>
+      </view>
+    </view>
+
+    <view id="ct-2" class="hd {{flash === 'ct-2' ? 'flash' : ''}}">由来时间轴</view>
+    <view class="box">
+      <view class="tline">
+        <view class="tn" wx:for="{{timeline}}" wx:key="t">
+          <text class="tn-b serif">{{item.t}}</text>
+          <text class="tn-s">{{item.s}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view id="ct-3" class="hd {{flash === 'ct-3' ? 'flash' : ''}}">文化符号图鉴</view>
+    <view class="sym">
+      <view class="s" wx:for="{{symbols}}" wx:key="n">
+        <view class="sc">
+          <text class="e">{{item.e}}</text>
+          <view class="n">{{item.n}}</view>
+          <view class="d">{{item.d}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view id="ct-4" class="hd {{flash === 'ct-4' ? 'flash' : ''}}">汕潮揭三地各有亮点</view>
+    <view class="box">
+      <view class="li" wx:for="{{cities}}" wx:key="n">
+        <view class="li-thumb" style="background:{{item.bg}}">{{item.n}}</view>
+        <view class="li-tx">
+          <text class="li-b">{{item.title}}</text>
+          <text class="li-s">{{item.sub}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="notice">各地礼俗细节差异较大，部分内容需进一步核实；正式上线前经文化馆或民俗专家审校。</view>
+
+    <view class="hd">延伸阅读</view>
+    <view class="box">
+      <view class="li" wx:for="{{more}}" wx:key="id" data-id="{{item.id}}" bindtap="goArticle">
+        <view class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
+        <view class="li-tx">
+          <text class="li-b">{{item.title}}</text>
+          <text class="li-s">{{item.tag}} · {{item.sub}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>

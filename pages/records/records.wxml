@@ -1,0 +1,56 @@
+<!-- 学习记录 · B2 阅读记录 + B3 错题本 -->
+<view class="rtabs">
+  <view class="rt {{tab === 'read' ? 'on' : ''}}" data-t="read" bindtap="onTab">阅读记录</view>
+  <view class="rt {{tab === 'quiz' ? 'on' : ''}}" data-t="quiz" bindtap="onTab">错题本</view>
+</view>
+
+<!-- ============ 阅读记录 ============ -->
+<block wx:if="{{tab === 'read'}}">
+  <view class="pad">
+    <view class="box sum">
+      <view class="sum-n serif">{{readCount}}<text class="sum-u">/ {{totalArticles}}</text></view>
+      <view class="sum-l">已读篇目</view>
+      <view class="bar"><view class="bar-fill" style="width:{{readPercent}}%"></view></view>
+    </view>
+
+    <view class="box">
+      <view class="li" wx:for="{{readList}}" wx:key="id" data-id="{{item.id}}" bindtap="goArticle">
+        <view class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
+        <view class="li-tx">
+          <text class="li-b">{{item.title}}</text>
+          <text class="li-s">{{item.status}}</text>
+        </view>
+        <view class="flag {{item.read ? 'on' : ''}}">{{item.read ? '已读' : '未读'}}</view>
+      </view>
+    </view>
+
+    <view class="notice">阅读记录只保存在本机，换设备或清除数据后不再保留。点任意一篇可直接进入阅读。</view>
+  </view>
+</block>
+
+<!-- ============ 错题本 ============ -->
+<block wx:else>
+  <view class="pad">
+    <block wx:if="{{wrongList.length}}">
+      <view class="box">
+        <view class="li" wx:for="{{wrongList}}" wx:key="id" data-id="{{item.art}}" bindtap="goArticle">
+          <view class="li-thumb wr-n">{{item.times}}</view>
+          <view class="li-tx">
+            <text class="li-b">{{item.q}}</text>
+            <text class="li-s">错过 {{item.times}} 次 · 去读《{{item.title}}》</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="btnL retry" bindtap="retryWrong">重练这 {{wrongList.length}} 道错题</view>
+      <view class="notice">重练时答对会自动从错题本移除；累计错误次数会保留，用来标记哪几道题最容易被答错。</view>
+    </block>
+
+    <view wx:else class="s-empty">
+      <view class="se-e">🎉</view>
+      <view class="se-t">错题本是空的</view>
+      <view class="se-s">去知识闯关答一轮，答错的题会自动收进来，并关联到对应的科普文章。</view>
+      <view class="btnL ghost se-btn" bindtap="goQuiz">去闯关</view>
+    </view>
+  </view>
+</block>

@@ -1,0 +1,177 @@
+/* app.wxss —— 全局样式
+   数值换算规则：原型 prototype.html 里的 px × 2 = 这里的 rpx
+   硬限制：WXSS 对 CSS 变量 var() 支持不稳定，故全部使用字面量颜色。 */
+
+page {
+  background: #FDF8F0;
+  color: #2B2320;
+  font-size: 28rpx;
+  line-height: 1.6;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 衬线标题（iOS 有宋体，安卓多数机型会回退成无衬线） */
+.serif {
+  font-family: "Songti SC", "STSong", "Source Han Serif SC", serif;
+}
+
+/* ===== 区块标题：左侧朱红→金竖条（原型 .hd） ===== */
+.hd {
+  display: flex;
+  align-items: center;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #2B2320;
+  margin: 36rpx 0 20rpx;
+}
+.hd::before {
+  content: "";
+  width: 6rpx;
+  height: 30rpx;
+  border-radius: 4rpx;
+  background: linear-gradient(180deg, #C8443C, #B98D3E);
+  margin-right: 16rpx;
+}
+
+/* ===== 内容留白（原型 .pad） ===== */
+.pad { padding: 28rpx 32rpx 44rpx; }
+.body { padding: 0 32rpx 44rpx; }
+
+/* ===== 白卡片（原型 .box） ===== */
+.box {
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  padding: 26rpx 28rpx;
+  border: 2rpx solid rgba(43, 35, 32, 0.09);
+  box-shadow: 0 4rpx 20rpx rgba(43, 35, 32, 0.05);
+}
+.box + .box { margin-top: 20rpx; }
+
+.row { display: flex; }
+.row > view { flex: 1; min-width: 0; }
+.row > view:first-child { margin-right: 20rpx; }
+
+/* ===== 标签（原型 .tagL） ===== */
+.tagL {
+  display: inline-block;
+  font-size: 22rpx;
+  line-height: 1.6;
+  padding: 4rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(200, 68, 60, 0.09);
+  color: #C8443C;
+  border: 2rpx solid rgba(200, 68, 60, 0.22);
+}
+.tagL.g { background: rgba(185, 141, 62, 0.12); color: #B98D3E; border-color: rgba(185, 141, 62, 0.3); }
+.tagL.j { background: rgba(63, 140, 118, 0.11); color: #3F8C76; border-color: rgba(63, 140, 118, 0.28); }
+
+/* ===== 主按钮（原型 .btnL） ===== */
+.btnL {
+  display: block;
+  width: 100%;
+  /* ⚠️ 这一行不能省：width:100% 只约束「内容盒」，
+     少了它按钮实际宽度 = 容器 + 2×26rpx，比卡片宽 52rpx，右边会被屏幕裁掉一截。
+     全项目所有主按钮都走这个类，改这里即全站生效。 */
+  box-sizing: border-box;
+  text-align: center;
+  padding: 26rpx;
+  border-radius: 24rpx;
+  border: 0;
+  font-size: 29rpx;
+  font-weight: 600;
+  line-height: 1.4;
+  background: linear-gradient(135deg, #C8443C, #A8322B);
+  color: #FFFFFF;
+  box-shadow: 0 12rpx 36rpx rgba(200, 68, 60, 0.28);
+  margin: 0;
+}
+.btnL::after { border: none; }
+.btnL.ghost {
+  background: #FFFFFF;
+  color: #C8443C;
+  border: 2rpx solid rgba(200, 68, 60, 0.35);
+  box-shadow: none;
+}
+
+/* ===== 列表项（原型 .li） ===== */
+.li {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+  border-bottom: 2rpx dashed rgba(43, 35, 32, 0.09);
+}
+.li:last-child { border-bottom: 0; padding-bottom: 6rpx; }
+.li-thumb {
+  width: 104rpx;
+  height: 104rpx;
+  line-height: 104rpx;
+  text-align: center;
+  border-radius: 22rpx;
+  font-size: 40rpx;
+  flex: none;
+  margin-right: 22rpx;
+}
+.li-tx { flex: 1; min-width: 0; }
+.li-b { display: block; font-size: 27rpx; color: #2B2320; font-weight: 600; margin-bottom: 6rpx; }
+.li-s { font-size: 23rpx; color: #A0937F; }
+
+/* ===== 页脚提示 ===== */
+.notice {
+  font-size: 22rpx;
+  color: #A0937F;
+  line-height: 1.7;
+  margin: 26rpx 4rpx 0;
+}
+
+/* 自定义 TabBar 是 fixed 定位，Tab 页内容要留出底部空间 */
+.tab-pad { padding-bottom: 180rpx; }
+
+/* ===== 规划中状态 =====
+   用于「已规划、但因主体资质限制尚未开放」的功能（服务预约、社区广场）。
+   设计原则：不假装能用 —— 用灰色 + 虚线框明确表达不可用，
+   点击后给一句如实的说明，而不是留一个点了没反应的按钮。 */
+
+/* 顶部说明条 */
+.plan-bar {
+  display: flex;
+  align-items: flex-start;
+  padding: 22rpx 24rpx;
+  border-radius: 22rpx;
+  background: rgba(43, 35, 32, 0.045);
+  border: 2rpx dashed rgba(43, 35, 32, 0.18);
+}
+.plan-bar .pi { flex: none; font-size: 30rpx; line-height: 1.35; margin-right: 16rpx; }
+.plan-bar .pb { flex: 1; min-width: 0; }
+.plan-bar .pt { display: block; font-size: 26rpx; font-weight: 600; color: #6B5D52; margin-bottom: 6rpx; }
+.plan-bar .ps { font-size: 23rpx; color: #A0937F; line-height: 1.65; }
+
+/* 灰色「规划中」按钮 */
+.go-plan {
+  flex: none;
+  font-size: 23rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 999rpx;
+  background: rgba(43, 35, 32, 0.06);
+  color: #A0937F;
+  border: 2rpx solid rgba(43, 35, 32, 0.13);
+  margin-left: 16rpx;
+}
+
+/* 规划中版本的互动区（点赞 / 评论 / 分享） */
+.acts-plan {
+  display: flex;
+  margin-top: 20rpx;
+}
+.acts-plan .ap {
+  font-size: 23rpx;
+  color: #A0937F;
+  padding: 10rpx 26rpx;
+  border-radius: 999rpx;
+  background: rgba(43, 35, 32, 0.045);
+  margin-right: 16rpx;
+}
+
+/* 状态栏占位（首页 / 体验 / 我的 三页使用了自定义导航）
+   高度不写死在 CSS 里，由页面用 statusBarHeight 内联指定 —— 各机型状态栏高度不同 */
+.sbar { width: 100%; flex: none; }

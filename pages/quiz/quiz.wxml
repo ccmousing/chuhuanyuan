@@ -1,0 +1,80 @@
+<!-- 知识闯关 · 对应原型 ④ 知识闯关
+     题库 30 题分三档，每轮抽 10 题；答错可跳到对应文章回看原文 -->
+
+<!-- ============ 结果页 ============ -->
+<block wx:if="{{finished}}">
+  <view class="pad res">
+    <view class="res-e">{{resEmoji}}</view>
+    <view class="res-t serif">本轮答对 {{qRight}} / {{total}} 题</view>
+    <view class="res-s">{{resText}}</view>
+
+    <view class="box res-box">
+      <view class="res-row">
+        <text class="res-l">本次正确率</text>
+        <text class="res-v">{{rate}}%</text>
+      </view>
+      <view class="res-row">
+        <text class="res-l">累计答对</text>
+        <text class="res-v">{{history.right}} 题</text>
+      </view>
+      <view class="res-row">
+        <text class="res-l">累计作答</text>
+        <text class="res-v">{{history.answered}} 题</text>
+      </view>
+    </view>
+
+    <!-- 错题回看：这是「答错能学到东西」的关键一环，不是干巴巴给个分数 -->
+    <block wx:if="{{wrongList.length}}">
+      <view class="hd">本轮错题 · 点进去回看原文</view>
+      <view class="box">
+        <view class="li" wx:for="{{wrongList}}" wx:key="q" data-id="{{item.art}}" bindtap="goWrongArt">
+          <view class="li-thumb wr-thumb">📖</view>
+          <view class="li-tx">
+            <text class="li-b">{{item.q}}</text>
+            <text class="li-s">你选了 {{item.yours}} · 正确 {{item.correct}} · 去读《{{item.title}}》</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <view class="btnL res-btn1" bindtap="onRestart">再来一轮</view>
+    <view class="btnL ghost res-btn2" bindtap="goMine">去我的花园看徽章</view>
+
+    <view class="notice">成绩只保存在本机，换设备或清除数据后不再保留。</view>
+  </view>
+</block>
+
+<!-- ============ 答题页 ============ -->
+<block wx:else>
+  <!-- 这里原本挂着一个「青少年版」标签。只有一版内容时它是误导性的 ——
+       会让人以为存在另一个版本可选，所以整个去掉。将来真做了内容分级再加回来。 -->
+  <view class="q-mode" wx:if="{{wrongMode}}">🎯 错题重练 · 答对即从错题本移除</view>
+  <view class="q-top">
+    <text class="lv">第 <text class="b">{{qi + 1}}</text> / {{total}} 题</text>
+    <text class="q-diff">{{diffName}}</text>
+    <text class="lv">已答对 <text class="b">{{qRight}}</text> 题</text>
+  </view>
+  <view class="q-bar"><view class="q-fill" style="width:{{percent}}%"></view></view>
+
+  <view class="pad">
+    <view class="q-q serif">{{qi + 1}}. {{item.q}}</view>
+
+    <view class="opt {{picked === index ? (index === item.a ? 'ok' : 'no') : (picked >= 0 && index === item.a ? 'ok' : '')}}"
+          wx:for="{{item.o}}" wx:key="*this"
+          data-i="{{index}}" bindtap="onPick">
+      <view class="k">{{letters[index]}}</view>
+      <view class="opt-tx">{{item}}</view>
+    </view>
+
+    <view class="exp {{picked >= 0 ? 'show' : ''}}">{{expText}}</view>
+
+    <!-- 答完可跳到对应文章回看原文 -->
+    <view class="exp-link" wx:if="{{picked >= 0 && canRead}}" bindtap="goArt">
+      📖 读《{{artTitle}}》 →
+    </view>
+
+    <view class="btnL q-next" wx:if="{{picked >= 0}}" bindtap="onNext">{{qi === total - 1 ? '查看结果' : '下一题'}}</view>
+
+    <view class="hint">累计答对 8 题解锁「花园达人」徽章</view>
+  </view>
+</block>

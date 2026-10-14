@@ -1,0 +1,206 @@
+/* 祝福卡样式 */
+
+.fld { padding: 20rpx 0; border-bottom: 2rpx dashed rgba(43, 35, 32, 0.09); }
+.fld:last-child { border-bottom: 0; padding-bottom: 4rpx; }
+.fld-l { display: block; font-size: 24rpx; color: #A0937F; margin-bottom: 14rpx; }
+.fld-i {
+  height: 76rpx;
+  font-size: 30rpx;
+  color: #2B2320;
+  background: #FDF8F0;
+  border: 2rpx solid rgba(43, 35, 32, 0.07);
+  border-radius: 18rpx;
+  padding: 0 24rpx;
+}
+
+.tpls { display: flex; flex-direction: column; }
+.tpl {
+  font-size: 28rpx;
+  color: #6B5D52;
+  line-height: 1.7;
+  padding: 20rpx 24rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid rgba(43, 35, 32, 0.08);
+  margin-bottom: 16rpx;
+  background: #FFFFFF;
+}
+.tpl.on {
+  border-color: rgba(200, 68, 60, 0.45);
+  background: rgba(200, 68, 60, 0.06);
+  color: #C8443C;
+  font-weight: 600;
+}
+
+/* 场景标签（通用 / 给儿子 / 给女儿 / 给海外亲友 / 集体成人礼）
+   文案 12 条，靠这个标签让用户能快速定位需要的场景 */
+.tpl-scene {
+  display: inline-block;
+  font-size: 20rpx;
+  line-height: 1.7;
+  padding: 0 12rpx;
+  border-radius: 999rpx;
+  background: rgba(43, 35, 32, 0.05);
+  color: #A0937F;
+  margin-bottom: 8rpx;
+}
+.tpl.on .tpl-scene {
+  background: rgba(200, 68, 60, 0.12);
+  color: #C8443C;
+}
+.tpl-tx { display: block; }
+
+/* ============ 页内预览：竖版卡片，三层次（引导语 / 正文 / 落款） ============ */
+.preview {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 760rpx;
+  padding: 46rpx 44rpx 42rpx;
+  border-radius: 28rpx;
+  background: linear-gradient(150deg, #C8443C 0%, #A8322B 60%, #8A2A25 100%);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 16rpx 48rpx rgba(200, 68, 60, 0.22);
+}
+
+/* 内描边：对应 canvas 里 strokeRect(20,20,W-40,H-40) 那道内框 */
+.pv-frame {
+  position: absolute;
+  left: 22rpx;
+  right: 22rpx;
+  top: 22rpx;
+  bottom: 22rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.22);
+  border-radius: 24rpx;
+}
+
+/* ===== 石榴花（坐标按 viewBox 100×100 参数化计算，勿手调）===== */
+.pv-bloom {
+  position: absolute;
+  right: -90rpx;
+  top: -60rpx;
+  width: 320rpx;
+  height: 320rpx;
+  opacity: 0.13;
+}
+.pv-bloom .pv-petal {
+  position: absolute;
+  width: 109rpx;
+  height: 109rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+}
+.pv-bloom .pv-petal.b1 { left: 106rpx; top: 6rpx; }
+.pv-bloom .pv-petal.b2 { left: 206rpx; top: 78rpx; }
+.pv-bloom .pv-petal.b3 { left: 170rpx; top: 196rpx; }
+.pv-bloom .pv-petal.b4 { left: 42rpx; top: 196rpx; }
+.pv-bloom .pv-petal.b5 { left: 6rpx; top: 78rpx; }
+.pv-bloom .pv-core {
+  position: absolute;
+  left: 124rpx;
+  top: 124rpx;
+  width: 73rpx;
+  height: 73rpx;
+  border-radius: 50%;
+  background: #F2C14E;
+}
+
+/* 左下角小点缀 */
+.pv-bloom.sm {
+  right: auto;
+  top: auto;
+  left: -46rpx;
+  bottom: -40rpx;
+  width: 150rpx;
+  height: 150rpx;
+  opacity: 0.09;
+}
+.pv-bloom.sm .pv-petal { width: 50rpx; height: 50rpx; }
+.pv-bloom.sm .pv-petal.c1 { left: 50rpx; top: 4rpx; }
+.pv-bloom.sm .pv-petal.c2 { left: 96rpx; top: 38rpx; }
+.pv-bloom.sm .pv-petal.c3 { left: 79rpx; top: 92rpx; }
+.pv-bloom.sm .pv-petal.c4 { left: 21rpx; top: 92rpx; }
+.pv-bloom.sm .pv-petal.c5 { left: 4rpx;  top: 38rpx; }
+.pv-bloom.sm .pv-core { left: 58rpx; top: 58rpx; width: 33rpx; height: 33rpx; }
+
+.pv-kicker {
+  position: relative;
+  font-size: 22rpx;
+  letter-spacing: 8rpx;
+  opacity: 0.82;
+  flex: none;
+}
+
+/* 正文区：垂直居中（略微上移，做视觉重心补偿） */
+.pv-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 30rpx;
+  box-sizing: border-box;
+}
+.pv-quote {
+  font-size: 40rpx;
+  line-height: 1.72;
+  font-weight: 600;
+  text-align: center;
+}
+.pv-line { white-space: nowrap; }
+.pv-name {
+  font-size: 26rpx;
+  opacity: 0.9;
+  margin-top: 36rpx;
+}
+
+/* 落款区 */
+.pv-foot {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.pv-div {
+  width: 220rpx;
+  height: 2rpx;
+  background: rgba(255, 255, 255, 0.24);
+  margin-bottom: 22rpx;
+}
+.pv-brand {
+  font-size: 22rpx;
+  letter-spacing: 8rpx;
+  opacity: 0.8;
+}
+.pv-date {
+  font-size: 20rpx;
+  opacity: 0.58;
+  margin-top: 12rpx;
+}
+
+.export-btn { margin-top: 36rpx; }
+
+/* 生成结果 */
+.result-img {
+  width: 100%;
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 40rpx rgba(43, 35, 32, 0.18);
+}
+.result-tip { text-align: center; font-size: 22rpx; color: #A0937F; margin-top: 16rpx; }
+.result-btns { margin-top: 24rpx; }
+
+/* 离屏画布容器：不参与视觉，但保持可渲染
+   若某些机型导出为空白图，把 left 改成 0、top 改成 0，并加 opacity: 0； */
+.canvas-holder {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  width: 600px;
+  height: 800px;
+  overflow: hidden;
+  z-index: -1;
+}

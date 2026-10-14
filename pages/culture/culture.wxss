@@ -1,0 +1,114 @@
+/* 文化馆样式 */
+
+/* 分段条（原型 .segs）：吸顶 */
+.segs {
+  display: flex;
+  padding: 24rpx 32rpx 20rpx;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #FDF8F0;
+}
+.seg {
+  font-size: 25rpx;
+  padding: 12rpx 26rpx;
+  border-radius: 999rpx;
+  background: #FFFFFF;
+  border: 2rpx solid rgba(43, 35, 32, 0.09);
+  color: #6B5D52;
+  margin-right: 12rpx;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.seg.on {
+  background: #2B2320;
+  color: #FFFFFF;
+  border-color: #2B2320;
+}
+
+/* 点击跳转后目标闪一下（原型 .flash） */
+@keyframes segFlash {
+  0%   { background: rgba(200, 68, 60, 0.20); }
+  100% { background: transparent; }
+}
+.flash { animation: segFlash 1.15s ease-out; border-radius: 18rpx; }
+
+.quote {
+  font-size: 30rpx;
+  color: #C8443C;
+  text-align: center;
+  padding: 12rpx 0 8rpx;
+  letter-spacing: 1rpx;
+}
+
+.def { font-size: 27rpx; color: #6B5D52; line-height: 1.8; }
+.def-k { color: #2B2320; font-weight: 600; }
+.tags { margin-top: 20rpx; }
+.tags .tagL { margin-right: 12rpx; }
+
+/* 时间轴（原型 .tline）：竖线 + 圆点 */
+.tline {
+  padding-left: 36rpx;
+  border-left: 4rpx solid rgba(185, 141, 62, 0.35);
+  margin-left: 8rpx;
+}
+.tn { position: relative; padding-bottom: 30rpx; }
+.tn:last-child { padding-bottom: 4rpx; }
+.tn::before {
+  content: "";
+  position: absolute;
+  left: -48rpx;
+  top: 12rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #FDF8F0;
+  border: 4rpx solid #B98D3E;
+}
+.tn-b { display: block; font-size: 27rpx; color: #B98D3E; font-weight: 600; }
+.tn-s { font-size: 25rpx; color: #6B5D52; }
+
+/* 符号图鉴（原型 .sym .s）：三列白底卡片 */
+.sym { display: flex; flex-wrap: wrap; margin: 0 -8rpx; }
+.sym .s { width: 33.33%; box-sizing: border-box; padding: 0 8rpx 16rpx; }
+.sym .sc {
+  background: #FFFFFF;
+  border: 2rpx solid rgba(43, 35, 32, 0.09);
+  border-radius: 26rpx;
+  padding: 22rpx 16rpx;
+  text-align: center;
+}
+.sym .e { display: block; font-size: 48rpx; line-height: 1.2; margin-bottom: 10rpx; }
+.sym .n { font-size: 24rpx; font-weight: 600; color: #2B2320; }
+.sym .d { font-size: 21rpx; color: #A0937F; line-height: 1.45; }
+
+/* ============ 搜索（B1） ============ */
+.searchbar {
+  display: flex;
+  align-items: center;
+  margin: 20rpx 32rpx 0;
+  padding: 0 24rpx;
+  height: 76rpx;
+  border-radius: 999rpx;
+  background: #FFFFFF;
+  border: 2rpx solid rgba(43, 35, 32, 0.09);
+}
+.sb-ic { flex: none; font-size: 30rpx; margin-right: 14rpx; opacity: 0.55; }
+.sb-in {
+  flex: 1;
+  min-width: 0;
+  height: 76rpx;
+  font-size: 27rpx;
+  color: #2B2320;
+}
+.sb-clr {
+  flex: none;
+  font-size: 26rpx;
+  color: #A0937F;
+  padding: 10rpx 6rpx 10rpx 20rpx;
+}
+
+/* 搜索无结果 */
+.s-empty { padding: 100rpx 40rpx; text-align: center; }
+.se-e { font-size: 72rpx; line-height: 1.2; opacity: 0.5; }
+.se-t { font-size: 30rpx; font-weight: 600; color: #2B2320; margin-top: 20rpx; }
+.se-s { font-size: 24rpx; color: #A0937F; line-height: 1.7; margin-top: 14rpx; }

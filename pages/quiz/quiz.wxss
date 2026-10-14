@@ -1,0 +1,128 @@
+/* 知识闯关样式 */
+
+/* 注：顶部原本有一个「青少年版」标签，已移除 ——
+   只有一版内容时它暗示存在另一版可选，属于不实标注。
+   因此这里不再有 .q-lvrow，.q-top 的上内边距相应加大，补回被移除那一行的高度。 */
+
+.q-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx 32rpx 12rpx;
+}
+.lv { font-size: 24rpx; color: #A0937F; }
+.lv .b { color: #2B2320; font-weight: 700; }
+
+.q-bar {
+  height: 12rpx;
+  border-radius: 6rpx;
+  background: rgba(43, 35, 32, 0.08);
+  margin: 0 32rpx 8rpx;
+  overflow: hidden;
+}
+.q-fill {
+  height: 100%;
+  border-radius: 6rpx;
+  background: linear-gradient(90deg, #B98D3E, #C8443C);
+  transition: width 0.25s;
+}
+
+.q-q { font-size: 34rpx; line-height: 1.6; margin: 20rpx 0 28rpx; font-weight: 700; color: #2B2320; }
+
+.opt {
+  display: flex;
+  align-items: center;
+  padding: 26rpx 28rpx;
+  border-radius: 26rpx;
+  background: #FFFFFF;
+  border: 3rpx solid rgba(43, 35, 32, 0.09);
+  margin-bottom: 18rpx;
+}
+.opt .k {
+  width: 44rpx;
+  height: 44rpx;
+  line-height: 44rpx;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(43, 35, 32, 0.06);
+  font-size: 23rpx;
+  color: #6B5D52;
+  flex: none;
+  margin-right: 20rpx;
+}
+.opt .opt-tx { flex: 1; font-size: 27rpx; color: #2B2320; line-height: 1.6; }
+
+.opt.ok { border-color: #3F8C76; background: rgba(63, 140, 118, 0.07); }
+.opt.ok .k { background: #3F8C76; color: #FFFFFF; }
+.opt.no { border-color: #C8443C; background: rgba(200, 68, 60, 0.06); }
+.opt.no .k { background: #C8443C; color: #FFFFFF; }
+
+.exp {
+  background: rgba(63, 140, 118, 0.08);
+  border-radius: 24rpx;
+  padding: 22rpx 26rpx;
+  font-size: 25rpx;
+  color: #6B5D52;
+  line-height: 1.7;
+  display: none;
+}
+.exp.show { display: block; }
+
+/* 答完可跳对应文章回看原文 */
+.exp-link {
+  display: inline-block;
+  margin-top: 18rpx;
+  font-size: 25rpx;
+  font-weight: 600;
+  color: #C8443C;
+}
+
+/* 难度标签（入门 / 进阶 / 挑战） */
+.q-diff {
+  font-size: 21rpx;
+  color: #A0937F;
+  border: 2rpx solid rgba(43, 35, 32, 0.14);
+  border-radius: 999rpx;
+  padding: 2rpx 16rpx;
+}
+
+/* 错题重练提示条 */
+.q-mode {
+  margin: 20rpx 32rpx 0;
+  padding: 14rpx 24rpx;
+  border-radius: 18rpx;
+  font-size: 23rpx;
+  color: #C8443C;
+  background: rgba(200, 68, 60, 0.07);
+  border: 2rpx dashed rgba(200, 68, 60, 0.3);
+}
+
+.q-next { margin-top: 32rpx; }
+.hint { text-align: center; font-size: 23rpx; color: #A0937F; margin-top: 24rpx; }
+
+/* ============ 结果页 ============ */
+.res { padding-top: 40rpx; text-align: center; }
+.res-e { font-size: 110rpx; line-height: 1.2; }
+.res-t { font-size: 40rpx; font-weight: 700; color: #2B2320; margin-top: 20rpx; }
+.res-s { font-size: 26rpx; color: #6B5D52; line-height: 1.7; margin-top: 14rpx; }
+
+.res-box { margin: 36rpx 0 40rpx; text-align: left; }
+.res-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 2rpx dashed rgba(43, 35, 32, 0.09);
+}
+.res-row:last-child { border-bottom: 0; padding-bottom: 4rpx; }
+.res-l { font-size: 26rpx; color: #6B5D52; }
+.res-v { font-size: 28rpx; color: #C8443C; font-weight: 600; }
+
+.res-btn1 { margin-top: 44rpx; }
+.res-btn2 { margin-top: 20rpx; }
+
+/* 结果页里的错题区要左对齐（.res 整体是 text-align: center） */
+.res .hd, .res .box { text-align: left; }
+.res .hd { margin-top: 48rpx; }
+/* 错题条的缩略块：放一本书，提示「点进去读原文」 */
+.wr-thumb { background: rgba(185, 141, 62, 0.14); font-size: 36rpx; }

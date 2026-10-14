@@ -1,0 +1,27 @@
+<!-- 我的收藏 · 内容来自本机存储 -->
+
+<view class="pad">
+  <block wx:if="{{empty}}">
+    <view class="box nf">
+      <view class="nf-e">⭐</view>
+      <view class="nf-t">还没有收藏</view>
+      <view class="nf-s">在文章页点一下「收藏」，文章就会出现在这里。</view>
+    </view>
+    <view class="btnL" bindtap="goCulture">去文化科普馆</view>
+  </block>
+
+  <block wx:else>
+    <view class="hd">我的收藏 · {{list.length}} 篇</view>
+    <view class="box">
+      <view class="li" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goArticle">
+        <view class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
+        <view class="li-tx">
+          <text class="li-b">{{item.title}}</text>
+          <text class="li-s">{{item.tag}} · {{item.sub}}</text>
+        </view>
+        <view class="rm" catchtap="onRemove" data-id="{{item.id}}">取消</view>
+      </view>
+    </view>
+    <view class="notice">收藏只保存在本机，换设备或清除数据后不再保留。</view>
+  </block>
+</view>

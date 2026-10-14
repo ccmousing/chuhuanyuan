@@ -1,0 +1,109 @@
+/* 我的花园样式 */
+
+.mine-top {
+  padding: 0 36rpx 52rpx;
+  color: #FFFFFF;
+  background: linear-gradient(150deg, #C8443C, #8A2A25);
+  border-radius: 0 0 44rpx 44rpx;
+}
+.rw { display: flex; align-items: center; margin-top: 16rpx; }
+.rw .av {
+  width: 108rpx;
+  height: 108rpx;
+  line-height: 108rpx;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 3rpx solid rgba(255, 255, 255, 0.5);
+  font-size: 42rpx;
+  flex: none;
+  margin-right: 24rpx;
+}
+.rw .nm { font-size: 34rpx; font-weight: 700; }
+.rw .sb { font-size: 23rpx; opacity: 0.85; }
+.rw .edit {
+  margin-left: auto;
+  flex: none;
+  font-size: 22rpx;
+  padding: 8rpx 22rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+}
+
+.stats { display: flex; margin-top: 32rpx; }
+.stats > view { flex: 1; text-align: center; }
+.stats .b { font-size: 38rpx; font-weight: 700; }
+.stats .l { font-size: 21rpx; opacity: 0.82; }
+
+.bar-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 25rpx;
+  color: #6B5D52;
+  margin-bottom: 14rpx;
+}
+.bar-num { color: #C8443C; font-weight: 700; }
+.bar {
+  height: 14rpx;
+  border-radius: 8rpx;
+  background: rgba(43, 35, 32, 0.08);
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 8rpx;
+  background: linear-gradient(90deg, #B98D3E, #C8443C);
+}
+.cert { margin-top: 24rpx; font-size: 25rpx; color: #6B5D52; }
+.cert-a { color: #C8443C; font-weight: 600; }
+
+/* 徽章：2 × 2 网格（带解锁条件，4 列会挤到看不清） */
+.badges { display: flex; flex-wrap: wrap; margin: 0 -8rpx; }
+.badge {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 0 8rpx 16rpx;
+  background: transparent;
+  border: 0;
+}
+.badge .e {
+  display: block;
+  text-align: center;
+  font-size: 52rpx;
+  line-height: 1.3;
+}
+.badge .n {
+  text-align: center;
+  font-size: 25rpx;
+  color: #2B2320;
+  font-weight: 600;
+}
+.badge .h {
+  text-align: center;
+  font-size: 20rpx;
+  color: #A0937F;
+  line-height: 1.45;
+}
+.badge.lock { opacity: 0.4; }
+
+.plist .r {
+  display: flex;
+  align-items: center;
+  padding: 26rpx 0;
+  border-bottom: 2rpx solid rgba(43, 35, 32, 0.09);
+  font-size: 27rpx;
+  color: #2B2320;
+}
+.plist .r:last-child { border-bottom: 0; }
+.plist .r .e { width: 52rpx; text-align: center; font-size: 32rpx; flex: none; }
+.plist .r .t { flex: 1; }
+.plist .r .v { font-size: 23rpx; color: #A0937F; }
+
+/* 规划中的菜单项：整行弱化，一眼能看出与可点项的区别（点了会给原因说明） */
+.plist .r.off .e { opacity: 0.5; }
+.plist .r.off .t { color: #A0937F; }
+.plist .r.off .v { color: #C0B5A8; }
+
+.center { text-align: center; }

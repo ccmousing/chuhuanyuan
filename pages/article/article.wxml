@@ -1,0 +1,56 @@
+<!-- 文章详情 · 内容来自 utils/content.js（页面只认 id，正文与页面解耦） -->
+<view wx:if="{{notFound}}" class="pad">
+  <view class="box nf">
+    <view class="nf-e">🔍</view>
+    <view class="nf-t">没有找到这篇文章</view>
+    <view class="nf-s">链接可能已失效，或者文章已调整。</view>
+  </view>
+  <view class="btnL" bindtap="goHome">返回首页</view>
+</view>
+
+<block wx:else>
+  <view class="ahero" style="background:{{a.bg}}">
+    <view class="ahero-ic">{{a.icon}}</view>
+    <view class="ahero-tag">{{a.tag}}</view>
+  </view>
+
+  <view class="pad">
+    <view class="atitle serif">{{a.title}}</view>
+    <view class="asub">{{a.sub}}</view>
+
+    <view class="ameta">
+      <text class="tagL g">{{a.tag}}</text>
+      <text class="ameta-t">{{mins}} 分钟读完 · 约 {{words}} 字</text>
+    </view>
+
+    <view class="abody">
+      <block wx:for="{{a.sections}}" wx:key="h" wx:for-item="sec">
+        <view class="ah2 serif">{{sec.h}}</view>
+        <view class="ap" wx:for="{{sec.p}}" wx:key="*this">{{item}}</view>
+      </block>
+    </view>
+
+    <view wx:if="{{a.needVerify}}" class="warn">
+      <view class="warn-t">内容提示</view>
+      <view class="warn-c">本文涉及各地差异较大的礼俗细节，已按「传说 / 通行说法」分别标注。正式上线前需经文化馆或民俗专家审校。</view>
+    </view>
+
+    <view class="acts">
+      <view class="act {{fav ? 'on' : ''}}" bindtap="onToggleFav">{{fav ? '★ 已收藏' : '☆ 收藏'}}</view>
+      <button class="act act-btn" open-type="share">转发给好友</button>
+    </view>
+
+    <view class="hd">延伸阅读</view>
+    <view class="box">
+      <view class="li" wx:for="{{related}}" wx:key="id" data-id="{{item.id}}" bindtap="goArticle">
+        <view class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
+        <view class="li-tx">
+          <text class="li-b">{{item.title}}</text>
+          <text class="li-s">{{item.tag}} · {{item.sub}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="notice">内容声明：本文为民俗科普整理，不同地区与家庭做法存在差异，如发现错漏欢迎指正。</view>
+  </view>
+</block>

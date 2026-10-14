@@ -1,0 +1,126 @@
+/* 首页样式 · 原型 px × 2 = rpx */
+
+/* ===== 顶部红色区（原型 .home-hero） ===== */
+.home-hero {
+  position: relative;
+  padding: 6rpx 36rpx 44rpx;
+  color: #FFFFFF;
+  overflow: hidden;
+  background: linear-gradient(150deg, #C8443C 0%, #A8322B 55%, #8A2A25 100%);
+  border-radius: 0 0 44rpx 44rpx;
+}
+
+/* 石榴花：坐标由原型 SVG 的 viewBox 100×100 等比换算 */
+.bloom {
+  position: absolute;
+  right: -28rpx;
+  top: 96rpx;
+  width: 264rpx;
+  height: 264rpx;
+  opacity: 0.17;
+}
+.petal {
+  position: absolute;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+}
+.p1 { left: 100rpx; top: 36rpx; }
+.p2 { left: 158rpx; top: 78rpx; }
+.p3 { left: 136rpx; top: 148rpx; }
+.p4 { left: 62rpx;  top: 148rpx; }
+.p5 { left: 42rpx;  top: 78rpx; }
+.core {
+  position: absolute;
+  left: 110rpx;
+  top: 106rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: #F2C14E;
+}
+
+.kk { font-size: 21rpx; letter-spacing: 6rpx; opacity: 0.82; }
+.hero-title { font-size: 54rpx; line-height: 1.3; margin: 16rpx 0 8rpx; letter-spacing: 2rpx; font-weight: 700; }
+.sl { font-size: 24rpx; opacity: 0.88; margin-bottom: 32rpx; }
+
+.count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 28rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.13);
+  border: 2rpx solid rgba(255, 255, 255, 0.24);
+}
+.lb { font-size: 23rpx; opacity: 0.9; }
+.lb-b { display: block; font-size: 27rpx; opacity: 1; margin-bottom: 4rpx; }
+.num { font-size: 60rpx; line-height: 1; font-weight: 700; }
+.num-na { font-size: 48rpx; line-height: 1; opacity: 0.55; }
+.unit { font-size: 24rpx; margin-left: 4rpx; opacity: 0.85; }
+.cd-tip { font-size: 20rpx; opacity: 0.72; margin-top: 14rpx; }
+
+/* ===== 四宫格（原型 .grid4 / .entry） ===== */
+.grid4 { display: flex; margin: 24rpx -4rpx 0; }
+.entry { flex: 1; text-align: center; padding: 24rpx 4rpx; border-radius: 28rpx; }
+.entry .ic {
+  width: 84rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  margin: 0 auto 12rpx;
+  border-radius: 26rpx;
+  text-align: center;
+  font-size: 38rpx;
+  font-weight: 700;
+}
+.entry .nm { font-size: 23rpx; color: #6B5D52; }
+/* 规划中的入口：在名称下方补一个小灰标，避免点进去才发现未开放 */
+.entry .nm-plan {
+  display: inline-block;
+  font-size: 19rpx;
+  line-height: 1.7;
+  padding: 0 10rpx;
+  margin-top: 6rpx;
+  border-radius: 999rpx;
+  color: #A0937F;
+  border: 2rpx solid rgba(43, 35, 32, 0.14);
+}
+
+/* ===== 社区横幅（原型 .banner） ===== */
+.banner {
+  display: flex;
+  align-items: center;
+  margin-top: 24rpx;
+  padding: 24rpx 28rpx;
+  border-radius: 28rpx;
+  background: linear-gradient(120deg, #F6E9D7, #FBF3E7);
+  border: 2rpx solid rgba(185, 141, 62, 0.28);
+}
+.banner-ic {
+  width: 72rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  border-radius: 22rpx;
+  background: rgba(185, 141, 62, 0.16);
+  color: #B98D3E;
+  font-size: 34rpx;
+  flex: none;
+  margin-right: 24rpx;
+}
+.banner-tx { flex: 1; min-width: 0; }
+.banner-b { display: block; font-size: 27rpx; color: #2B2320; }
+.banner-s { font-size: 23rpx; color: #A0937F; }
+.banner-arr { font-size: 36rpx; color: #B98D3E; opacity: 0.6; flex: none; }
+
+/* ===== 今日一签（对应原型 .box 上的淡金渐变） ===== */
+.sign-box {
+  padding: 26rpx 28rpx;
+  border-radius: 28rpx;
+  background: linear-gradient(120deg, #FFF9EF, #FFFDF8);
+  border: 2rpx solid rgba(185, 141, 62, 0.28);
+}
+.sign-label { font-size: 23rpx; color: #B98D3E; letter-spacing: 2rpx; margin-bottom: 10rpx; }
+.sign-text { font-size: 31rpx; color: #2B2320; line-height: 1.75; }
+.sign-more { margin-top: 18rpx; }
