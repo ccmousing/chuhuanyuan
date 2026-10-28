@@ -25,7 +25,7 @@ Page({
 
   onShow() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 3 });
+      this.getTabBar().setData({ selected: 4 });
     }
     this.refresh();   // 从别的页面回来时刷新，数字始终是最新的
   },
@@ -145,12 +145,17 @@ Page({
   clearData() {
     wx.showModal({
       title: '清除本机数据？',
-      content: '将删除仪式进度、徽章、收藏、答题记录与昵称。此操作不可撤销，云端无备份。',
+      content: '将删除仪式进度、徽章、收藏、答题记录、昵称与已生成的祝福卡图片。此操作不可撤销，云端无备份。',
       confirmText: '清除',
       confirmColor: '#C8443C',
       success: (r) => {
         if (!r.confirm) return;
+        // 先取路径再清 store —— 清完就读不到了，图片会变成删不掉的孤儿文件
+        const cardFile = store.getCardFile();
         store.clearAll();
+        if (cardFile && cardFile.indexOf(wx.env.USER_DATA_PATH) === 0) {
+          wx.getFileSystemManager().unlink({ filePath: cardFile, fail: () => {} });
+        }
         this.refresh();
         wx.showToast({ title: '已清除', icon: 'success' });
       }

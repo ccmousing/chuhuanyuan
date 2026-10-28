@@ -89,6 +89,54 @@ Page({
     if (Number.isInteger(t) && t >= 0 && t < this.data.templates.length) {
       this.setData({ tplIdx: t });
     }
+    this.restoreCard();
+  },
+
+  /**
+   * 恢复上次生成的卡片。
+   * 存的是 USER_DATA_PATH 下的永久文件，不是 tempFilePath ——
+   * 后者在小程序重启后就失效，会出现「计数说有 N 张，却一张都看不到」。
+   */
+  restoreCard() {
+    const p = store.getCardFile();
+    if (!p) return;
+    wx.getFileSystemManager().access({
+      path: p,
+      success: () => this.setData({ cardPath: p }),
+      // 文件可能被系统清理或用户清过缓存 —— 静默清掉失效路径，不打扰用户
+      fail: () => store.setCardFile('')
+    });
+  },
+
+  /**
+   * 把临时图片转成永久文件（只保留最近一张，避免 USER_DATA_PATH 无限堆积）。
+   * 保存失败不阻断主流程：本次仍可用临时路径预览、保存到相册、分享。
+   */
+  persist(tempPath) {
+    return new Promise((resolve) => {
+      const fs = wx.getFileSystemManager();
+      const old = store.getCardFile();
+      // 加随机后缀：只用 Date.now() 时，同一毫秒内连点两次会得到相同文件名，
+      // 第二次会静默覆盖第一张（verify-card.js 抓到过这个问题）
+      const filePath = wx.env.USER_DATA_PATH + '/card_' + Date.now() +
+        '_' + Math.floor(Math.random() * 1e6) + '.png';
+      fs.saveFile({
+        tempFilePath: tempPath,
+        filePath: filePath,
+        success: (r) => {
+          const saved = r.savedFilePath || filePath;
+          store.setCardFile(saved);
+          if (old && old !== saved && old.indexOf(wx.env.USER_DATA_PATH) === 0) {
+            fs.unlink({ filePath: old, fail: () => {} });
+          }
+          resolve(saved);
+        },
+        fail: (e) => {
+          console.warn('[祝福卡] 永久保存失败，本次使用临时文件', e);
+          resolve(tempPath);
+        }
+      });
+    });
   },
 
   onNameInput(e) {
@@ -215,7 +263,9 @@ Page({
       const cssW = res.width || CARD_W;   // 取不到尺寸时用兜底常量
       const cssH = res.height || CARD_H;
       const dpr = this.drawCard(res.node, cssW, cssH);
-      const path = await this.exportImage(res.node, cssW, cssH, dpr);
+      const tempPath = await this.exportImage(res.node, cssW, cssH, dpr);
+      // 转永久文件：tempFilePath 重启即失效，不能直接展示给用户当"已生成"
+      const path = await this.persist(tempPath);
       this.setData({ cardPath: path });
       store.addCard();                    // 累计生成张数，「我的花园」会读这个数
       wx.showToast({ title: '已生成', icon: 'success' });

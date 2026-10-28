@@ -1,0 +1,41 @@
+<!-- 文化问答 · AI 助手（精致聊天风格）
+     流程：本地检索知识库(kb-search) → 命中则调 wx.cloud.extend.AI 流式回答；
+     未命中直接拒答并给建议，不浪费 token、不硬编答案。 -->
+<view class="page">
+
+  <scroll-view class="msg-list" scroll-y scroll-into-view="msg-{{lastId}}" scroll-with-animation>
+    <view class="msg{{item.side === 'right' ? ' right' : ''}}"
+          wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}">
+
+      <view class="avatar" wx:if="{{item.role === 'ai'}}"></view>
+
+      <view class="body">
+        <view class="bubble {{item.side === 'right' ? 'b-user' : 'b-ai'}}">
+          <view class="typing" wx:if="{{item.typing}}">
+            <view class="dot"></view>
+            <view class="dot d2"></view>
+            <view class="dot d3"></view>
+          </view>
+          <text class="b-tx" wx:else user-select>{{item.content}}</text>
+        </view>
+
+        <view class="sources" wx:if="{{item.sources.length}}">
+          <view class="pill" wx:for="{{item.sources}}" wx:for-item="src" wx:key="id"
+                data-id="{{src.id}}" bindtap="onSourceTap">{{src.label}}</view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="suggests" wx:if="{{showSuggests}}">
+      <view class="sug" wx:for="{{suggests}}" wx:key="*this" data-q="{{item}}" bindtap="onSuggestTap">{{item}}</view>
+    </view>
+  </scroll-view>
+
+  <view class="bar">
+    <input class="ipt" value="{{input}}" bindinput="onInput" bindconfirm="send"
+           placeholder="问一个潮汕礼俗问题" confirm-type="send" disabled="{{loading}}" />
+    <view class="btn {{loading ? 'btn-off' : ''}}" bindtap="send">{{loading ? '…' : '发送'}}</view>
+  </view>
+
+</view>

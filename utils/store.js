@@ -179,6 +179,12 @@ function addCard() {
   set('cardCount', n);
   return n;
 }
+/** 最近一次生成的卡片文件路径（USER_DATA_PATH 下的永久文件；'' 表示没有） */
+function getCardFile() {
+  const p = get('cardFile', '');
+  return typeof p === 'string' ? p : '';
+}
+function setCardFile(p) { return set('cardFile', p || ''); }
 
 /* ---------------- 个人资料 ---------------- */
 /**
@@ -238,6 +244,8 @@ module.exports = {
   wrongTimes: wrongTimes,
   getCardCount: getCardCount,
   addCard: addCard,
+  getCardFile: getCardFile,
+  setCardFile: setCardFile,
   getProfile: getProfile,
   setProfile: setProfile,
   clearAll: clearAll

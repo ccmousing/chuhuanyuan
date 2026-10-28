@@ -37,6 +37,15 @@
     </view>
   </view>
 
+  <view class="banner banner-ai" data-key="assistant" bindtap="onEntryTap">
+    <view class="banner-ic">问</view>
+    <view class="banner-tx">
+      <text class="banner-b serif">文化问答 · AI 助手</text>
+      <text class="banner-s">基于知识库回答潮汕礼俗问题（云开发 AI）</text>
+    </view>
+    <view class="banner-arr">›</view>
+  </view>
+
   <view class="banner" data-key="community" bindtap="onEntryTap">
     <view class="banner-ic">花</view>
     <view class="banner-tx">
@@ -46,17 +55,24 @@
     <view class="banner-arr">›</view>
   </view>
 
-  <view class="hd">今日一签</view>
-  <view class="sign-box">
+  <!-- 每日轮换：内容见 utils/daily-copy.js（7 条，按本地日期取模）。
+       原版是硬编码一句固定文案，叫「今日一签」却从不变 —— 已修正。 -->
+  <view class="hd">今日 · 民俗一签</view>
+  <view class="sign-box" wx:if="{{sign}}">
     <view class="sign-label">农历 · 民俗小知识</view>
-    <view class="sign-text serif">「咬鸡头，富雅贤；咬鸡嘴，大富贵。」——出花园宴上最热闹的一环，就藏在这句俗语里。</view>
-    <view class="sign-more" data-id="head-dish" bindtap="onEntryTap"><text class="tagL g">点击了解咬鸡头的由来</text></view>
+    <view class="sign-text serif">{{sign.quote}}</view>
+    <view class="sign-sub">{{sign.text}}</view>
+    <view class="sign-more" data-id="{{sign.articleId}}" bindtap="onEntryTap">
+      <text class="tagL g">{{sign.more}} →</text>
+    </view>
   </view>
 
-  <view class="hd">大家都在看</view>
+  <view class="hd">编辑推荐</view>
   <view class="box">
     <view class="li" wx:for="{{reads}}" wx:key="id" data-id="{{item.id}}" bindtap="onEntryTap">
-      <view class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
+      <image wx:if="{{!item.imgFailed}}" class="li-thumb" src="/images/{{item.id}}.{{item.imgExt ? item.imgExt : 'jpg'}}"
+             mode="aspectFill" data-list="reads" data-i="{{index}}" binderror="onImgErr"></image>
+      <view wx:else class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
       <view class="li-tx">
         <text class="li-b">{{item.t}}</text>
         <text class="li-s">{{item.s}}</text>

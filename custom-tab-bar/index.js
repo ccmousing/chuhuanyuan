@@ -19,6 +19,7 @@ Component({
       { pagePath: '/pages/index/index',   text: '首页', icon: 'home' },
       { pagePath: '/pages/culture/culture', text: '文化', icon: 'book' },
       { pagePath: '/pages/ritual/ritual', text: '体验', icon: 'ring' },
+      { pagePath: '/pages/assistant/assistant', text: 'AI科普', icon: 'ai' },
       { pagePath: '/pages/mine/mine',     text: '我的', icon: 'user' }
     ]
   },

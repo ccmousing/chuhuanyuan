@@ -14,7 +14,9 @@
     <view class="hd">我的收藏 · {{list.length}} 篇</view>
     <view class="box">
       <view class="li" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goArticle">
-        <view class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
+        <image wx:if="{{!item.imgFailed}}" class="li-thumb" src="/images/{{item.id}}.{{item.imgExt ? item.imgExt : 'jpg'}}"
+             mode="aspectFill" data-list="list" data-i="{{index}}" binderror="onImgErr"></image>
+      <view wx:else class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
         <view class="li-tx">
           <text class="li-b">{{item.title}}</text>
           <text class="li-s">{{item.tag}} · {{item.sub}}</text>

@@ -19,6 +19,8 @@ function qById(id) {
   return null;
 }
 
+const imgFallback = require('../../utils/img-fallback.js');
+
 Page({
   data: {
     tab: 'read',
@@ -100,6 +102,9 @@ Page({
   goQuiz() {
     wx.navigateTo({ url: '/pages/quiz/quiz' });
   },
+
+  /** 配图加载失败 → 依次换扩展名，全失败再回退 emoji（逻辑在 utils/img-fallback.js） */
+  onImgErr(e) { imgFallback.handle(this, e); },
 
   onShareAppMessage() {
     return { title: '出花园 · 潮汕人的十五岁成人礼', path: '/pages/index/index' };

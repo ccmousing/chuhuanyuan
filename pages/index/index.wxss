@@ -114,6 +114,17 @@
 .banner-s { font-size: 23rpx; color: #A0937F; }
 .banner-arr { font-size: 36rpx; color: #B98D3E; opacity: 0.6; flex: none; }
 
+/* AI 问答横幅：砖红调，与社区横幅（金色）区分 */
+.banner-ai {
+  background: linear-gradient(120deg, #FBEDE7, #FDF6EF);
+  border-color: rgba(200, 68, 60, 0.24);
+}
+.banner-ai .banner-ic {
+  background: rgba(200, 68, 60, 0.12);
+  color: #C8443C;
+}
+.banner-ai .banner-arr { color: #C8443C; }
+
 /* ===== 今日一签（对应原型 .box 上的淡金渐变） ===== */
 .sign-box {
   padding: 26rpx 28rpx;
@@ -123,4 +134,6 @@
 }
 .sign-label { font-size: 23rpx; color: #B98D3E; letter-spacing: 2rpx; margin-bottom: 10rpx; }
 .sign-text { font-size: 31rpx; color: #2B2320; line-height: 1.75; }
+/* 每日一签的解读段：字号比引言小一档，做层次区分 */
+.sign-sub { font-size: 26rpx; color: #6B5D52; line-height: 1.78; margin-top: 14rpx; }
 .sign-more { margin-top: 18rpx; }

@@ -40,6 +40,8 @@ function snippetOf(text, idx, len) {
   return (start > 0 ? '…' : '') + text.slice(start, end).trim() + (end < text.length ? '…' : '');
 }
 
+const imgFallback = require('../../utils/img-fallback.js');
+
 Page({
   data: {
     seg: 'ct-1',
@@ -152,6 +154,9 @@ Page({
 
   // 本页是 tabBar 页面，分享 path 上的 query 会被微信忽略，因此落到首页。
   // 需要「分享到具体内容」的页面请参考 article / quiz / blessing 的写法。
+  /** 配图加载失败 → 依次换扩展名，全失败再回退 emoji（逻辑在 utils/img-fallback.js） */
+  onImgErr(e) { imgFallback.handle(this, e); },
+
   onShareAppMessage() {
     return { title: '出花园 · 潮汕人的十五岁成人礼', path: '/pages/index/index' };
   }

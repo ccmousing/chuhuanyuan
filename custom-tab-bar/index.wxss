@@ -61,6 +61,14 @@
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23C8443C'%20stroke-width='2.1'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Ccircle%20cx='12'%20cy='12'%20r='3'/%3E%3Cpath%20d='M12,3.5a8.5,8.5,0,0,1,6,2.5M12,20.5a8.5,8.5,0,0,1,-6,-2.5M20.5,12a8.5,8.5,0,0,1,-2.5,6M3.5,12A8.5,8.5,0,0,1,6,6'/%3E%3C/svg%3E");
 }
 
+/* AI 科普：对话气泡 + 星火，延续线性风格 */
+.ic-ai {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23A0937F'%20stroke-width='1.7'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M4,5.5A1.5,1.5,0,0,1,5.5,4H18.5A1.5,1.5,0,0,1,20,5.5V15.5A1.5,1.5,0,0,1,18.5,17H10l-4,3.5V17H5.5A1.5,1.5,0,0,1,4,15.5z'/%3E%3Cpath%20d='M12,7.4l0.85,2.05L14.9,10.3l-2.05,0.85L12,13.2l-0.85,-2.05L9.1,10.3l2.05,-0.85z'/%3E%3C/svg%3E");
+}
+.ic-ai.on {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23C8443C'%20stroke-width='2.1'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M4,5.5A1.5,1.5,0,0,1,5.5,4H18.5A1.5,1.5,0,0,1,20,5.5V15.5A1.5,1.5,0,0,1,18.5,17H10l-4,3.5V17H5.5A1.5,1.5,0,0,1,4,15.5z'/%3E%3Cpath%20d='M12,7.4l0.85,2.05L14.9,10.3l-2.05,0.85L12,13.2l-0.85,-2.05L9.1,10.3l2.05,-0.85z'/%3E%3C/svg%3E");
+}
+
 .ic-user {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23A0937F'%20stroke-width='1.7'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Ccircle%20cx='12'%20cy='8.5'%20r='3.6'/%3E%3Cpath%20d='M4.8,20.5c0,-3.6,3.2,-6,7.2,-6s7.2,2.4,7.2,6'/%3E%3C/svg%3E");
 }

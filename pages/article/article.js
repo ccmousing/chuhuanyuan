@@ -4,6 +4,8 @@
 const content = require('../../utils/content.js');
 const store = require('../../utils/store.js');
 
+const imgFallback = require('../../utils/img-fallback.js');
+
 Page({
   data: {
     a: null,
@@ -75,6 +77,9 @@ Page({
   },
 
   // 分享带 id —— 对方点开直接落到这篇文章（详情页是非 tabBar 页，参数有效）
+  /** 配图加载失败 → 依次换扩展名，全失败再回退 emoji（逻辑在 utils/img-fallback.js） */
+  onImgErr(e) { imgFallback.handle(this, e); },
+
   onShareAppMessage() {
     const a = this.data.a;
     return {

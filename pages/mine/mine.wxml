@@ -25,7 +25,7 @@
       <text>仪式进度</text>
       <view><text class="bar-num">{{progress.reached}} / 7</text> {{progress.done ? '已完成' : '进行中'}}</view>
     </view>
-    <view class="bar"><view class="bar-fill" style="width:{{progress.percent}}%"></view></view>
+    <view class="bar"><view class="bar-fill" style="width:{{progress.percent}}"></view></view>
 
     <view class="cert" bindtap="goBlessing" wx:if="{{progress.done}}">
       出花园纪念证书可生成　<text class="cert-a">去制作 / 保存 →</text>

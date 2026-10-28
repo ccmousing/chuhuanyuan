@@ -81,6 +81,7 @@ miniprogram/
 ├── sitemap.json
 ├── custom-tab-bar/         ★ 自定义 TabBar（还原原型的 4 个线性图标）
 │   ├── index.js / .json / .wxml / .wxss
+├── images/                 ★ 素材目录（换图只动这里，命名规则见 images/README.md）
 ├── utils/
 │   ├── lunar.js            出花园吉日计算（七夕日期表 + 校验过的换算逻辑）
 │   ├── content.js          ★ 内容库：6 篇文章 + 4 个徽章定义（页面只认 id）
@@ -104,7 +105,10 @@ chuhuayuan/tools/             ← 在工程外，不会打进代码包
 ├── check-layout.js           WXSS 盒模型检查（抓横向溢出）
 ├── check-bind.js             事件绑定检查（抓死按钮 / 方法改名）
 ├── check-wxss.js             WXSS 类名一致性（抓样式漏写 / 孤儿样式）
-└── check-copy.js             内容约束检查（文案断行 / 题量 / 篇幅）
+├── check-copy.js             内容约束检查（文案断行 / 题量 / 篇幅）
+├── verify-card.js            祝福卡持久化测试（永久文件 / 降级 / 失效清理）
+├── check-images.js           素材目录自检（文件名 / 扩展名 / 体积 / data-list）
+└── verify-img.js             配图降级测试（jpg → png → webp → emoji）
 ```
 
 ---
@@ -312,6 +316,9 @@ node tools/check-layout.js      # WXSS 盒模型 —— 横向溢出检查
 node tools/check-bind.js        # 事件绑定 —— 死按钮 / 方法改名检查
 node tools/check-wxss.js        # WXSS 类名一致性 —— 样式漏写 / 孤儿样式检查
 node tools/check-copy.js        # 内容约束 —— 文案断行 / 题量 / 篇幅 / markdown 残留
+node tools/verify-card.js       # 祝福卡持久化 —— 永久文件 / 降级 / 失效清理
+node tools/check-images.js      # 素材目录 —— 文件名 / 扩展名 / 体积 / data-list
+node tools/verify-img.js        # 配图降级 —— jpg → png → webp → emoji
 ```
 
 三个脚本都在**工程外**（`chuhuayuan/tools/`），不会打进代码包。
@@ -349,6 +356,7 @@ node tools/check-copy.js        # 内容约束 —— 文案断行 / 题量 / �
 | `content.js` | 6 篇文章（4428 字，`sections` 结构）+ 4 个徽章 | `article` / `index` / `culture` / `favorites` |
 | `quiz-bank.js` | 30 题（入门/进阶/挑战各 10）+ 每轮抽题逻辑 | `quiz` |
 | `blessing-copy.js` | 12 条祝福卡文案（含预设断行 `lines`） | `blessing` |
+| `daily-copy.js` | 7 条每日民俗一签（按本地日期轮转） | `index` |
 
 **为什么值得单独抽出来**（不只是「看起来整洁」）：
 

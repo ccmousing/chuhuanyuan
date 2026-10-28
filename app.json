@@ -10,7 +10,8 @@
     "pages/blessing/blessing",
     "pages/article/article",
     "pages/favorites/favorites",
-    "pages/records/records"
+    "pages/records/records",
+    "pages/assistant/assistant"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FDF8F0",
@@ -29,6 +30,7 @@
       { "pagePath": "pages/index/index", "text": "首页" },
       { "pagePath": "pages/culture/culture", "text": "文化" },
       { "pagePath": "pages/ritual/ritual", "text": "体验" },
+      { "pagePath": "pages/assistant/assistant", "text": "AI科普" },
       { "pagePath": "pages/mine/mine", "text": "我的" }
     ]
   },
