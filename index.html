@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「出花园」潮汕文化小程序 · 全案策划与项目架构</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<!-- ======================= 左侧导航 ======================= -->
+<aside class="side">
+  <div class="brand">
+    <div class="seal">出</div>
+    <h1>出花园 · 小程序</h1>
+    <p>潮汕成人礼数字化传播平台</p>
+  </div>
+  <nav id="nav">
+    <div class="navgrp">方案正文</div>
+    <a href="#s1" class="on">01　项目总览与定位</a>
+    <a href="#s2">02　文化知识库（内容底座）</a>
+    <a href="#s3">03　项目架构</a>
+    <a href="#s4">04　内容体系与分级</a>
+    <a href="#s5">05　传播与运营</a>
+    <a href="#s6">06　实施路线</a>
+    <a href="#s7">07　风险与合规</a>
+    <div class="navgrp">架构图直达</div>
+    <a href="#d1">· 信息架构图</a>
+    <a href="#d2">· 功能分层图</a>
+    <a href="#d3">· 用户旅程图</a>
+    <a href="#d4">· 技术架构图</a>
+    <div class="navgrp">交付物</div>
+    <a href="prototype.html">▸ 打开小程序原型</a>
+    <a href="case-study.html">▸ 案例研究主页</a>
+    <a href="rag-plan.html">▸ RAG 问答方案</a>
+    <a href="deploy-guide.html">▸ 上线实操路线图</a>
+  </nav>
+</aside>
+
+<!-- ======================= 主内容 ======================= -->
+<main class="main">
+
+<!-- ============ 封面 ============ -->
+<header class="hero">
+  <span class="kicker">潮汕非遗 · 出花园</span>
+  <h1>把「出花园」装进一部手机<br><em>潮汕成人礼数字化传播平台 · 全案策划</em></h1>
+  <p class="lede">
+    「未出花园是奴仔，一出花园成大人。」这是一份可直接落地执行的小程序策划方案：面向<strong>泛文化爱好者与游客、中小学生研学群体、本地家长家庭</strong>三类用户，
+    用「文化科普 + 互动体验 + 服务预约 + 内容社区」四大板块，把一项 2018 年入选广东省省级非遗名录的潮汕成人礼，从祠堂与家宅搬进年轻人的手机里。
+  </p>
+  <div class="meta">
+    <span class="pill red">广东省省级非遗（2018）</span>
+    <span class="pill gold">综合平台定位</span>
+    <span class="pill jade">MVP 可 1–2 个月上线</span>
+    <span class="pill">含完整项目架构 + 高保真原型</span>
+  </div>
+</header>
+
+<!-- ============ 01 项目总览 ============ -->
+<section id="s1">
+  <div class="sec-head">
+    <div class="idx">S E C T I O N　0 1</div>
+    <h2>项目总览与定位</h2>
+    <p class="sub">先回答三件事：为谁做、做什么、凭什么做成。</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h4>一句话定位</h4>
+      <p style="font-family:var(--serif);font-size:19px;color:var(--ink);line-height:1.6">
+        一个让潮汕人「看懂、玩到、约得上、留得下」的出花园文化平台。
+      </p>
+      <p style="font-size:13.5px">不只做「科普展示页」——把知识、互动、服务、情感留存串成一条完整链路，让文化传播自带转化与复用。</p>
+    </div>
+    <div class="card">
+      <h4>Slogan 备选（择一）</h4>
+      <ul class="clean">
+        <li><strong>花开故里，少年出园</strong>　— 侧重本地家庭与仪式感</li>
+        <li><strong>一园潮汕，礼见成长</strong>　— 侧重文化厚度与研学</li>
+        <li><strong>走出花园，走向世界</strong>　— 侧重海外潮人情感连接</li>
+      </ul>
+      <p style="font-size:13px;margin-top:10px;color:var(--ink-3)">建议主用第一条，海外传播场景切换第三条。</p>
+    </div>
+  </div>
+
+  <h3>目标用户画像（三类并行）</h3>
+  <div class="grid g3">
+    <div class="card">
+      <h4>① 泛文化爱好者 / 游客</h4>
+      <p style="font-size:13.4px"><strong>他们想：</strong>快速搞懂「出花园是什么」，看有意思的细节，能拍照发圈。</p>
+      <p style="font-size:13.4px"><strong>痛点：</strong>资料零散、专业文献读不下去、内容不够好看。</p>
+      <p style="font-size:13.4px"><strong>内容偏好：</strong>短图文、图鉴、冷知识、打卡点。</p>
+      <p style="margin-bottom:0"><span class="pill gold">轻量 · 趣味 · 可分享</span></p>
+    </div>
+    <div class="card">
+      <h4>② 中小学生 / 研学群体</h4>
+      <p style="font-size:13.4px"><strong>他们想：</strong>完成乡土教育任务、写作文/做课题有素材。</p>
+      <p style="font-size:13.4px"><strong>痛点：</strong>缺适合青少年的讲解，缺体系化知识点。</p>
+      <p style="font-size:13.4px"><strong>内容偏好：</strong>闯关问答、动画演示、可下载的知识卡。</p>
+      <p style="margin-bottom:0"><span class="pill jade">分级 · 闯关 · 可带走</span></p>
+    </div>
+    <div class="card">
+      <h4>③ 本地家长 / 家庭</h4>
+      <p style="font-size:13.4px"><strong>他们想：</strong>孩子要办出花园，流程怎么走、东西去哪买、找谁操办。</p>
+      <p style="font-size:13.4px"><strong>痛点：</strong>问长辈说法不一、采购与司仪信息不透明。</p>
+      <p style="font-size:13.4px"><strong>内容偏好：</strong>流程清单、用品清单、预约服务、纪念留存。</p>
+      <p style="margin-bottom:0"><span class="pill red">工具 · 清单 · 可预约</span></p>
+    </div>
+  </div>
+
+  <h3>三方价值主张</h3>
+  <div class="grid g3">
+    <div class="card">
+      <h4>对文化</h4>
+      <ul class="clean">
+        <li>把散落口头的礼俗沉淀为可检索、可复用的数字资产</li>
+        <li>用传播数据反哺非遗保护与政策叙事</li>
+        <li>为海外潮籍后代提供不依赖回乡的认知入口</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>对用户</h4>
+      <ul class="clean">
+        <li>随时查、随时学，不必再「问长辈」</li>
+        <li>一次办仪式的信息与资源，集中在一处</li>
+        <li>免费得到一份专属于自己的成长纪念</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>对合作方</h4>
+      <ul class="clean">
+        <li>文化馆/文旅：多一个官方活动报名与宣发阵地</li>
+        <li>传承人/商家：低成本的精准客源入口</li>
+        <li>学校/侨团：一套现成的研学与侨务活动工具</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>为什么是现在：四个已被验证的事实</h3>
+  <div class="grid g4">
+    <div class="stat"><span class="n">2018</span><span class="l">入选广东省第七批省级非遗名录（2014 年先入汕头市级）</span></div>
+    <div class="stat"><span class="n">3000<small>万</small></span><span class="l">全球海外潮人规模，情感连接刚需</span></div>
+    <div class="stat"><span class="n">10<small>届+</small></span><span class="l">揭阳榕城自 2015 年起连续举办的成人礼届数</span></div>
+    <div class="stat"><span class="n">8<small>万</small></span><span class="l">揭阳榕城线上活动平台单次点击量量级</span></div>
+  </div>
+  <div class="note">
+    <b>结论：</b>三地官方（汕头/潮州/揭阳）已连续多年办集体成人礼并沉淀出线上化经验，但<strong>尚无一个以「出花园」为单一主题、面向三类用户、可持续日常运营的独立小程序</strong>。需求、素材、权威背书三者齐备，缺的是产品化的整合。
+  </div>
+</section>
+
+<!-- ============ 02 文化知识库 ============ -->
+<section id="s2">
+  <div class="sec-head">
+    <div class="idx">S E C T I O N　0 2</div>
+    <h2>文化知识库（内容底座）</h2>
+    <p class="sub">小程序所有内容的源头。本节可直接作为内容团队的编写大纲与审校依据。</p>
+  </div>
+
+  <h3>2.1　什么是「出花园」</h3>
+  <p>
+    「出花园」是<strong>潮汕地区独有的成人礼俗</strong>，由古代冠笄之礼演变而来，是现今保留较为完整的汉族成人礼之一。潮汕民间观念中，十五虚岁之前的孩子受「公婆母」（又称花公花妈、床脚婆）庇佑，如同生活在无忧无虑的「花园」里；满十五虚岁举行「出花园」仪式，拜谢神恩、跨出花园墙，象征告别童年、长大成人、承担社会责任。俗语概括为：<strong>「十五成丁，十六成人」「未出花园是奴仔，一出花园成大人」</strong>。
+  </p>
+  <div class="grid g3">
+    <div class="card"><h4>时间</h4><p style="font-size:13.4px;margin:0">传统多择农历<strong>七月初七</strong>（乞巧节），亦有三月、五月、七月十五或另择吉日；现代多择正月或由家庭自定吉日。</p></div>
+    <div class="card"><h4>对象</h4><p style="font-size:13.4px;margin:0">年满<strong>十五虚岁</strong>的男女皆可，不分性别。旧时多为家庭单户举办，近年出现集体成人礼形式。</p></div>
+    <div class="card"><h4>身份</h4><p style="font-size:13.4px;margin:0">2014 年入选汕头市第四批市级非遗；<strong>2018 年入选广东省第七批省级非物质文化遗产代表性项目名录</strong>。</p></div>
+  </div>
+
+  <h3>2.2　由来与时间轴</h3>
+  <div class="tl">
+    <div class="node">
+      <div class="yr">周代 · 源头</div>
+      <div class="tx">承袭「冠笄之礼」的文化内核——男子二十而冠、女子十五而笄，标志由家庭走向社会。</div>
+    </div>
+    <div class="node">
+      <div class="yr">明嘉靖年间 · 传说成型</div>
+      <div class="tx">潮州状元<strong>林大钦</strong>少时家贫，穿红木屐上学；路遇老者以「雄鸡头上髻」求对，他对出「牝羊颔下须」，获赠公鸡。父亲将鸡头奖励给他，寄望「独占鳌头」，后果然高中状元。潮人效仿，遂成<strong>穿红木屐、咬鸡头</strong>之俗。</div>
+    </div>
+    <div class="node">
+      <div class="yr">明清以降 · 民间普及</div>
+      <div class="tx">仪式细节不断完善，形成沐浴更衣、拜公婆母、头彩食、敬茶等一系列环节，随潮人足迹传至东南亚。</div>
+    </div>
+    <div class="node">
+      <div class="yr">2007 年起 · 走向海外</div>
+      <div class="tx">马来西亚柔佛潮州八邑会馆开始举办集体「出花园」，此后延续十余届；加拿大等地潮属社团陆续跟进。</div>
+    </div>
+    <div class="node">
+      <div class="yr">2014 / 2018 · 非遗认定</div>
+      <div class="tx">先后入选汕头市级、广东省省级非物质文化遗产名录。</div>
+    </div>
+    <div class="node">
+      <div class="yr">近年 · 三地联动 + 线上化</div>
+      <div class="tx">汕潮揭三地各具特色地举办集体成人礼；汕头与马来西亚社团合作推出<strong>线上「出花园」</strong>，揭阳榕城线上平台单次点击量近 8 万，汕头市文化馆制作英文视频向海外推广。</div>
+    </div>
+  </div>
+
+  <h3>2.3　仪式七步流程</h3>
+  <p style="font-size:13.5px">各地细节略有差异，以下为汕潮揭通行的核心环节。小程序「仪式体验馆」即按此七步设计互动。</p>
+  <div class="steps">
+    <div class="step">
+      <span class="no">01</span>
+      <div class="tt">择吉</div>
+      <div class="do">择定吉日吉时，传统多在农历七月初七，现多由家庭商定。</div>
+      <div class="sy">寓意：郑重其事，以礼启新</div>
+    </div>
+    <div class="step">
+      <span class="no">02</span>
+      <div class="tt">十二花水浴</div>
+      <div class="do">采十二种寓意吉祥的花草（如石榴花、芙蓉花、春草、状元竹、榕叶、百日红、抹草等）煮水沐浴。</div>
+      <div class="sy">寓意：洗去稚气，净身迎新</div>
+    </div>
+    <div class="step">
+      <span class="no">03</span>
+      <div class="tt">换新衣 · 着红木屐</div>
+      <div class="do">穿外婆（舅家）送的新衣新鞋，系红肚兜——兜内藏十二颗桂圆与两枚古铜钱，脚着红皮木屐。</div>
+      <div class="sy">寓意：脱胎换骨，一帆风顺</div>
+    </div>
+    <div class="step">
+      <span class="no">04</span>
+      <div class="tt">拜公婆母</div>
+      <div class="do">于床上设浅沿大笸箩，供十二碗甜薯粉圆、十二盅乌豆酒、红桃粿、发粿与三牲（男供公鸡、女供母鸡），跪拜辞谢多年庇佑。</div>
+      <div class="sy">寓意：感恩守护，正式「离园」</div>
+    </div>
+    <div class="step">
+      <span class="no">05</span>
+      <div class="tt">咬鸡头 · 吃头彩食</div>
+      <div class="do">整鸡上桌、鸡头对准孩子，象征性咬一口；十二碗「花园菜」每样都吃一点——猪肚「换肠肚」、芹菜勤劳、葱聪明、蒜会算、豆干做官、韭菜长久、鱼丸圆满。</div>
+      <div class="sy">寓意：独占鳌头，事事有好彩头</div>
+    </div>
+    <div class="step">
+      <span class="no">06</span>
+      <div class="tt">敬茶感恩</div>
+      <div class="do">孩子向父母长辈敬茶，长辈回赠红包或饰品，叮嘱「志在四方」。孩子破例坐席上大位，象征已成家中栋梁。</div>
+      <div class="sy">寓意：孝亲责任，家风传续</div>
+    </div>
+    <div class="step">
+      <span class="no">07</span>
+      <div class="tt">躲花园</div>
+      <div class="do">当日不外出、不见天、不串门，静守家中，完成身份转换；亦有「行巷」之说，寓意行四方、处处有得食。</div>
+      <div class="sy">寓意：收心立志，成人自持</div>
+    </div>
+  </div>
+
+  <h3>2.4　文化符号图鉴</h3>
+  <div class="grid g3">
+    <div class="card"><h4>红木屐</h4><p style="font-size:13.4px;margin:0">源自林大钦穿红屐上学、后中状元的传说。象征脚踏实地、走出花园、前程开阔。</p></div>
+    <div class="card"><h4>石榴花</h4><p style="font-size:13.4px;margin:0">多籽，籽谐音「子」。插于头上、置于供粿，象征子孙绵延、吉祥平安。</p></div>
+    <div class="card"><h4>十二花水</h4><p style="font-size:13.4px;margin:0">十二种花草煮水沐浴，「十二」应合一年十二月与十二生肖，寓意圆满、去秽纳新。</p></div>
+    <div class="card"><h4>公鸡</h4><p style="font-size:13.4px;margin:0">男孩供公鸡象征朝气勃发，女孩供母鸡祈愿将来。鸡头即「独占鳌头」的具象。</p></div>
+    <div class="card"><h4>红桃粿</h4><p style="font-size:13.4px;margin:0">桃形粉红粿品，潮汕节庆供品代表之一，取「桃」长寿、红色喜庆之意。</p></div>
+    <div class="card"><h4>腰兜（肚兜）</h4><p style="font-size:13.4px;margin:0">母亲亲手缝制，内压十二颗桂圆与两枚古铜钱，贴身佩戴，是最私人的祝福载体。</p></div>
+  </div>
+
+  <h3>2.5　汕潮揭三地差异（均为官方已落地样本）</h3>
+  <table class="tbl">
+    <caption>三地礼俗内核相通，各有亮点——可作为小程序「地域切换」内容模块的真实依据。</caption>
+    <thead>
+      <tr><th style="width:96px">城市</th><th>定位与场地</th><th>特色做法</th><th>可借鉴点</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">汕头</td>
+        <td>规模化集体传承<br>老妈宫戏台等公共文化空间</td>
+        <td>单场 60 组家庭参与，吸引上海、广州、深圳、珠海、佛山等地潮籍学子跨城共赴；家长为孩童摆放红木屐，行敬茶跪拜礼。</td>
+        <td>「集体仪式 + 跨城报名」的规模化模板</td>
+      </tr>
+      <tr>
+        <td class="item">潮州</td>
+        <td>侨乡特色<br>海阳县儒学宫</td>
+        <td>30 名海内外潮籍少年由「花园路」进场，经「一路生花」「花沐韶华」「锦跃出园」；特邀<strong>国家级潮州歌册传承人现场「做四句」</strong>，文庙集体礼 + 网上报名。</td>
+        <td>「非遗跨界 + 面向海外潮二代/潮三代」</td>
+      </tr>
+      <tr>
+        <td class="item">揭阳</td>
+        <td>文明实践 · 学宫<br>揭阳学宫 / 丁氏光禄公祠</td>
+        <td>挽面、插石榴花、沐浴更衣、感恩奉茶、敬先贤拜孔子；融入《穿红屐》特色舞蹈、潮剧折子戏、击鼓明志、放飞许愿气球、齐唱《出花园》主题曲。</td>
+        <td>「仪式 + 文艺展演 + 文创手信」的整合包装</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.6　海外传播与侨乡网络</h3>
+  <div class="grid g3">
+    <div class="card">
+      <h4>马来西亚</h4>
+      <p style="font-size:13.4px;margin:0">柔佛州新山素有「小汕头」之称。柔佛潮州八邑会馆自 2007 年起举办集体「出花园」，已续办十余届。2020 年起与汕头市侨务局合作推出<strong>线上「出花园」</strong>，马来西亚潮籍青年通过云平台在民俗专家指导下居家完成仪式。</p>
+    </div>
+    <div class="card">
+      <h4>新加坡 / 加拿大</h4>
+      <p style="font-size:13.4px;margin:0">新加坡潮汕社团为各地仪式提供潮剧与民俗音乐参考；加拿大温哥华潮属社团发起集体成人礼，乡亲自潮汕带回红木屐、花店老乡搜寻十二种鲜花、老华侨亲手蒸制红桃粿。</p>
+    </div>
+    <div class="card">
+      <h4>对小程序的意义</h4>
+      <p style="font-size:13.4px;margin:0">海外潮团是<strong>最强的种子用户与传播节点</strong>：他们既需要标准化的仪式流程参考，也乐于转发。建议面向海外独立设计「线上出花园」参与路径与多语言内容。</p>
+    </div>
+  </div>
+
+  <div class="warn">
+    <b>内容审校提醒（须写入内容规范）：</b>
+    ① 十二种花草的具体名目、十二碗「花园菜」的品类、择吉月份等<strong>各地差异较大，个别细节需进一步核实</strong>，正式上线前建议请当地文化馆或民俗专家审校并署名背书；
+    ② 涉及「公婆母」等民间信仰内容，表述应保持民俗文化中性语气，不作迷信化渲染，也不作调侃低俗演绎；
+    ③ 传说类内容（如林大钦故事、宋仁宗乳母说）应明确标注「民间传说」，与史实区分。
+  </div>
+</section>
+
+<!-- ============ 03 项目架构 ============ -->
+<section id="s3">
+  <div class="sec-head">
+    <div class="idx">S E C T I O N　0 3</div>
+    <h2>项目架构</h2>
+    <p class="sub">信息架构、功能分层、用户旅程、技术选型——四张图看清整个项目。</p>
+  </div>
+
+  <!-- 3.1 -->
+  <h3 id="d1">3.1　信息架构图（IA）</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 1000 430" role="img" aria-label="出花园小程序信息架构图">
+      <defs>
+        <linearGradient id="gRoot" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#C8443C"/><stop offset="100%" stop-color="#8E2A24"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 根 -->
+      <rect x="356" y="12" width="288" height="46" rx="12" fill="url(#gRoot)" stroke="#E4695F" stroke-width="1.4"/>
+      <text x="500" y="41" text-anchor="middle" font-size="16" font-weight="700" fill="#FFF6F4" font-family="serif">出花园 · 潮汕成人礼小程序</text>
+
+      <!-- 连接线 -->
+      <path d="M500 58 V86" stroke="#C9A055" stroke-width="1.4" opacity="0.6"/>
+      <path d="M130 86 H870" stroke="#C9A055" stroke-width="1.4" opacity="0.6"/>
+      <path d="M130 86 V108 M377 86 V108 M623 86 V108 M870 86 V108" stroke="#C9A055" stroke-width="1.4" opacity="0.6"/>
+
+      <!-- 四大板块 -->
+      <g font-family="serif" font-size="15" font-weight="600">
+        <rect x="25"  y="108" width="210" height="42" rx="10" fill="rgba(201,160,85,.13)" stroke="#C9A055" stroke-width="1.3"/>
+        <text x="130" y="135" text-anchor="middle" fill="#E6C583">文化科普馆</text>
+
+        <rect x="272" y="108" width="210" height="42" rx="10" fill="rgba(200,68,60,.14)" stroke="#E4695F" stroke-width="1.3"/>
+        <text x="377" y="135" text-anchor="middle" fill="#F0938B">仪式体验馆</text>
+
+        <rect x="518" y="108" width="210" height="42" rx="10" fill="rgba(78,155,132,.15)" stroke="#4E9B84" stroke-width="1.3"/>
+        <text x="623" y="135" text-anchor="middle" fill="#8ED0BA">服务预约</text>
+
+        <rect x="765" y="108" width="210" height="42" rx="10" fill="rgba(201,160,85,.13)" stroke="#C9A055" stroke-width="1.3"/>
+        <text x="870" y="135" text-anchor="middle" fill="#E6C583">社区广场</text>
+      </g>
+
+      <!-- 三级页面 -->
+      <g font-family="sans-serif" font-size="12.2" fill="#CBBEAE">
+        <g>
+          <rect x="35" y="166" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="130" y="186" text-anchor="middle">出花园是什么</text>
+          <rect x="35" y="202" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="130" y="222" text-anchor="middle">由来 · 时间轴</text>
+          <rect x="35" y="238" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="130" y="258" text-anchor="middle">符号图鉴</text>
+          <rect x="35" y="274" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="130" y="294" text-anchor="middle">三地差异对照</text>
+          <rect x="35" y="310" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="130" y="330" text-anchor="middle">海外潮人地图</text>
+        </g>
+        <g>
+          <rect x="282" y="166" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(228,105,95,.3)"/>
+          <text x="377" y="186" text-anchor="middle">七步仪式闯关</text>
+          <rect x="282" y="202" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(228,105,95,.3)"/>
+          <text x="377" y="222" text-anchor="middle">知识问答（分级）</text>
+          <rect x="282" y="238" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(228,105,95,.3)"/>
+          <text x="377" y="258" text-anchor="middle">祝福卡制作</text>
+          <rect x="282" y="274" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(228,105,95,.3)"/>
+          <text x="377" y="294" text-anchor="middle">纪念证书生成</text>
+          <rect x="282" y="310" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(228,105,95,.3)"/>
+          <text x="377" y="330" text-anchor="middle">家乡话语音包</text>
+        </g>
+        <g>
+          <rect x="528" y="166" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(78,155,132,.3)"/>
+          <text x="623" y="186" text-anchor="middle">仪式操办 / 司仪</text>
+          <rect x="528" y="202" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(78,155,132,.3)"/>
+          <text x="623" y="222" text-anchor="middle">用品采购（木屐/粿品）</text>
+          <rect x="528" y="238" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(78,155,132,.3)"/>
+          <text x="623" y="258" text-anchor="middle">旅拍 / 场地</text>
+          <rect x="528" y="274" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(78,155,132,.3)"/>
+          <text x="623" y="294" text-anchor="middle">集体成人礼报名</text>
+          <rect x="528" y="310" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(78,155,132,.3)"/>
+          <text x="623" y="330" text-anchor="middle">我的预约与订单</text>
+        </g>
+        <g>
+          <rect x="775" y="166" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="870" y="186" text-anchor="middle">祝福墙 / 话题</text>
+          <rect x="775" y="202" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="870" y="222" text-anchor="middle">仪式记录广场</text>
+          <rect x="775" y="238" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="870" y="258" text-anchor="middle">UGC 精选与达人</text>
+          <rect x="775" y="274" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="870" y="294" text-anchor="middle">活动与征集</text>
+          <rect x="775" y="310" width="190" height="30" rx="7" fill="#241D17" stroke="rgba(201,160,85,.28)"/>
+          <text x="870" y="330" text-anchor="middle">举报与内容公约</text>
+        </g>
+      </g>
+
+      <!-- 底部常驻 -->
+      <rect x="25" y="362" width="950" height="46" rx="12" fill="rgba(255,255,255,.035)" stroke="rgba(201,160,85,.3)" stroke-dasharray="5 4"/>
+      <text x="500" y="390" text-anchor="middle" font-size="13.5" fill="#CBBEAE" font-family="serif">
+        底部常驻 Tab：首页　·　文化　·　体验　·　我的花园（成长档案 / 徽章收藏 / 我的预约 / 设置与隐私）
+      </text>
+    </svg>
+    <div class="cap">图 1　信息架构图：四大板块 + 20 个三级页面 + 常驻「我的花园」个人中心。四大板块对应用户四类诉求——看懂 / 玩到 / 约上 / 留下。</div>
+  </div>
+
+  <!-- 3.2 -->
+  <h3 id="d2">3.2　功能模块分层图（按建设期次）</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 1000 400" role="img" aria-label="功能模块分层图">
+      <!-- MVP -->
+      <rect x="18" y="18" width="964" height="106" rx="14" fill="rgba(200,68,60,.10)" stroke="rgba(200,68,60,.42)"/>
+      <text x="42" y="48" font-size="14" font-weight="700" fill="#F0938B" font-family="serif">MVP 期 · 1–2 个月</text>
+      <text x="42" y="70" font-size="11.5" fill="#8D8071" font-family="sans-serif">先跑通「看懂 → 玩到 → 分享」最短闭环</text>
+      <text x="42" y="98" font-size="11.5" fill="#8D8071" font-family="sans-serif">目的：验证内容吸引力与自发传播</text>
+      <g font-family="sans-serif" font-size="12.5">
+        <rect x="300" y="32" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.45)"/><text x="376" y="54" text-anchor="middle" fill="#F4ECE2">出花园是什么</text>
+        <rect x="462" y="32" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.45)"/><text x="538" y="54" text-anchor="middle" fill="#F4ECE2">七步仪式展示</text>
+        <rect x="624" y="32" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.45)"/><text x="700" y="54" text-anchor="middle" fill="#F4ECE2">知识闯关（分级）</text>
+        <rect x="786" y="32" width="176" height="34" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.45)"/><text x="874" y="54" text-anchor="middle" fill="#F4ECE2">祝福卡生成与分享</text>
+        <rect x="300" y="76" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.45)"/><text x="376" y="98" text-anchor="middle" fill="#F4ECE2">符号图鉴</text>
+        <rect x="462" y="76" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.45)"/><text x="538" y="98" text-anchor="middle" fill="#F4ECE2">由来时间轴</text>
+        <rect x="624" y="76" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.45)"/><text x="700" y="98" text-anchor="middle" fill="#F4ECE2">纪念证书生成</text>
+        <rect x="786" y="76" width="176" height="34" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.45)"/><text x="874" y="98" text-anchor="middle" fill="#F4ECE2">内容后台（CMS）</text>
+      </g>
+
+      <!-- V2 -->
+      <rect x="18" y="138" width="964" height="106" rx="14" fill="rgba(201,160,85,.09)" stroke="rgba(201,160,85,.4)"/>
+      <text x="42" y="168" font-size="14" font-weight="700" fill="#E6C583" font-family="serif">V2 期 · +2–3 个月</text>
+      <text x="42" y="190" font-size="11.5" fill="#8D8071" font-family="sans-serif">补「约得上、留得下」</text>
+      <text x="42" y="218" font-size="11.5" fill="#8D8071" font-family="sans-serif">目的：形成服务闭环与用户粘性</text>
+      <g font-family="sans-serif" font-size="12.5">
+        <rect x="300" y="152" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.45)"/><text x="376" y="174" text-anchor="middle" fill="#F4ECE2">商家入驻与展示</text>
+        <rect x="462" y="152" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.45)"/><text x="538" y="174" text-anchor="middle" fill="#F4ECE2">在线预约与表单</text>
+        <rect x="624" y="152" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.45)"/><text x="700" y="174" text-anchor="middle" fill="#F4ECE2">集体成人礼报名</text>
+        <rect x="786" y="152" width="176" height="34" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.45)"/><text x="874" y="174" text-anchor="middle" fill="#F4ECE2">社区广场与 UGC</text>
+        <rect x="300" y="196" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.45)"/><text x="376" y="218" text-anchor="middle" fill="#F4ECE2">我的花园成长档案</text>
+        <rect x="462" y="196" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.45)"/><text x="538" y="218" text-anchor="middle" fill="#F4ECE2">徽章与打卡</text>
+        <rect x="624" y="196" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.45)"/><text x="700" y="218" text-anchor="middle" fill="#F4ECE2">家乡话语音讲解</text>
+        <rect x="786" y="196" width="176" height="34" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.45)"/><text x="874" y="218" text-anchor="middle" fill="#F4ECE2">内容审核与风控</text>
+      </g>
+
+      <!-- V3 -->
+      <rect x="18" y="258" width="964" height="106" rx="14" fill="rgba(78,155,132,.09)" stroke="rgba(78,155,132,.4)"/>
+      <text x="42" y="288" font-size="14" font-weight="700" fill="#8ED0BA" font-family="serif">V3 期 · 生态延展</text>
+      <text x="42" y="310" font-size="11.5" fill="#8D8071" font-family="sans-serif">从工具走向生态</text>
+      <text x="42" y="338" font-size="11.5" fill="#8D8071" font-family="sans-serif">目的：可持续营收与资源联动</text>
+      <g font-family="sans-serif" font-size="12.5">
+        <rect x="300" y="272" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.45)"/><text x="376" y="294" text-anchor="middle" fill="#F4ECE2">文创周边商城</text>
+        <rect x="462" y="272" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.45)"/><text x="538" y="294" text-anchor="middle" fill="#F4ECE2">研学课程与证书</text>
+        <rect x="624" y="272" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.45)"/><text x="700" y="294" text-anchor="middle" fill="#F4ECE2">文旅路线联动</text>
+        <rect x="786" y="272" width="176" height="34" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.45)"/><text x="874" y="294" text-anchor="middle" fill="#F4ECE2">海外侨团专区</text>
+        <rect x="300" y="316" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.45)"/><text x="376" y="338" text-anchor="middle" fill="#F4ECE2">多语言（英/马）</text>
+        <rect x="462" y="316" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.45)"/><text x="538" y="338" text-anchor="middle" fill="#F4ECE2">传承人直播 / 专栏</text>
+        <rect x="624" y="316" width="152" height="34" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.45)"/><text x="700" y="338" text-anchor="middle" fill="#F4ECE2">数据看板（供机构）</text>
+        <rect x="786" y="316" width="176" height="34" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.45)"/><text x="874" y="338" text-anchor="middle" fill="#F4ECE2">开放接口给文旅平台</text>
+      </g>
+    </svg>
+    <div class="cap">图 2　功能分层图：明确每期「做什么」，也明确每期「不做什么」——避免首版功能堆砌导致延期。左侧标注每期的核心目的。</div>
+  </div>
+
+  <!-- 3.3 -->
+  <h3 id="d3">3.3　用户旅程图（认知 → 参与 → 传播）</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 1000 424" role="img" aria-label="用户旅程图">
+      <!-- 行标签 -->
+      <g font-family="serif" font-size="13" fill="#E6C583">
+        <rect x="16" y="22" width="116" height="46" rx="9" fill="rgba(201,160,85,.10)" stroke="rgba(201,160,85,.3)"/><text x="74" y="50" text-anchor="middle">阶段</text>
+        <rect x="16" y="76" width="116" height="50" rx="9" fill="rgba(255,255,255,.02)" stroke="rgba(201,160,85,.16)"/><text x="74" y="106" text-anchor="middle">用户目标</text>
+        <rect x="16" y="134" width="116" height="62" rx="9" fill="rgba(255,255,255,.02)" stroke="rgba(201,160,85,.16)"/><text x="74" y="169" text-anchor="middle">主要触点</text>
+        <rect x="16" y="204" width="116" height="62" rx="9" fill="rgba(255,255,255,.02)" stroke="rgba(201,160,85,.16)"/><text x="74" y="239" text-anchor="middle">关键行为</text>
+        <rect x="16" y="274" width="116" height="54" rx="9" fill="rgba(255,255,255,.02)" stroke="rgba(201,160,85,.16)"/><text x="74" y="306" text-anchor="middle">情绪</text>
+        <rect x="16" y="336" width="116" height="62" rx="9" fill="rgba(255,255,255,.02)" stroke="rgba(201,160,85,.16)"/><text x="74" y="371" text-anchor="middle">运营目标</text>
+      </g>
+
+      <!-- 列头 -->
+      <g font-family="serif" font-size="14" font-weight="700">
+        <rect x="146" y="22" width="270" height="46" rx="9" fill="rgba(201,160,85,.16)" stroke="#C9A055" stroke-width="1.2"/><text x="281" y="50" text-anchor="middle" fill="#E6C583">① 认知 Awareness</text>
+        <rect x="428" y="22" width="270" height="46" rx="9" fill="rgba(200,68,60,.16)" stroke="#E4695F" stroke-width="1.2"/><text x="563" y="50" text-anchor="middle" fill="#F0938B">② 参与 Participation</text>
+        <rect x="710" y="22" width="270" height="46" rx="9" fill="rgba(78,155,132,.16)" stroke="#4E9B84" stroke-width="1.2"/><text x="845" y="50" text-anchor="middle" fill="#8ED0BA">③ 传播 Advocacy</text>
+      </g>
+
+      <!-- 内容行 -->
+      <g font-family="sans-serif" font-size="12" fill="#CBBEAE">
+        <!-- 用户目标 -->
+        <g>
+          <rect x="146" y="76" width="270" height="50" rx="8" fill="#241D17" stroke="rgba(201,160,85,.2)"/>
+          <text x="162" y="98">「出花园到底是什么？」</text><text x="162" y="115">想快速看懂、觉得有意思</text>
+          <rect x="428" y="76" width="270" height="50" rx="8" fill="#241D17" stroke="rgba(228,105,95,.22)"/>
+          <text x="444" y="98">走完一遍仪式、拿到纪念</text><text x="444" y="115">家长：办仪式信息一次到位</text>
+          <rect x="710" y="76" width="270" height="50" rx="8" fill="#241D17" stroke="rgba(78,155,132,.22)"/>
+          <text x="726" y="98">分享自豪感与祝福</text><text x="726" y="115">带别人一起参与</text>
+        </g>
+        <!-- 触点 -->
+        <g>
+          <rect x="146" y="134" width="270" height="62" rx="8" fill="#241D17" stroke="rgba(201,160,85,.2)"/>
+          <text x="162" y="156">朋友圈 / 小红书 / 抖音</text><text x="162" y="173">亲友转发 · 校园乡土课</text><text x="162" y="190">当地文旅公众号</text>
+          <rect x="428" y="134" width="270" height="62" rx="8" fill="#241D17" stroke="rgba(228,105,95,.22)"/>
+          <text x="444" y="156">小程序首页 · 仪式体验馆</text><text x="444" y="173">知识闯关 · 预约服务页</text><text x="444" y="190">客服咨询 / 商家详情</text>
+          <rect x="710" y="134" width="270" height="62" rx="8" fill="#241D17" stroke="rgba(78,155,132,.22)"/>
+          <text x="726" y="156">祝福卡 · 纪念证书</text><text x="726" y="173">社区广场话题</text><text x="726" y="190">「邀亲友同祝福」邀请页</text>
+        </g>
+        <!-- 关键行为 -->
+        <g>
+          <rect x="146" y="204" width="270" height="62" rx="8" fill="#241D17" stroke="rgba(201,160,85,.2)"/>
+          <text x="162" y="226">点开分享卡片 → 阅读 3 屏</text><text x="162" y="243">查看符号图鉴 / 三地差异</text><text x="162" y="260">收藏或转发给家人</text>
+          <rect x="428" y="204" width="270" height="62" rx="8" fill="#241D17" stroke="rgba(228,105,95,.22)"/>
+          <text x="444" y="226">走完七步仪式动画</text><text x="444" y="243">完成一次知识闯关</text><text x="444" y="260">提交预约 / 生成证书</text>
+          <rect x="710" y="204" width="270" height="62" rx="8" fill="#241D17" stroke="rgba(78,155,132,.22)"/>
+          <text x="726" y="226">生成并发布祝福卡</text><text x="726" y="243">上传仪式照片到广场</text><text x="726" y="260">邀请 3 位亲友送祝福</text>
+        </g>
+      </g>
+
+      <!-- 情绪曲线 -->
+      <g>
+        <rect x="146" y="274" width="834" height="54" rx="8" fill="rgba(255,255,255,.015)" stroke="rgba(201,160,85,.14)"/>
+        <path d="M170 316 L281 306 L563 290 L845 288 L962 288" fill="none" stroke="#C9A055" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="281" cy="306" r="5" fill="#E6C583"/><circle cx="563" cy="290" r="5" fill="#E6C583"/><circle cx="845" cy="288" r="5" fill="#E6C583"/>
+        <text x="281" y="300" text-anchor="middle" font-size="11" fill="#CBBEAE" font-family="sans-serif">好奇</text>
+        <text x="563" y="284" text-anchor="middle" font-size="11" fill="#CBBEAE" font-family="sans-serif">投入 · 感动</text>
+        <text x="845" y="282" text-anchor="middle" font-size="11" fill="#CBBEAE" font-family="sans-serif">自豪 · 认同</text>
+      </g>
+
+      <!-- 运营目标 -->
+      <g font-family="sans-serif" font-size="12" fill="#CBBEAE">
+        <rect x="146" y="336" width="270" height="62" rx="8" fill="rgba(201,160,85,.07)" stroke="rgba(201,160,85,.28)"/>
+        <text x="162" y="358">30 秒看懂出花园</text><text x="162" y="375">分享卡片打开率 ≥ 25%</text><text x="162" y="392">内容收藏率 ≥ 10%</text>
+        <rect x="428" y="336" width="270" height="62" rx="8" fill="rgba(200,68,60,.07)" stroke="rgba(228,105,95,.28)"/>
+        <text x="444" y="358">新手引导完成率 ≥ 60%</text><text x="444" y="375">闯关完成率 ≥ 40%</text><text x="444" y="392">预约咨询转化可追踪</text>
+        <rect x="710" y="336" width="270" height="62" rx="8" fill="rgba(78,155,132,.07)" stroke="rgba(78,155,132,.28)"/>
+        <text x="726" y="358">单用户带来 ≥ 1 次分享</text><text x="726" y="375">广场月 UGC ≥ 200 条</text><text x="726" y="392">老带新占比 ≥ 20%</text>
+      </g>
+    </svg>
+    <div class="cap">图 3　用户旅程图：情绪从「好奇」抬升至「自豪」，运营动作应与情绪曲线对齐——在情绪高点（刚走完仪式 / 生成证书）布置分享钩子，转化效率最高。</div>
+  </div>
+
+  <!-- 3.4 -->
+  <h3 id="d4">3.4　技术架构与选型建议</h3>
+  <p style="font-size:13.5px">以下仅为<strong>选型方向建议</strong>（供你的技术合作方评估），不含任何实现代码。</p>
+  <div class="diagram">
+    <svg viewBox="0 0 1000 330" role="img" aria-label="技术架构分层图">
+      <g font-family="sans-serif" font-size="12.5">
+        <!-- 用户端 -->
+        <rect x="18" y="16" width="964" height="52" rx="12" fill="rgba(200,68,60,.10)" stroke="rgba(200,68,60,.4)"/>
+        <text x="40" y="47" font-size="13" font-weight="700" fill="#F0938B" font-family="serif">用户端</text>
+        <rect x="150" y="26" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.4)"/><text x="250" y="47" text-anchor="middle" fill="#F4ECE2">微信小程序（主端）</text>
+        <rect x="362" y="26" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.4)"/><text x="462" y="47" text-anchor="middle" fill="#F4ECE2">H5 分享页（免登录浏览）</text>
+        <rect x="574" y="26" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.4)"/><text x="674" y="47" text-anchor="middle" fill="#F4ECE2">商家后台（Web）</text>
+        <rect x="786" y="26" width="176" height="32" rx="8" fill="#2B231A" stroke="rgba(200,68,60,.4)"/><text x="874" y="47" text-anchor="middle" fill="#F4ECE2">内容管理后台 CMS</text>
+
+        <!-- 接入层 -->
+        <rect x="18" y="80" width="964" height="52" rx="12" fill="rgba(201,160,85,.09)" stroke="rgba(201,160,85,.38)"/>
+        <text x="40" y="111" font-size="13" font-weight="700" fill="#E6C583" font-family="serif">接入层</text>
+        <rect x="150" y="90" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.4)"/><text x="250" y="111" text-anchor="middle" fill="#F4ECE2">微信登录 / 授权</text>
+        <rect x="362" y="90" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.4)"/><text x="462" y="111" text-anchor="middle" fill="#F4ECE2">API 网关与鉴权</text>
+        <rect x="574" y="90" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.4)"/><text x="674" y="111" text-anchor="middle" fill="#F4ECE2">内容安全检测</text>
+        <rect x="786" y="90" width="176" height="32" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.4)"/><text x="874" y="111" text-anchor="middle" fill="#F4ECE2">埋点与日志</text>
+
+        <!-- 业务层 -->
+        <rect x="18" y="144" width="964" height="52" rx="12" fill="rgba(78,155,132,.09)" stroke="rgba(78,155,132,.38)"/>
+        <text x="40" y="175" font-size="13" font-weight="700" fill="#8ED0BA" font-family="serif">业务服务层</text>
+        <rect x="150" y="154" width="150" height="32" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.4)"/><text x="225" y="175" text-anchor="middle" fill="#F4ECE2">内容服务</text>
+        <rect x="310" y="154" width="150" height="32" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.4)"/><text x="385" y="175" text-anchor="middle" fill="#F4ECE2">互动/答题服务</text>
+        <rect x="470" y="154" width="150" height="32" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.4)"/><text x="545" y="175" text-anchor="middle" fill="#F4ECE2">预约与订单</text>
+        <rect x="630" y="154" width="150" height="32" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.4)"/><text x="705" y="175" text-anchor="middle" fill="#F4ECE2">社区与审核</text>
+        <rect x="790" y="154" width="172" height="32" rx="8" fill="#2B231A" stroke="rgba(78,155,132,.4)"/><text x="876" y="175" text-anchor="middle" fill="#F4ECE2">证书/分享图生成</text>
+
+        <!-- 数据层 -->
+        <rect x="18" y="208" width="964" height="52" rx="12" fill="rgba(255,255,255,.03)" stroke="rgba(201,160,85,.28)"/>
+        <text x="40" y="239" font-size="13" font-weight="700" fill="#E6C583" font-family="serif">数据层</text>
+        <rect x="150" y="218" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.3)"/><text x="250" y="239" text-anchor="middle" fill="#F4ECE2">内容库（结构化文本）</text>
+        <rect x="362" y="218" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.3)"/><text x="462" y="239" text-anchor="middle" fill="#F4ECE2">用户 / UGC 库</text>
+        <rect x="574" y="218" width="200" height="32" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.3)"/><text x="674" y="239" text-anchor="middle" fill="#F4ECE2">预约 / 商家库</text>
+        <rect x="786" y="218" width="176" height="32" rx="8" fill="#2B231A" stroke="rgba(201,160,85,.3)"/><text x="874" y="239" text-anchor="middle" fill="#F4ECE2">对象存储（图片/音频）</text>
+
+        <!-- 外部能力 -->
+        <rect x="18" y="272" width="964" height="46" rx="12" fill="rgba(255,255,255,.02)" stroke="rgba(201,160,85,.2)" stroke-dasharray="5 4"/>
+        <text x="40" y="300" font-size="13" font-weight="700" fill="#CBBEAE" font-family="serif">外部能力</text>
+        <text x="150" y="300" font-size="12.5" fill="#8D8071" font-family="sans-serif">微信支付　·　微信订阅消息　·　地图与位置　·　表单与客服消息　·　短信通知　·　内容安全接口</text>
+      </g>
+    </svg>
+    <div class="cap">图 4　技术架构分层图：五层结构，重点在于「内容结构化」与「审核前置」——非遗内容的准确性与合规性必须在架构层解决，而不是靠发布后人工补救。</div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h4>选型建议（四要点）</h4>
+      <ul class="clean">
+        <li><strong>内容与代码分离</strong>：所有文案、图鉴、题库进 CMS 结构化存储，节庆换内容不必发版。</li>
+        <li><strong>先做 H5 分享页</strong>：分享链路不强制登录，降低首次触达门槛（尤其对泛用户与海外用户）。</li>
+        <li><strong>审核前置</strong>：UGC 走「机审 + 人工抽检」；内容安全接口先接，再开放社区功能。</li>
+        <li><strong>数据可导出</strong>：埋点数据支持导出给文化馆/文旅机构，便于合作方形成自己的汇报材料。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>不建议首版做的三件事</h4>
+      <ul class="clean">
+        <li>不做线上支付闭环的重投入（预约先走「提交意向 + 电话/微信确认」）。</li>
+        <li>不做复杂 3D/AR 仪式还原（成本高、收益未验证）。</li>
+        <li>不做多语言版本（先用中文 + 英文字幕视频试水海外反馈）。</li>
+      </ul>
+      <p style="font-size:13px;color:var(--ink-3);margin:10px 0 0">理由：MVP 阶段的唯一目标是<strong>验证内容吸引力</strong>，任何非核心功能都会稀释验证信号。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 内容体系 ============ -->
+<section id="s4">
+  <div class="sec-head">
+    <div class="idx">S E C T I O N　0 4</div>
+    <h2>内容体系与分级</h2>
+    <p class="sub">同一套民俗知识，要讲给三类完全不同的用户听——分级是本方案的内容核心方法。</p>
+  </div>
+
+  <h3>4.1　三套内容分级</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th style="width:120px">版本</th><th style="width:130px">面向用户</th><th>语言与深度</th><th>内容形态</th><th style="width:150px">核心指标</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">儿童版<br>6–12 岁</td>
+        <td>亲子陪伴 / 小学研学</td>
+        <td>300 字以内，多用比喻与图画；不讲信仰来源，只讲「长辈的祝福」；生僻字注音。</td>
+        <td>插画卡片、语音朗读、贴纸徽章、3 题小测</td>
+        <td>完读率、徽章收集</td>
+      </tr>
+      <tr>
+        <td class="item">青少年版<br>13–18 岁</td>
+        <td>初高中研学 / 乡土教育</td>
+        <td>完整讲清由来、七步流程、符号寓意；神话与史实分开标注；提供「可引用」的知识卡。</td>
+        <td>闯关问答（3 级共 15 题）、流程图解、作文素材包、可下载 PDF 知识卡</td>
+        <td>闯关完成率、素材下载量</td>
+      </tr>
+      <tr>
+        <td class="item">成年版 / 侨胞版</td>
+        <td>泛文化爱好者 / 家长 / 海外潮人</td>
+        <td>深读长文与细节差异，含汕潮揭对照、海外流变、传说考据；对家长另附「操办清单」。</td>
+        <td>长图文、图鉴、操办清单、音频讲解（潮汕话 + 普通话）、线上仪式参与页</td>
+        <td>停留时长、预约转化、海外访问占比</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note"><b>实现方式：</b>不做三套独立内容，而是<strong>一套内容库 + 三个阅读层级开关</strong>。同一条知识给「摘要 / 标准 / 深读」三段文本，按用户选择的身份自动默认展开层级，可手动切换——内容维护成本只增加约 40%。</div>
+
+  <h3>4.2　内容形态清单（可直接作为内容排期表）</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h4>必备（MVP 期完成）</h4>
+      <ul class="deck">
+        <li>「出花园是什么」三屏图文（每屏 ≤ 60 字 + 1 图）</li>
+        <li>由来时间轴 6 节点（本方案 2.2 节可直接复用）</li>
+        <li>七步仪式流程卡 7 张（做法 / 寓意 / 各地差异）</li>
+        <li>文化符号图鉴 6 张（红木屐 / 石榴花 / 花水 / 公鸡 / 红桃粿 / 腰兜）</li>
+        <li>知识闯关题库 15 题（儿童 5 / 青少年 7 / 进阶 3）</li>
+        <li>祝福卡文案模板 12 条（分「父母致孩子 / 孩子致父母 / 亲友祝福」三类）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>增强（V2 期补齐）</h4>
+      <ul class="deck">
+        <li>汕潮揭三地对照专题页 1 个</li>
+        <li>海外潮人地图（马来西亚 / 新加坡 / 加拿大等节点）</li>
+        <li>短视频脚本 6 条（每条 45–60 秒，见 4.4 示例）</li>
+        <li>潮汕话 / 普通话双语音频讲解 7 段（对应七步）</li>
+        <li>家长「操办清单」可勾选版（用品 / 供品 / 时间线）</li>
+        <li>民俗小知识「今日一签」文案 100 条</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>4.3　示例：知识闯关题库（节选 8 题）</h3>
+  <table class="tbl">
+    <caption>青少年版示例。题干须避免歧义，选项须同构（同长度、同句式）。</caption>
+    <thead>
+      <tr><th style="width:52px" class="c">序号</th><th>题干</th><th style="width:250px">选项</th><th style="width:78px" class="c">答案</th><th style="width:290px">解析（答对后展示）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="c">1</td><td>「出花园」通常在孩子几岁时举行？</td><td>A. 十虚岁　B. 十五虚岁　C. 十八虚岁</td><td class="c">B</td><td>潮汕俗语「十五成丁，十六成人」，满十五虚岁举行。</td></tr>
+      <tr><td class="c">2</td><td>传统上「出花园」最常选在哪一天？</td><td>A. 正月初一　B. 五月初五　C. 七月初七</td><td class="c">C</td><td>多选农历七月初七（乞巧节），也有三月、五月或另择吉日。</td></tr>
+      <tr><td class="c">3</td><td>仪式中沐浴用的是「十二花水」，这里的「十二」主要象征什么？</td><td>A. 十二生肖与一年十二月，寓意圆满　B. 家里有十二口人　C. 十二岁开始准备</td><td class="c">A</td><td>十二应合一年十二月与十二生肖，取圆满、去秽纳新之意。</td></tr>
+      <tr><td class="c">4</td><td>「咬鸡头」这一习俗与哪位历史人物有关？</td><td>A. 唐代韩愈　B. 明代状元林大钦　C. 宋代包拯</td><td class="c">B</td><td>明嘉靖潮州状元林大钦少时得赠公鸡，父以鸡头奖励，寄望「独占鳌头」。</td></tr>
+      <tr><td class="c">5</td><td>「出花园」的孩子穿的木屐是什么颜色？</td><td>A. 红色　B. 黑色　C. 白色</td><td class="c">A</td><td>红皮木屐，源自林大钦穿红屐上学的传说，寓意前程开阔。</td></tr>
+      <tr><td class="c">6</td><td>孩子腰兜里通常会压着什么？</td><td>A. 十二颗桂圆与两枚铜钱　B. 一把米　C. 一张红纸</td><td class="c">A</td><td>十二颗桂圆 + 两枚古铜钱（旧说用「顺治」铜钱），由母亲亲手缝制。</td></tr>
+      <tr><td class="c">7</td><td>「出花园」在哪一年入选广东省省级非物质文化遗产名录？</td><td>A. 2008 年　B. 2014 年　C. 2018 年</td><td class="c">C</td><td>2014 年入选汕头市级非遗，2018 年入选广东省第七批省级非遗名录。</td></tr>
+      <tr><td class="c">8</td><td>仪式当天孩子不宜做的事是？</td><td>A. 外出串门、跑出去玩　B. 向父母敬茶　C. 吃头彩食</td><td class="c">A</td><td>「躲花园」——当日不外出、不串门，寓意收心立志。</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.4　示例：祝福卡文案与短视频脚本</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h4>祝福卡文案模板（可直接上线）</h4>
+      <ul class="clean" style="font-family:var(--serif);font-size:14.4px">
+        <li>「一枝今已出花园，愿你此后路远亦从容。」</li>
+        <li>「咬过鸡头，独占鳌头。此去经年，步步生花。」</li>
+        <li>「出了花园，不是离了家，是多了一双能走路远方的脚。」</li>
+        <li>「十二花水洗过脸，从今往后，棱角分明，心气明亮。」</li>
+        <li>「红木屐踏过门槛，愿你走到哪，都记得从哪出发。」</li>
+      </ul>
+      <p style="font-size:12.6px;color:var(--ink-3);margin:12px 0 0">写作规范：一句一意，不超过 24 字；不使用网络流行语；不出现玩笑化宗教表述。</p>
+    </div>
+    <div class="card">
+      <h4>短视频脚本示例（60 秒）</h4>
+      <p style="font-size:13.4px"><strong>标题：</strong>潮汕人十五岁那天，要「咬」一口鸡头</p>
+      <ul class="deck" style="font-size:13.4px">
+        <li><strong>0–3s 钩子</strong>：特写红木屐踏过门槛 + 字幕「潮汕人 15 岁，要过一个不办酒席的成人礼」</li>
+        <li><strong>3–15s 悬念</strong>：老人剪下石榴枝叶，红绳绑好插在孩子头上——「为什么要插一枝花？」</li>
+        <li><strong>15–35s 展开</strong>：快剪十二花水、换新衣、拜公婆母、咬鸡头、敬茶五个动作，每条字幕 5 字</li>
+        <li><strong>35–50s 讲透</strong>：讲述林大钦与「独占鳌头」传说（画面用插画，避免真人扮演）</li>
+        <li><strong>50–60s 收尾转化</strong>：孩子敬茶给父母，父母回赠红包——「你们家，谁还没出花园？」→ 引导评论区互动</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 传播与运营 ============ -->
+<section id="s5">
+  <div class="sec-head">
+    <div class="idx">S E C T I O N　0 5</div>
+    <h2>传播与运营</h2>
+    <p class="sub">非遗类小程序最大的坑是「节庆爆、日常死」。这套运营方案的核心是：用日常栏目托住底线，用节庆节点做峰值。</p>
+  </div>
+
+  <h3>5.1　节庆内容日历（首年）</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th style="width:110px">时间节点</th><th style="width:170px">文化依据</th><th>运营动作</th><th style="width:150px">目标</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="item">农历七月初七<br>（全年主峰）</td><td>乞巧节，传统出花园正日</td><td>「出花园日」专题：线上集体成人礼报名、七步仪式完整上线、邀请潮团/文化馆联合转发、当日直播</td><td>全年最大声量与报名量</td></tr>
+      <tr><td class="item">春节 · 正月</td><td>现代家庭多择正月择吉办礼</td><td>「新年办礼」指南：操办清单、用品采购、司仪预约；返乡青年内容</td><td>服务预约转化高峰</td></tr>
+      <tr><td class="item">农历七月十五</td><td>部分地区可选的中元吉日</td><td>三地习俗差异专题，弱化形式、强调文化解释</td><td>内容深度口碑</td></tr>
+      <tr><td class="item">农历十月初十</td><td>花公花婆诞（部分地区）</td><td>「认识公婆母」民俗科普，中性表述，配专家解读</td><td>文化严谨性背书</td></tr>
+      <tr><td class="item">开学季 · 9 月</td><td>乡土教育 / 研学季</td><td>面向学校推出「出花园研学包」：知识卡 + 闯关 + 讲解视频，可批量发放</td><td>B 端学校渗透</td></tr>
+      <tr><td class="item">日常 · 每周</td><td>非节庆期托底</td><td>「今日一签」民俗小知识、用户仪式记录精选、传承人问答专栏</td><td>维持留存与打开率</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.2　用户增长机制</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h4>四个可落地的增长动作</h4>
+      <ul class="deck">
+        <li><strong>祝福卡裂变</strong>：孩子生成专属祝福卡 → 「邀请亲友送祝福」→ 每位亲友进入即产生一次免登录访问，卡片集满 N 条祝福可解锁纪念证书高清版。</li>
+        <li><strong>文化打卡</strong>：七步仪式拆成七日打卡，每日解锁一步，完成后得徽章 + 证书，制造回访理由。</li>
+        <li><strong>集体成人礼线上报名</strong>：与当地文化馆联动，把官方活动的报名入口放在小程序内，借官方活动带新增。</li>
+        <li><strong>研学作业入口</strong>：教师端可生成班级邀请码，学生凭码进入并提交闯关结果，形成班级级传播。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>增长设计的边界（重要）</h4>
+      <ul class="clean">
+        <li><strong>不做</strong>强制关注公众号才可看内容——非遗传播的首要目标是「看得见」。</li>
+        <li><strong>不做</strong>过度游戏化的排名攀比，避免文化与竞技感冲突。</li>
+        <li><strong>不做</strong>诱导分享（如「不转发就无法生成证书」），易触发平台违规。</li>
+        <li><strong>要做</strong>「无痕浏览」：泛用户与海外用户可全程不登录读完科普内容，仅在生成/预约时唤起授权。</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>5.3　可对接的合作资源地图</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th style="width:130px">资源类型</th><th>可对接对象（示例，需逐一核实联络方式）</th><th style="width:230px">合作形式</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="item">文化馆 / 非遗中心</td><td>汕头市文化馆、揭阳市榕城区文化馆、潮州相关文化场馆与非遗保护单位</td><td>内容审校背书、官方活动报名入口、联合宣发</td></tr>
+      <tr><td class="item">非遗传承人</td><td>潮州歌册传承人（可选：邀请「做四句」音频录制）、当地民俗研究专家</td><td>专栏内容、音频讲解、专家问答栏目</td></tr>
+      <tr><td class="item">海外潮团</td><td>马来西亚柔佛潮州八邑会馆、新加坡潮汕社团、加拿大温哥华潮属社团等</td><td>海外专区内容共创、线上出花园联合活动、多语言翻译</td></tr>
+      <tr><td class="item">学校 / 研学机构</td><td>潮汕本地中小学（已有进校园先例）、研学旅行机构</td><td>研学包授权、班级邀请码、线下研学导流</td></tr>
+      <tr><td class="item">文旅场景</td><td>老妈宫戏台、揭阳学宫、海阳县儒学宫、濠江乡村文旅农场等</td><td>线下打卡点、活动场地、AR/打卡内容联动</td></tr>
+      <tr><td class="item">本地商家</td><td>木屐与红肚兜制作、粿品与红桃粿作坊、鲜花店、潮汕摄影旅拍、民俗司仪</td><td>入驻展示、预约撮合、联合纪念品</td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><b>对接建议：</b>先谈 1 家文化馆 + 1 家海外潮团 + 2 家商家共 4 方，把「内容审校—官方报名—商家入驻」三条链路跑通一次，再规模化复制。万事开头只求「有一个真实的合作案例」。</div>
+</section>
+
+<!-- ============ 06 实施路线 ============ -->
+<section id="s6">
+  <div class="sec-head">
+    <div class="idx">S E C T I O N　0 6</div>
+    <h2>实施路线</h2>
+    <p class="sub">从「要不要做」到「第一步做什么」，本节给出可直接讨论的执行顺序。</p>
+  </div>
+
+  <h3>6.1　三期演进</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th style="width:104px">期次</th><th style="width:130px">周期参考</th><th>交付内容</th><th style="width:200px">验收标准</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">MVP</td>
+        <td>1–2 个月<br>（3–5 人小团队）</td>
+        <td>首页 + 文化科普（是什么/时间轴/图鉴）+ 七步仪式展示 + 知识闯关（1 级）+ 祝福卡生成分享 + 内容后台</td>
+        <td>内容完整上线，分享卡可生成并带参数回传，能看清「哪条内容被看得最多」</td>
+      </tr>
+      <tr>
+        <td class="item">V2</td>
+        <td>+2–3 个月</td>
+        <td>预约服务（商家入驻 + 表单 + 订单）+ 社区广场（UGC + 审核）+ 我的花园（档案/徽章）+ 双语音频 + 农历日历</td>
+        <td>至少 5 家商家入驻、完成首单预约闭环、月 UGC ≥ 200 条</td>
+      </tr>
+      <tr>
+        <td class="item">V3</td>
+        <td>持续迭代</td>
+        <td>文创商城 + 研学课程 + 文旅联动 + 海外侨团专区 + 多语言 + 机构数据看板</td>
+        <td>出现稳定营收或稳定机构采购；海外访问占比可量化</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>6.2　开发优先级矩阵（价值 × 成本）</h3>
+  <div class="quad">
+    <div class="qbox q1">
+      <div class="qt"><i></i>高价值 · 低成本　→ 立刻做</div>
+      <ul class="clean">
+        <li>「出花园是什么」三屏图文</li>
+        <li>七步仪式流程展示</li>
+        <li>知识闯关（青少年版）</li>
+        <li>祝福卡生成 + 分享</li>
+        <li>符号图鉴</li>
+      </ul>
+    </div>
+    <div class="qbox q2">
+      <div class="qt"><i></i>高价值 · 高成本　→ 排期做</div>
+      <ul class="clean">
+        <li>预约服务与商家体系</li>
+        <li>社区广场 + 内容审核</li>
+        <li>双语音频 / 视频内容</li>
+        <li>海外侨团专区</li>
+      </ul>
+    </div>
+    <div class="qbox q3">
+      <div class="qt"><i></i>低价值 · 低成本　→ 顺手做</div>
+      <ul class="clean">
+        <li>今日一签小知识</li>
+        <li>农历日历与节气提示</li>
+        <li>收藏与分享历史</li>
+        <li>节日皮肤 / 换装</li>
+      </ul>
+    </div>
+    <div class="qbox q4">
+      <div class="qt"><i></i>低价值 · 高成本　→ 暂不做</div>
+      <ul class="clean">
+        <li>3D / AR 仪式还原</li>
+        <li>自建短视频内容平台</li>
+        <li>积分商城与复杂会员体系</li>
+        <li>多语言全站翻译</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>6.3　起步建议：先做这 3 个页面</h3>
+  <div class="grid g3">
+    <div class="card">
+      <h4>① 首页</h4>
+      <p style="font-size:13.4px;margin:0">承载「节庆倒计时 + 四宫格入口 + 今日一签」。它是唯一必须一次做对的页面——决定用户是否留下。</p>
+    </div>
+    <div class="card">
+      <h4>② 出花园是什么（详情页）</h4>
+      <p style="font-size:13.4px;margin:0">三屏讲清定义、由来、意义。这是所有分享落地的目标页，也是内容质量的最直接体现。</p>
+    </div>
+    <div class="card">
+      <h4>③ 祝福卡生成页</h4>
+      <p style="font-size:13.4px;margin:0">选模板 + 填名字 + 生成图片 + 微信分享。这是 MVP 唯一天然带传播属性的功能，用来验证增长假设。</p>
+    </div>
+  </div>
+  <div class="note"><b>最小验证闭环：</b>分享卡片 → 落地「出花园是什么」→ 走完七步仪式 → 生成祝福卡 → 再次分享。<strong>五个环节打通，产品就算成立了</strong>；四条板块里的其他功能都可以在这条主干之后再加。</div>
+</section>
+
+<!-- ============ 07 风险与合规 ============ -->
+<section id="s7">
+  <div class="sec-head">
+    <div class="idx">S E C T I O N　0 7</div>
+    <h2>风险与合规</h2>
+    <p class="sub">非遗类项目失败往往不是因为做不出来，而是因为「做得不严谨」。</p>
+  </div>
+
+  <h3>7.1　文化风险</h3>
+  <table class="tbl">
+    <thead><tr><th style="width:220px">风险点</th><th>说明</th><th style="width:320px">应对措施</th></tr></thead>
+    <tbody>
+      <tr><td class="item">细节失真</td><td>十二种花草名目、十二碗菜品、择吉月份等各地差异大，容易「一地做法当成通例」。</td><td>所有差异点标注地域来源；上线前请文化馆或民俗专家审校并署名；存疑内容标「需进一步核实」。</td></tr>
+      <tr><td class="item">信仰内容处理不当</td><td>「公婆母」「择吉」等涉及民间信仰，易被断章取义为迷信传播。</td><td>采用民俗文化中性语气；标注为「民俗传统」；不提供占卜、算命类功能；不渲染神秘功效。</td></tr>
+      <tr><td class="item">传说与史实混淆</td><td>林大钦传说、宋仁宗乳母说等属民间传说，若当作史实传播会损伤公信力。</td><td>统一加「民间传说」标签，与有史料依据的内容在视觉上区分。</td></tr>
+      <tr><td class="item">娱乐化损害本真性</td><td>为追求流量添加搞笑音效、夸张演绎仪式动作，可能引发本地潮人反感。</td><td>设立内容红线清单；本地用户参与评审；宁可平淡不可轻慢。</td></tr>
+      <tr><td class="item">文化圈地争议</td><td>汕潮揭三地都主张「出花园」，内容若偏重一市易引争议。</td><td>采用三地并列呈现（等权重）；标题不冠单一城市名；邀请三地官方共同背书。</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2　合规与法律风险</h3>
+  <table class="tbl">
+    <thead><tr><th style="width:220px">风险点</th><th>说明</th><th style="width:320px">应对措施</th></tr></thead>
+    <tbody>
+      <tr><td class="item">小程序资质与备案</td><td>内容含文化科普与预约服务，需按平台要求选择合适类目并完成备案；涉付费需相应资质。</td><td>立项阶段先核实类目与备案要求；预约服务首版仅做信息撮合，不做资金归集。</td></tr>
+      <tr><td class="item">非遗名称使用</td><td>「省级非物质文化遗产」等表述有使用规范，不得擅自用于商业宣传。</td><td>对外表述采用「依据 2018 年广东省省级非遗名录」等客观陈述；商业页面单独做合规审查。</td></tr>
+      <tr><td class="item">素材版权</td><td>潮剧唱段、英歌舞影像、歌册录音、摄影作品均可能受版权保护。</td><td>统一使用原创插画/自制素材；确需使用他方素材须取得书面授权并署名。</td></tr>
+      <tr><td class="item">UGC 与内容安全</td><td>社区功能上线后存在违规内容与舆情风险。</td><td>先机审后人工抽检；建立举报入口与内容公约；敏感期可临时关闭发布入口。</td></tr>
+      <tr><td class="item">未成年人信息保护</td><td>核心用户是 15 岁左右青少年，涉及个人信息与肖像。</td><td>最小化收集；上传照片需监护人同意；提供一键删除；隐私政策用大白话写。</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.3　运营风险</h3>
+  <div class="grid g3">
+    <div class="card"><h4>内容供给断层</h4><p style="font-size:13.4px;margin:0">非遗内容体量有限，易「开局爆更、三月停更」。<br><strong>应对：</strong>按 5.1 日历提前储备半年内容，并把 UGC 精选纳入日常更新源。</p></div>
+    <div class="card"><h4>节庆集中、日常冷清</h4><p style="font-size:13.4px;margin:0">七夕前后流量陡增，其余月份近乎归零。<br><strong>应对：</strong>用研学季（9 月）、春节办礼季与日常专栏织成流量网，避免单点依赖。</p></div>
+    <div class="card"><h4>服务履约不可控</h4><p style="font-size:13.4px;margin:0">预约撮合一旦商家服务差，口碑会反噬文化品牌。<br><strong>应对：</strong>首批商家人工审核、设保证金与评价机制；差评可下架。</p></div>
+  </div>
+
+  <div class="cta">
+    <div>
+      <h3>下一步：先看原型，再看技术方案</h3>
+      <p>7 屏高保真原型已按本方案完成；案例研究主页含 60 秒演示动线；RAG 方案说明知识库如何变成可溯源问答。</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn" href="prototype.html">打开原型 →</a>
+      <a class="btn" href="case-study.html" style="background:linear-gradient(135deg,#4E9B84,#3A7A66);box-shadow:0 6px 22px rgba(78,155,132,.3)">案例研究 →</a>
+      <a class="btn" href="rag-plan.html" style="background:linear-gradient(135deg,#8A6A2E,#6B5223);box-shadow:0 6px 22px rgba(201,160,85,.25)">RAG 方案 →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>
+    <b>「出花园」潮汕文化小程序 · 全案策划与项目架构</b>　·　配套交付：
+    <a href="prototype.html">小程序高保真原型（7 屏）</a>　·　
+    <a href="case-study.html">案例研究主页</a>　·　
+    <a href="rag-plan.html">RAG 问答实现方案</a>　·　
+    <a href="deploy-guide.html">上线实操路线图</a>
+  </p>
+  <p>
+    文化依据来源：广东省/汕头市非遗名录公开信息、汕头·潮州·揭阳三地官方「出花园」成人礼活动公开报道、主流媒体（人民日报海外版、中国文明网、广东文明网等）专题报道。<br>
+    所有涉及地方差异的民俗细节均标注「各地略有差异」；标注「需进一步核实」的内容请在正式上线前经文化馆或民俗专家审校。<br>
+    本方案为策划与内容层面建议，不含技术实现方案，不承诺任何用户增长或传播效果数据。
+  </p>
+</footer>
+
+</main>
+</div>
+
+<script>
+/* 侧栏高亮：滚动时同步当前章节 */
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+  var targets = links.map(function (a) {
+    return document.querySelector(a.getAttribute('href'));
+  }).filter(Boolean);
+  if (!targets.length) return;
+  var ticking = false;
+  function sync() {
+    var y = window.scrollY + 140;
+    var idx = 0;
+    for (var i = 0; i < targets.length; i++) {
+      if (targets[i].offsetTop <= y) idx = i;
+    }
+    links.forEach(function (a) { a.classList.remove('on'); });
+    if (links[idx]) links[idx].classList.add('on');
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(sync); }
+  }, { passive: true });
+  sync();
+})();
+</script>
+</body>
+</html>

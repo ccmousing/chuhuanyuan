@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>案例研究 ·「出花园」潮汕成人礼文化小程序</title>
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ===== Case Study 页专用布局（单栏 + 顶部粘性导航） ===== */
+.cs-nav {
+  position: sticky; top: 0; z-index: 30;
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 12px 0;
+  background: rgba(21,17,14,.88); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.cs-nav .lg { font-family: var(--serif); font-size: 14.5px; color: var(--gold-2); margin-right: auto; }
+.cs-nav a { font-size: 13px; color: var(--ink-2); }
+.cs-nav a:hover { color: var(--gold-2); text-decoration: none; }
+.cs-nav .op {
+  font-size: 12.5px; padding: 6px 14px; border-radius: 999px;
+  border: 1px solid var(--line-2); color: var(--gold-2);
+}
+
+.cs-wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 26px 120px; }
+
+/* 封面 */
+.cs-hero { padding: 48px 0 34px; border-bottom: 1px solid var(--line); }
+.cs-hero .kick {
+  display: inline-block; font-size: 11.5px; letter-spacing: 3px;
+  color: var(--gold); border: 1px solid var(--line-2); border-radius: 999px;
+  padding: 4px 13px; background: rgba(0,0,0,.25); margin-bottom: 18px;
+}
+.cs-hero h1 { font-family: var(--serif); font-size: 38px; line-height: 1.3; margin: 0 0 14px; letter-spacing: .5px; }
+.cs-hero h1 em { font-style: normal; color: var(--gold-2); display: block; font-size: 22px; margin-top: 8px; }
+.cs-hero .lede { max-width: 720px; font-size: 15.5px; color: var(--ink-2); margin: 0 0 22px; }
+
+/* 事实条 */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; margin: 24px 0 0; }
+.facts div { background: var(--bg-soft); padding: 14px 16px; }
+.facts b { display: block; font-family: var(--serif); font-size: 15px; color: var(--ink); margin-bottom: 3px; }
+.facts span { font-size: 12px; color: var(--ink-3); }
+@media (max-width: 860px) { .facts { grid-template-columns: repeat(2, 1fr); } }
+
+/* 洞察卡 */
+.insight { border-left: 3px solid var(--red); background: rgba(200,68,60,.06); border-radius: 0 var(--r) var(--r) 0; padding: 15px 18px; margin-bottom: 12px; }
+.insight b { display: block; font-family: var(--serif); font-size: 15.5px; color: var(--ink); margin-bottom: 5px; }
+.insight p { margin: 0; font-size: 13.5px; }
+
+/* 决策卡 */
+.dec { border: 1px solid var(--line-2); border-radius: var(--r); padding: 18px 20px; background: linear-gradient(160deg, var(--card-2), var(--bg-soft)); }
+.dec .q { font-family: var(--serif); font-size: 16px; color: var(--gold-2); margin-bottom: 10px; }
+.dec .kv { font-size: 13.2px; color: var(--ink-2); margin-bottom: 7px; }
+.dec .kv i { font-style: normal; color: var(--ink-3); display: inline-block; min-width: 44px; }
+.dec .kv strong { color: var(--ink); }
+
+/* 产物卡 */
+.out { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--r); padding: 18px 20px; background: linear-gradient(160deg, var(--card), var(--bg-soft)); }
+.out .st { align-self: flex-start; margin-bottom: 10px; }
+.out h4 { margin: 0 0 8px; font-family: var(--serif); font-size: 16.5px; color: var(--ink); }
+.out p { font-size: 13.2px; flex: 1; }
+.out a.lk { font-size: 13px; color: var(--gold-2); }
+
+/* 演示动线 */
+.line3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+@media (max-width: 860px) { .line3 { grid-template-columns: 1fr; } }
+.l3 { border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; background: rgba(255,255,255,.02); position: relative; }
+.l3 .n { font-family: var(--serif); font-size: 12px; letter-spacing: 2px; color: var(--red-2); }
+.l3 h4 { margin: 6px 0 8px; font-size: 15px; font-family: var(--serif); }
+.l3 .say { font-size: 13.4px; color: var(--gold-2); font-family: var(--serif); line-height: 1.7; }
+
+.closing { font-family: var(--serif); font-size: 20px; line-height: 1.7; color: var(--ink); text-align: center; margin: 26px 0 0; }
+</style>
+</head>
+<body>
+
+<div class="cs-wrap">
+
+  <nav class="cs-nav">
+    <span class="lg">案例研究 · 出花园</span>
+    <a href="#overview">概览</a>
+    <a href="#insight">洞察</a>
+    <a href="#method">方法</a>
+    <a href="#decisions">设计决策</a>
+    <a href="#outputs">产物</a>
+    <a href="#tech">技术方案</a>
+    <a href="#demo">演示动线</a>
+    <a href="deploy-guide.html">上线路线图</a>
+    <a href="index.html">策划方案站</a>
+    <a class="op" href="prototype.html">打开原型</a>
+  </nav>
+
+  <!-- ============ 封面 ============ -->
+  <header class="cs-hero">
+    <span class="kick">C A S E　S T U D Y</span>
+    <h1>「出花园」潮汕成人礼文化小程序<em>从一项省级非遗的地方民俗，到一套可执行的小程序方案与验证原型</em></h1>
+    <p class="lede">
+      独立完成的端到端文化数字化项目：联网核实民俗事实 → 需求分层与用户画像 → 信息架构与功能规划 → 内容体系设计 → 高保真可点击原型。
+      并延伸设计了「民俗知识库检索增强问答（RAG）」技术方案，把内容资产变成可交互的能力。
+    </p>
+    <div class="meta" style="display:flex;flex-wrap:wrap;gap:9px">
+      <span class="pill gold">单人独立完成 · 2026.10</span>
+      <span class="pill red">策划 + 产品 + 前端原型</span>
+      <span class="pill jade">7 屏高保真原型</span>
+      <span class="pill">RAG 问答 · 方案设计中</span>
+    </div>
+
+    <div class="facts">
+      <div><b>我的角色</b><span>资料核实 · 需求分析 · 信息架构 · 内容体系 · 原型实现</span></div>
+      <div><b>交付形态</b><span>策划方案站 + 7 屏可点击原型 + RAG 技术方案</span></div>
+      <div><b>技术栈</b><span>HTML / CSS / 原生 JS / 内联 SVG / Python（RAG 规划）</span></div>
+      <div><b>当前状态</b><span>策划、原型、内容包与小程序均已落地；RAG 知识库与检索层已完成，问答链路与评估待做</span></div>
+    </div>
+  </header>
+
+  <!-- ============ 项目概览 ============ -->
+  <section id="overview" style="margin-top:52px">
+    <div class="sec-head">
+      <div class="idx">0 1</div>
+      <h2>项目概览</h2>
+      <p class="sub">一句话说清：问题是什么、我做了什么、产出了什么。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <h4>问题</h4>
+        <p style="font-size:13.4px">「出花园」是潮汕独有的成人礼俗（2018 年入选广东省省级非遗），但它<strong>只活在长辈的口述里和每年一次的线下活动里</strong>——在外潮汕青年与海外潮籍后代几乎没有可自主查询、可参与的数字入口。</p>
+      </div>
+      <div class="card">
+        <h4>做法</h4>
+        <p style="font-size:13.4px">不做一个「科普展示页」，而是把<strong>知识、互动、服务、情感留存</strong>串成一条完整链路：文化科普馆 + 仪式体验馆 + 服务预约 + 内容社区，并用内容分级同时服务游客、研学学生、本地家长三类人群。</p>
+      </div>
+      <div class="card">
+        <h4>产物</h4>
+        <p style="font-size:13.4px">一份 7 章策划方案（含 4 张架构图）、一套 7 屏可点击高保真原型、一份 RAG 民俗问答技术方案、一份完整内容包清单。<strong>全部离线可打开、无外部依赖。</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 背景 ============ -->
+  <section id="background">
+    <div class="sec-head">
+      <div class="idx">0 2</div>
+      <h2>背景：为什么这个项目值得做</h2>
+      <p class="sub">四个已核实的事实，构成了立项的依据。</p>
+    </div>
+    <div class="grid g4">
+      <div class="stat"><span class="n">2018</span><span class="l">入选广东省第七批省级非物质文化遗产名录（2014 年先入汕头市级）</span></div>
+      <div class="stat"><span class="n">3000<small>万</small></span><span class="l">全球海外潮人规模，构成强烈的情感连接需求</span></div>
+      <div class="stat"><span class="n">10<small>届+</small></span><span class="l">揭阳榕城自 2015 年起连续举办集体成人礼的届数</span></div>
+      <div class="stat"><span class="n">8<small>万</small></span><span class="l">揭阳榕城线上活动平台单次点击量量级，已验证线上需求</span></div>
+    </div>
+    <div class="note">
+      <b>结论：</b>汕潮揭三地官方已连续多年举办集体成人礼，并各自沉淀出线上化经验，但<strong>尚无以「出花园」为单一主题、面向三类用户、可持续日常运营的独立产品</strong>。需求、素材、权威背书三者齐备，缺的是产品化的整合。
+    </div>
+  </section>
+
+  <!-- ============ 洞察 ============ -->
+  <section id="insight">
+    <div class="sec-head">
+      <div class="idx">0 3</div>
+      <h2>三个核心洞察</h2>
+      <p class="sub">它们直接决定了产品形态，而不是凭空做功能堆砌。</p>
+    </div>
+    <div class="insight">
+      <b>洞察一：三类用户的诉求几乎不重叠，必须分层，而不是折中</b>
+      <p>游客要「30 秒看懂」、学生要「能闯关能带走」、家长要「流程、清单、能约到人」。用一个通用页面服务三类人，结果是三类人都留不住。方案给出的解法是<strong>一套内容库 + 三个阅读层级</strong>，而不是维护三套内容。</p>
+    </div>
+    <div class="insight">
+      <b>洞察二：这个民俗的情感高点，恰好是产品唯一的传播支点</b>
+      <p>用户旅程中情绪从「好奇」抬升到「投入·感动」再到「自豪·认同」，而情绪最高点正出现在<strong>仪式走完、纪念证书生成的那一刻</strong>。把分享钩子布置在这个位置，转化效率最高——这也是 MVP 必须包含「祝福卡 + 纪念证书」的原因。</p>
+    </div>
+    <div class="insight">
+      <b>洞察三：非遗类内容的最大风险不是没人看，而是「讲错了」</b>
+      <p>「出花园」各地细节差异极大（十二种花草名目、十二碗菜品、择吉月份），网络流传版本互相矛盾。因此方案把<strong>内容准确性当作产品功能</strong>来设计：统一标注地域来源与「需进一步核实」，并规划了文化馆/民俗专家审校环节，以及能溯源引用的 RAG 问答。</p>
+    </div>
+  </section>
+
+  <!-- ============ 方法 ============ -->
+  <section id="method">
+    <div class="sec-head">
+      <div class="idx">0 4</div>
+      <h2>方法论：四步走完</h2>
+      <p class="sub">这套流程本身也是可复用的——同类地方文化项目可以照搬。</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="no">01</span>
+        <div class="tt">事实核实</div>
+        <div class="do">两轮检索：文化本体（由来/流程/符号/典故/非遗认定）+ 活化现状（各地官方活动做法、海外传播、已有线上化先例）。</div>
+        <div class="sy">产出：已核实事实清单</div>
+      </div>
+      <div class="step">
+        <span class="no">02</span>
+        <div class="tt">需求分层</div>
+        <div class="do">明确目标用户（三类并行）、核心定位（综合平台）、投入规模与交付范围，全部落到书面确认。</div>
+        <div class="sy">产出：需求确认表</div>
+      </div>
+      <div class="step">
+        <span class="no">03</span>
+        <div class="tt">架构设计</div>
+        <div class="do">信息架构图 → 功能分层图（MVP/V2/V3，明确每期不做什么）→ 用户旅程图 → 技术架构图。</div>
+        <div class="sy">产出：4 张架构图</div>
+      </div>
+      <div class="step">
+        <span class="no">04</span>
+        <div class="tt">原型验证</div>
+        <div class="do">用 HTML/CSS/JS 实现 7 屏可点击原型，验证信息架构是否走得通、用户旅程是否闭环。</div>
+        <div class="sy">产出：7 屏高保真原型</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 关键设计决策 ============ -->
+  <section id="decisions">
+    <div class="sec-head">
+      <div class="idx">0 5</div>
+      <h2>三个关键设计决策</h2>
+      <p class="sub">面试和答辩最容易被追问的就是这些「为什么」，先想清楚。</p>
+    </div>
+    <div class="grid g3">
+      <div class="dec">
+        <div class="q">为什么是综合平台，不是纯科普？</div>
+        <div class="kv"><i>理由</i>纯科普做完就死——用户看完即走，没有回访理由，也没有可持续的内容供给动力。</div>
+        <div class="kv"><i>取舍</i>综合平台成本更高，因此用<strong>三期演进</strong>化解：MVP 只做「科普 + 互动 + 分享」，服务与社区放到 V2。</div>
+      </div>
+      <div class="dec">
+        <div class="q">为什么内容分级用「一套库三层展开」，不做三套？</div>
+        <div class="kv"><i>理由</i>同一条知识给「摘要 / 标准 / 深读」三段文本，按身份默认展开层级。<strong>内容维护成本只增加约 40%</strong>，而不是 3 倍。</div>
+        <div class="kv"><i>取舍</i>长文本编写要求更高，需要一次就把三层写全；换来的是后续零重复维护。</div>
+      </div>
+      <div class="dec">
+        <div class="q">为什么 MVP 只做 3 个页面？</div>
+        <div class="kv"><i>理由</i>MVP 阶段唯一目标是<strong>验证内容吸引力</strong>，任何非核心功能都会稀释验证信号。</div>
+        <div class="kv"><i>取舍</i>明确列了「低价值高成本 → 暂不做」清单（3D/AR 仪式还原、自建短视频平台、积分商城），主动克制。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 产物 ============ -->
+  <section id="outputs">
+    <div class="sec-head">
+      <div class="idx">0 6</div>
+      <h2>产物清单</h2>
+      <p class="sub">已完成与规划中分开标注，不夸大交付范围。</p>
+    </div>
+    <div class="grid g2">
+      <div class="out">
+        <span class="pill jade st">已完成</span>
+        <h4>1 · 策划方案站（7 章 + 4 张架构图）</h4>
+        <p>项目总览与定位 / 文化知识库 / 项目架构 / 内容体系与分级 / 传播与运营 / 实施路线 / 风险与合规。含信息架构、功能分层、用户旅程、技术架构四张内联 SVG 图。</p>
+        <a class="lk" href="index.html">打开策划方案站 →</a>
+      </div>
+      <div class="out">
+        <span class="pill jade st">已完成</span>
+        <h4>2 · 7 屏可点击高保真原型</h4>
+        <p>首页 / 文化科普馆 / 七步仪式体验 / 知识闯关 / 服务预约 / 社区广场 / 我的花园。底部固定 4 Tab，含仪式步进与答题解析交互。</p>
+        <a class="lk" href="prototype.html">打开原型 →</a>
+      </div>
+      <div class="out">
+        <span class="pill gold st">检索层已完成</span>
+        <h4>3 · 民俗知识库检索增强问答（RAG）</h4>
+        <p>知识库与检索层已实现：6 篇科普切成 31 个知识块、标注 11 条可回溯来源（其中 8 条官方），检索采用 BM25 + 单字回退 + 地域加权，并用覆盖率阈值实现「检索不到就拒答」。LLM 问答链路与 20 题对照评估待完成。</p>
+        <a class="lk" href="rag-plan.html">查看 RAG 实现方案 →</a>
+      </div>
+      <div class="out">
+        <span class="pill jade st">大部分完成</span>
+        <h4>4 · 完整内容包</h4>
+        <p>科普正文 6 篇（4428 字）、三档共 30 题、祝福卡文案 12 条已完成并接入小程序；七段双语音频脚本与家长操办清单待补。</p>
+        <span style="font-size:12.5px;color:var(--ink-3)">清单见方案站第 4 章</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 技术方案 ============ -->
+  <section id="tech">
+    <div class="sec-head">
+      <div class="idx">0 7</div>
+      <h2>技术方案</h2>
+      <p class="sub">重点说清「我做了什么技术判断」，而不只是「我用了什么」。</p>
+    </div>
+
+    <h3>7.1　前端：用原型本身质疑信息架构</h3>
+    <p style="font-size:13.6px">
+      原型不是「画着好看」，而是用来验证结构：把 7 屏真的用 HTML/CSS/JS 做出来、点得通，
+      才能暴露问题——例如「非 Tab 页面进入后底部导航失去高亮」这类体验断裂，只在真机点一遍才会发现。
+      全部使用原生技术 + 内联 SVG，<strong>零外部依赖、离线可打开</strong>，方便投屏演示与分发给合作方。
+    </p>
+
+    <h3>7.2　RAG：为什么这个地方需要检索，而不是直接问大模型</h3>
+    <p style="font-size:13.6px">
+      直接问通用大模型「出花园的十二种花是什么」，它会给出一个「很像」但可能错误或张冠李戴的答案——
+      而地方民俗恰恰<strong>各地版本不同、网络资料互相矛盾</strong>。
+      所以我设计的是一条「先检索本地方知识库、再生成、且必须带引用来源」的链路：
+      答案里每一处事实都能指回知识库中的具体条目和它的地域来源，这也让「文化准确性」从一个宣传口号变成了可测量的技术指标。
+    </p>
+    <div class="grid g3">
+      <div class="card">
+        <h4>核心设计</h4>
+        <ul class="clean">
+          <li><strong>结构化优先</strong>：知识库不是原始网页切块，而是带字段的结构化条目</li>
+          <li><strong>地域差异作为一等公民</strong>：同一条知识点可挂多个地域版本，检索时按用户所在地域优先</li>
+          <li><strong>强制引用</strong>：生成结果必须返回引用条目 ID，无引用则降级为「未找到」</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>技术选型倾向</h4>
+        <ul class="clean">
+          <li>Embedding：中文语义表现好的多语模型（如 BGE-M3 类）</li>
+          <li>向量库：本地 <strong>Chroma</strong> 起步，数据量小、无需运维</li>
+          <li>生成：OpenAI 兼容接口（可对接 DeepSeek / 硅基流动），用 requests 直调，不用框架黑盒</li>
+          <li>进阶：用 LangGraph 包成「检索 → 生成 → 自检引用」三节点</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>可量化验证</h4>
+        <ul class="clean">
+          <li>建 20 条测试问题集（含地域差异、易混淆、超纲三类）</li>
+          <li>指标：检索命中率 / 引用准确率 / 幻觉率（答案中无法溯源的事实比例）</li>
+          <li>基线对比：直接问通用大模型 vs 本方案，用同一套题目跑对照</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <b>为什么这条技术线值得写进简历：</b>它把一个文化项目变成了一个<strong>有明确对照实验和指标的 RAG 实践</strong>——
+      既有业务语境（非遗内容准确性），又有工程判断（结构化 vs 切块、地域元数据、强制引用），
+      还有可复现的评估方法。这正是 AI 应用岗位最想看的东西。
+      <a href="rag-plan.html">完整的六步实施清单与技术选型对比见 RAG 方案 →</a>
+    </div>
+  </section>
+
+  <!-- ============ 指标假设 ============ -->
+  <section id="metrics">
+    <div class="sec-head">
+      <div class="idx">0 8</div>
+      <h2>指标设计（目标假设 · 非实测结果）</h2>
+      <p class="sub">项目尚未上线，以下全部是「用来判断做对了没有」的假设，不是成绩。</p>
+    </div>
+    <table class="tbl">
+      <caption>指标分三层：认知 → 参与 → 传播，与用户旅程一一对应。</caption>
+      <thead>
+        <tr><th style="width:96px">层级</th><th style="width:210px">指标</th><th style="width:130px">目标假设</th><th>为什么选它</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="item">认知</td><td>分享卡片打开率</td><td class="c">≥ 25%</td><td>衡量「内容是否让人愿意点开」，是最上游的漏斗口</td></tr>
+        <tr><td class="item">认知</td><td>「出花园是什么」完读率</td><td class="c">≥ 55%</td><td>验证三屏讲清定义的表达是否成立</td></tr>
+        <tr><td class="item">参与</td><td>七步仪式走完率</td><td class="c">≥ 40%</td><td>核心互动功能的真实吸引力</td></tr>
+        <tr><td class="item">参与</td><td>预约咨询转化可追踪率</td><td class="c">≥ 30%</td><td>验证家长侧工具属性是否成立</td></tr>
+        <tr><td class="item">传播</td><td>单用户带来分享次数</td><td class="c">≥ 1</td><td>低于 1 意味着没有自然增长，产品不成立</td></tr>
+        <tr><td class="item">传播</td><td>老带新占比</td><td class="c">≥ 20%</td><td>决定获客成本能否长期成立</td></tr>
+      </tbody>
+    </table>
+    <div class="warn"><b>诚实声明：</b>上述为设计阶段的<strong>目标假设</strong>，本项目尚未上线运营，无任何实测数据。对外演示时须明确说明，避免被误读为项目成绩。</div>
+  </section>
+
+  <!-- ============ 演示动线 ============ -->
+  <section id="demo">
+    <div class="sec-head">
+      <div class="idx">0 9</div>
+      <h2>60 秒演示动线</h2>
+      <p class="sub">汇报时不要从封面开始讲。按这条动线走，三屏三句话讲完。</p>
+    </div>
+    <div class="line3">
+      <div class="l3">
+        <div class="n">第 1 屏 · 首页</div>
+        <h4>先给结论，不给背景</h4>
+        <div class="say">「这是一个让潮汕人读懂十五岁成人礼的小程序——三类人进来，各走各的门。」</div>
+        <p style="font-size:12.6px;margin:10px 0 0">指着四宫格说明三类用户的分流设计。</p>
+      </div>
+      <div class="l3">
+        <div class="n">第 2 屏 · 七步仪式</div>
+        <h4>给一个能玩的东西</h4>
+        <div class="say">「点开就能走完整个仪式，每一步都讲清做法和寓意，各地差异也标了出来。」</div>
+        <p style="font-size:12.6px;margin:10px 0 0">现场点两步，让人看到「可交互」而非「是张图」。</p>
+      </div>
+      <div class="l3">
+        <div class="n">第 3 屏 · 我的花园</div>
+        <h4>落到唯一的增长支点</h4>
+        <div class="say">「走完七步生成纪念证书与祝福卡——这是整个产品唯一自带传播的动作。」</div>
+        <p style="font-size:12.6px;margin:10px 0 0">这是整个汇报的价值落点。</p>
+      </div>
+    </div>
+    <p class="closing">「一项省级非遗，三分钟看懂，一次参与，一生留存。」</p>
+    <div class="note" style="margin-top:22px">
+      <b>如果评委追问技术：</b>先讲「非遗内容最大的风险是讲错了」，再讲 RAG 的强制引用与地域元数据设计，
+      最后给指标（命中率 / 引用准确率 / 幻觉率）。<strong>顺序很重要</strong>——先讲为什么需要，再讲怎么实现。
+    </div>
+  </section>
+
+  <!-- ============ 复盘 ============ -->
+  <section id="review">
+    <div class="sec-head">
+      <div class="idx">1 0</div>
+      <h2>复盘与下一步</h2>
+      <p class="sub">主动说不足，比等别人指出更可信。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <h4>做对了什么</h4>
+        <ul class="clean">
+          <li>先核实事实再设计，避免了「网上抄来的民俗」这类硬伤</li>
+          <li>用功能分层图明确「每期不做什么」，克制住了首版堆功能</li>
+          <li>把原型做成可点击的，而不是静态稿——结构问题因此暴露</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>如果重来会怎么改</h4>
+        <ul class="clean">
+          <li>应该在需求阶段就更早锁定「是否要真上线」，避免后期方案范围反复</li>
+          <li>内容分级的三层文本应同步编写，否则后续补写成本会叠加</li>
+          <li>原型阶段可以更早引入真实用户（本地家庭）做一次可用性走查</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>下一步</h4>
+        <ul class="clean">
+          <li>落地 RAG 问答，完成 20 题对照评估（对照直接问通用大模型）</li>
+          <li>补齐完整内容包，并联系文化馆做一次内容审校背书</li>
+          <li>用本案例整理一页 Case Study 与 3 分钟口播稿，用于参赛与实习投递</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cta">
+      <div>
+        <h3>看完整方案与原型</h3>
+        <p>策划方案站含 4 张架构图与完整内容体系；原型 7 屏可直接点击演示。</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn" href="index.html">策划方案站 →</a>
+        <a class="btn" href="prototype.html" style="background:linear-gradient(135deg,#4E9B84,#3A7A66);box-shadow:0 6px 22px rgba(78,155,132,.3)">打开原型 →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>案例研究 ·「出花园」潮汕成人礼文化小程序</b>　·　单人独立完成的策划与原型设计项目</p>
+    <p>
+      文化依据来源：广东省/汕头市非遗名录公开信息，汕潮揭三地官方「出花园」成人礼活动公开报道，主流媒体（人民日报海外版、中国文明网、广东文明网等）专题报道。<br>
+      涉及地方差异的民俗细节统一标注「各地略有差异」，「需进一步核实」的内容请在正式上线前经文化馆或民俗专家审校。<br>
+      本页所列量化指标均为<strong>设计阶段的目标假设</strong>，非实测数据；RAG 问答模块已完成知识库与检索层（31 个知识块、11 条来源，BM25 + 地域加权 + 覆盖率拒答），LLM 问答链路与 20 题对照评估尚未完成，具体指标数值待实测后填入。
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>

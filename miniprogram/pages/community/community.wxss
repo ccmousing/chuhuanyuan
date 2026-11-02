@@ -1,0 +1,32 @@
+/* 社区广场样式
+   「规划中」相关的公共样式（.plan-bar / .acts-plan）定义在 app.wxss，两个页面共用 */
+
+.pad-top { padding: 28rpx 32rpx 0; }
+
+.topic { display: flex; align-items: center; padding: 24rpx 32rpx 4rpx; }
+.topic .tagL { margin-right: 16rpx; }
+.topic .t { font-size: 32rpx; font-weight: 700; color: #2B2320; }
+
+.post .ph { display: flex; align-items: center; }
+.post .av {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  flex: none;
+  margin-right: 16rpx;
+}
+.post .who { font-size: 25rpx; font-weight: 600; color: #2B2320; }
+.post .when { font-size: 22rpx; color: #A0937F; margin-left: auto; }
+
+.post .ct { font-size: 27rpx; color: #6B5D52; line-height: 1.7; margin: 18rpx 0; }
+
+.post .imgs { display: flex; }
+.post .im {
+  width: 33.33%;
+  height: 170rpx;
+  border-radius: 18rpx;
+  margin-right: 10rpx;
+}
+.post .im:last-child { margin-right: 0; }
+
+.center { text-align: center; }

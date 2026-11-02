@@ -1,0 +1,82 @@
+<!-- 首页 · 1:1 对应原型 ① 首页
+     navigationStyle: custom → 红色渐变铺到屏幕最顶 -->
+<view class="home-hero">
+  <view class="sbar" style="height:{{statusBarHeight}}px"></view>
+
+  <!-- 石榴花装饰：原型是内联 SVG，WXML 不支持，改用 5 瓣 + 1 花心纯 CSS -->
+  <view class="bloom">
+    <view class="petal p1"></view>
+    <view class="petal p2"></view>
+    <view class="petal p3"></view>
+    <view class="petal p4"></view>
+    <view class="petal p5"></view>
+    <view class="core"></view>
+  </view>
+
+  <view class="kk">潮汕 · 成人礼</view>
+  <view class="hero-title serif">出花園</view>
+  <view class="sl">十五成丁，十六成人 · 一出花园，便是大人</view>
+
+  <view class="count">
+    <view class="lb">
+      <text class="lb-b serif">农历七月初七 · 出花园正日</text>
+      <text>{{cdSub}}</text>
+    </view>
+    <view class="num serif" wx:if="{{countdownDays !== null}}">{{countdownDays}}<text class="unit">天</text></view>
+    <view class="num-na serif" wx:else>—</view>
+  </view>
+  <view class="cd-tip">{{cdNote}}</view>
+</view>
+
+<view class="pad tab-pad">
+  <view class="grid4">
+    <view class="entry" wx:for="{{entries}}" wx:key="key" data-key="{{item.key}}" bindtap="onEntryTap">
+      <view class="ic" style="background:{{item.bg}};color:{{item.color}}">{{item.ch}}</view>
+      <view class="nm">{{item.name}}</view>
+      <view class="nm-plan" wx:if="{{item.plan}}">规划中</view>
+    </view>
+  </view>
+
+  <view class="banner banner-ai" data-key="assistant" bindtap="onEntryTap">
+    <view class="banner-ic">问</view>
+    <view class="banner-tx">
+      <text class="banner-b serif">文化问答 · AI 助手</text>
+      <text class="banner-s">基于知识库回答潮汕礼俗问题（云开发 AI）</text>
+    </view>
+    <view class="banner-arr">›</view>
+  </view>
+
+  <view class="banner" data-key="community" bindtap="onEntryTap">
+    <view class="banner-ic">花</view>
+    <view class="banner-tx">
+      <text class="banner-b serif">社区广场 · #我的出花园</text>
+      <text class="banner-s">该板块规划在 V2 · 需完成内容安全与举报机制</text>
+    </view>
+    <view class="banner-arr">›</view>
+  </view>
+
+  <!-- 每日轮换：内容见 utils/daily-copy.js（7 条，按本地日期取模）。
+       原版是硬编码一句固定文案，叫「今日一签」却从不变 —— 已修正。 -->
+  <view class="hd">今日 · 民俗一签</view>
+  <view class="sign-box" wx:if="{{sign}}">
+    <view class="sign-label">农历 · 民俗小知识</view>
+    <view class="sign-text serif">{{sign.quote}}</view>
+    <view class="sign-sub">{{sign.text}}</view>
+    <view class="sign-more" data-id="{{sign.articleId}}" bindtap="onEntryTap">
+      <text class="tagL g">{{sign.more}} →</text>
+    </view>
+  </view>
+
+  <view class="hd">编辑推荐</view>
+  <view class="box">
+    <view class="li" wx:for="{{reads}}" wx:key="id" data-id="{{item.id}}" bindtap="onEntryTap">
+      <image wx:if="{{!item.imgFailed}}" class="li-thumb" src="/images/{{item.id}}.{{item.imgExt ? item.imgExt : 'jpg'}}"
+             mode="aspectFill" data-list="reads" data-i="{{index}}" binderror="onImgErr"></image>
+      <view wx:else class="li-thumb" style="background:{{item.bg}}">{{item.icon}}</view>
+      <view class="li-tx">
+        <text class="li-b">{{item.t}}</text>
+        <text class="li-s">{{item.s}}</text>
+      </view>
+    </view>
+  </view>
+</view>

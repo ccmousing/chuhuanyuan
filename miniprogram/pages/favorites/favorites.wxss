@@ -1,0 +1,33 @@
+/* 我的收藏样式（列表项复用 app.wxss 里的 .li / .li-thumb / .li-tx） */
+
+.rm {
+  flex: none;
+  font-size: 22rpx;
+  color: #A0937F;
+  padding: 8rpx 20rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid rgba(43, 35, 32, 0.12);
+  margin-left: 14rpx;
+}
+
+/* 空状态 */
+.nf {
+  text-align: center;
+  padding: 70rpx 30rpx;
+  margin-bottom: 30rpx;
+}
+.nf-e { font-size: 84rpx; line-height: 1.2; }
+.nf-t {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2B2320;
+  margin-top: 20rpx;
+}
+.nf-s {
+  font-size: 25rpx;
+  color: #A0937F;
+  margin-top: 10rpx;
+  line-height: 1.6;
+}
+
+.notice { margin-top: 30rpx; }

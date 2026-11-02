@@ -1,0 +1,88 @@
+<!-- 祝福卡 · MVP 唯一自带传播的功能
+     预览用预设断行（templates[i].lines），与 canvas 导出用同一套行数据，两端一致 -->
+<view class="pad">
+  <view class="hd">做一张祝福卡</view>
+
+  <view class="box">
+    <view class="fld">
+      <text class="fld-l">小孩名字</text>
+      <input class="fld-i" placeholder="如：阿澄" maxlength="8"
+             value="{{name}}" bindinput="onNameInput" />
+    </view>
+    <view class="fld">
+      <text class="fld-l">选一句祝福 · 共 {{templates.length}} 条</text>
+      <view class="tpls">
+        <view class="tpl {{tplIdx === index ? 'on' : ''}}"
+              wx:for="{{templates}}" wx:key="t"
+              data-i="{{index}}" bindtap="onPickTpl">
+          <text class="tpl-scene">{{item.scene}}</text>
+          <text class="tpl-tx">{{item.t}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="hd">预览</view>
+  <view class="preview">
+    <!-- 内描边：与 canvas 导出图里那道内框一致 -->
+    <view class="pv-frame"></view>
+
+    <!-- 石榴花装饰（与导出图同款，纯 CSS 画） -->
+    <view class="pv-bloom">
+      <view class="pv-petal b1"></view>
+      <view class="pv-petal b2"></view>
+      <view class="pv-petal b3"></view>
+      <view class="pv-petal b4"></view>
+      <view class="pv-petal b5"></view>
+      <view class="pv-core"></view>
+    </view>
+    <view class="pv-bloom sm">
+      <view class="pv-petal c1"></view>
+      <view class="pv-petal c2"></view>
+      <view class="pv-petal c3"></view>
+      <view class="pv-petal c4"></view>
+      <view class="pv-petal c5"></view>
+      <view class="pv-core"></view>
+    </view>
+
+    <view class="pv-kicker">潮汕 · 成人礼</view>
+
+    <view class="pv-body">
+      <view class="pv-quote serif">
+        <view class="pv-line" wx:for="{{templates[tplIdx].lines}}" wx:key="*this">{{item}}</view>
+      </view>
+      <view class="pv-name">—— 致 {{name || '孩子'}}</view>
+    </view>
+
+    <view class="pv-foot">
+      <view class="pv-div"></view>
+      <view class="pv-brand">出花園 · 潮汕成人礼</view>
+      <view class="pv-date">农历七月初七 · 出花园正日</view>
+    </view>
+  </view>
+
+  <view class="btnL export-btn" bindtap="onExport">
+    {{exporting ? '正在生成…' : '生成祝福卡图片'}}
+  </view>
+
+  <!-- 生成结果 -->
+  <view wx:if="{{cardPath}}">
+    <view class="hd">已生成</view>
+    <image class="result-img" src="{{cardPath}}" mode="widthFix" bindtap="previewCard"></image>
+    <view class="result-tip">点图片可放大 · 长按可保存或转发</view>
+    <view class="row result-btns">
+      <view class="btnL ghost" bindtap="saveToAlbum">保存到相册</view>
+      <view class="btnL" bindtap="shareImage">分享给好友</view>
+    </view>
+  </view>
+
+  <view class="notice">
+    分享给家人，一起为孩子送祝福。
+    上线前请确认：不使用「不邀请好友就不能生成」这类诱导分享设计，容易被平台判定违规。
+  </view>
+</view>
+
+<!-- 离屏画布：不显示但参与绘制。若某些机型导出为空白，把 left 改成 0 / top 改成 0 并加 opacity:0 -->
+<view class="canvas-holder">
+  <canvas type="2d" id="cardCanvas" style="width: 600px; height: 800px;"></canvas>
+</view>

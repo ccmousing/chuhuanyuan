@@ -1,0 +1,137 @@
+/* 文章详情样式 */
+
+/* ===== 顶部图形区（无图片方案：emoji + 主题色底） ===== */
+.ahero {
+  position: relative;
+  height: 300rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ahero-ic {
+  font-size: 124rpx;
+  line-height: 1;
+}
+.ahero-tag {
+  position: absolute;
+  right: 32rpx;
+  top: 30rpx;
+  font-size: 21rpx;
+  color: #6B5D52;
+  padding: 6rpx 20rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.66);
+}
+
+/* ===== 标题区 ===== */
+.atitle {
+  font-size: 46rpx;
+  line-height: 1.42;
+  font-weight: 700;
+  color: #2B2320;
+}
+.asub {
+  font-size: 26rpx;
+  color: #A0937F;
+  margin-top: 14rpx;
+}
+
+.ameta {
+  display: flex;
+  align-items: center;
+  margin: 26rpx 0 34rpx;
+}
+.ameta-t {
+  font-size: 22rpx;
+  color: #A0937F;
+  margin-left: 16rpx;
+}
+
+/* ===== 正文 =====
+   正文按「小标题 + 若干段」组织（见 utils/content.js 的 sections）。
+   长文两端对齐、行距 1.95，小标题用 44rpx 上间距拉开层次 */
+.abody { padding-top: 4rpx; }
+.ah2 {
+  font-size: 31rpx;
+  font-weight: 700;
+  color: #2B2320;
+  line-height: 1.5;
+  margin: 44rpx 0 18rpx;
+}
+.abody .ah2:first-child { margin-top: 0; }
+.ap {
+  font-size: 30rpx;
+  line-height: 1.95;
+  color: #4A4038;
+  margin-bottom: 32rpx;
+  text-align: justify;
+}
+
+/* ===== 需要审校的内容提示 ===== */
+.warn {
+  background: rgba(185, 141, 62, 0.08);
+  border: 2rpx solid rgba(185, 141, 62, 0.3);
+  border-radius: 24rpx;
+  padding: 24rpx 26rpx;
+}
+.warn-t {
+  font-size: 24rpx;
+  color: #B98D3E;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+.warn-c {
+  font-size: 24rpx;
+  color: #6B5D52;
+  line-height: 1.7;
+}
+
+/* ===== 操作区 ===== */
+.acts {
+  display: flex;
+  margin: 34rpx 0 6rpx;
+}
+.act {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 27rpx;
+  border-radius: 22rpx;
+  border: 2rpx solid rgba(43, 35, 32, 0.12);
+  background: #FFFFFF;
+  color: #6B5D52;
+  margin-right: 20rpx;
+}
+.act:last-child { margin-right: 0; }
+.act.on {
+  border-color: rgba(200, 68, 60, 0.42);
+  background: rgba(200, 68, 60, 0.07);
+  color: #C8443C;
+  font-weight: 600;
+}
+
+/* button 默认样式重置：小程序 button 自带 padding、背景、::after 边框 */
+.act-btn { padding: 0; font-weight: 400; }
+.act-btn::after { border: none; }
+
+/* ===== 未找到 ===== */
+.nf {
+  text-align: center;
+  padding: 70rpx 30rpx;
+  margin-bottom: 30rpx;
+}
+.nf-e { font-size: 84rpx; line-height: 1.2; }
+.nf-t {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2B2320;
+  margin-top: 20rpx;
+}
+.nf-s {
+  font-size: 25rpx;
+  color: #A0937F;
+  margin-top: 10rpx;
+}
+
+.notice { margin-top: 34rpx; }

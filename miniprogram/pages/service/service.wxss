@@ -1,0 +1,42 @@
+/* 服务预约样式
+   「规划中」相关的公共样式（.plan-bar / .go-plan）定义在 app.wxss，两个页面共用 */
+
+.pad-top { padding: 28rpx 32rpx 0; }
+
+.chipsL { white-space: nowrap; padding: 24rpx 0 4rpx; width: 100%; }
+.chip {
+  display: inline-block;
+  font-size: 25rpx;
+  padding: 12rpx 26rpx;
+  border-radius: 999rpx;
+  background: #FFFFFF;
+  border: 2rpx solid rgba(43, 35, 32, 0.09);
+  color: #6B5D52;
+  margin-left: 14rpx;
+}
+.chipsL .chip:first-child { margin-left: 32rpx; }
+.chipsL .chip:last-child { margin-right: 32rpx; }
+.chip.on {
+  background: rgba(200, 68, 60, 0.1);
+  color: #C8443C;
+  border-color: rgba(200, 68, 60, 0.3);
+  font-weight: 600;
+}
+
+.shop { display: flex; align-items: center; }
+.shop .pic {
+  width: 116rpx;
+  height: 116rpx;
+  line-height: 116rpx;
+  text-align: center;
+  border-radius: 26rpx;
+  font-size: 44rpx;
+  flex: none;
+  margin-right: 22rpx;
+}
+.shop .info { flex: 1; min-width: 0; }
+.shop-b { display: block; font-size: 28rpx; font-weight: 600; color: #2B2320; margin-bottom: 6rpx; }
+.shop-m { font-size: 23rpx; color: #A0937F; line-height: 1.5; }
+
+.flow { font-size: 25rpx; color: #6B5D52; line-height: 1.7; }
+.flow-tip { color: #A0937F; font-size: 23rpx; margin-top: 12rpx; }

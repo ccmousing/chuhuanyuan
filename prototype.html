@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「出花园」小程序 · 高保真原型（7 屏）</title>
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============ 原型页专用样式（手机屏内为浅色） ============ */
+:root {
+  --paper:   #FDF8F0;
+  --paper-2: #F7EEE2;
+  --pcard:   #FFFFFF;
+  --inkL:    #2B2320;
+  --inkL2:   #6B5D52;
+  --inkL3:   #A0937F;
+  --redL:    #C8443C;
+  --goldL:   #B98D3E;
+  --jadeL:   #3F8C76;
+  --lineL:   rgba(43,35,32,.09);
+}
+
+body { background: #100D0B; }
+
+.pwrap {
+  position: relative; z-index: 1;
+  max-width: 1180px; margin: 0 auto; padding: 34px 24px 90px;
+}
+
+.phead { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 8px; }
+.phead h1 { font-family: var(--serif); font-size: 26px; margin: 0 0 6px; letter-spacing: .5px; }
+.phead p { margin: 0; font-size: 13.5px; color: var(--ink-3); }
+.backlink {
+  font-size: 13px; padding: 9px 18px; border-radius: 999px;
+  border: 1px solid var(--line-2); color: var(--gold-2); text-decoration: none;
+}
+.backlink:hover { background: var(--gold-soft); text-decoration: none; }
+
+/* 屏幕切换 chip */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 26px; }
+.chip {
+  font-size: 13px; padding: 7px 15px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line-2); background: rgba(0,0,0,.25); color: var(--ink-2);
+  transition: .15s; font-family: var(--sans);
+}
+.chip:hover { color: var(--gold-2); background: var(--gold-soft); }
+.chip.on { background: linear-gradient(135deg, var(--red), #A8322B); color: #fff; border-color: transparent; font-weight: 600; }
+
+.stage { display: grid; grid-template-columns: minmax(0,1fr) 330px; gap: 40px; align-items: start; }
+
+/* ============ 手机外框 ============ */
+.device {
+  width: 399px; margin: 0 auto;
+  padding: 12px; border-radius: 56px;
+  background: linear-gradient(155deg, #4A413D, #1B1715 60%, #2A2422);
+  box-shadow: 0 34px 90px rgba(0,0,0,.7), 0 0 0 1px rgba(201,160,85,.22), inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.screen {
+  width: 375px; height: 812px; border-radius: 44px; overflow: hidden;
+  background: var(--paper); position: relative;
+  display: flex; flex-direction: column;
+  font-family: var(--sans); color: var(--inkL); font-size: 14px; line-height: 1.6;
+}
+/* 状态栏：作为每屏首个子元素，随所在区域背景色自适应 */
+.sbar-strip {
+  height: 30px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 18px; font-size: 11.5px; letter-spacing: .3px; color: inherit;
+}
+.sbar-strip.light { background: var(--paper); color: var(--inkL); }
+.sbar-strip .dots { display: flex; gap: 3px; align-items: center; }
+.sbar-strip .dots i { width: 3px; background: currentColor; opacity: .7; border-radius: 1px; display: block; }
+.sbar-strip .bat { width: 20px; height: 10px; border: 1px solid currentColor; border-radius: 2px; position: relative; opacity: .8; }
+.sbar-strip .bat::after { content: ""; position: absolute; inset: 1.5px; right: 6px; background: currentColor; border-radius: 1px; }
+
+/* 屏蔽方案站全局样式对手机屏内的干扰 */
+.screen p { color: inherit; }
+.rit-card h3 { color: var(--inkL); }
+.rit-card h3::before { content: none; }
+
+.viewport { flex: 1 1 auto; overflow-y: auto; overflow-x: hidden; position: relative; -webkit-overflow-scrolling: touch; }
+.viewport::-webkit-scrollbar { width: 0; }
+
+.page { display: none; }
+.page.active { display: block; animation: pin .28s ease-out; }
+@keyframes pin { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* 小程序导航栏（子页） */
+.navbar {
+  display: flex; align-items: center; gap: 10px;
+  height: 42px; padding: 0 14px; background: var(--paper);
+  border-bottom: 1px solid var(--lineL); position: sticky; top: 0; z-index: 6;
+}
+.navbar .bk { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(43,35,32,.06); font-size: 13px; color: var(--inkL2); cursor: pointer; flex: 0 0 auto; }
+.navbar .tt { font-family: var(--serif); font-size: 16px; font-weight: 700; }
+.navbar .sp { flex: 1; }
+
+/* 底部 Tab */
+.tabbar {
+  flex: 0 0 58px; height: 58px; display: flex; background: rgba(255,255,255,.96);
+  border-top: 1px solid var(--lineL); backdrop-filter: blur(8px); z-index: 7;
+}
+.tabbar button {
+  flex: 1; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  font-size: 10.5px; color: var(--inkL3); font-family: var(--sans); padding: 0;
+}
+.tabbar button svg { width: 21px; height: 21px; }
+.tabbar button .st { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.tabbar button.on { color: var(--redL); font-weight: 600; }
+.tabbar button.on .st { stroke-width: 2.1; }
+
+/* ============ 屏内通用组件 ============ */
+.pad { padding: 14px 16px 22px; }
+.hd { font-family: var(--serif); font-size: 17px; font-weight: 700; margin: 18px 0 10px; display: flex; align-items: center; gap: 8px; }
+.hd::before { content: ""; width: 3px; height: 15px; border-radius: 2px; background: linear-gradient(180deg, var(--redL), var(--goldL)); }
+.hd:first-child { margin-top: 6px; }
+.sub { font-size: 12px; color: var(--inkL3); margin: 0 0 8px; }
+
+.box { background: var(--pcard); border-radius: 14px; padding: 13px 14px; box-shadow: 0 2px 10px rgba(43,35,32,.05); border: 1px solid var(--lineL); }
+.box + .box { margin-top: 10px; }
+.row { display: flex; gap: 10px; }
+.row > * { flex: 1; min-width: 0; }
+
+.tagL { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 999px; background: rgba(200,68,60,.09); color: var(--redL); border: 1px solid rgba(200,68,60,.22); }
+.tagL.g { background: rgba(185,141,62,.12); color: var(--goldL); border-color: rgba(185,141,62,.3); }
+.tagL.j { background: rgba(63,140,118,.11); color: var(--jadeL); border-color: rgba(63,140,118,.28); }
+
+.btnL {
+  display: block; width: 100%; text-align: center; border: 0; cursor: pointer;
+  padding: 13px; border-radius: 12px; font-size: 14.5px; font-weight: 600; font-family: var(--sans);
+  background: linear-gradient(135deg, var(--redL), #A8322B); color: #fff;
+  box-shadow: 0 6px 18px rgba(200,68,60,.28);
+}
+.btnL.ghost { background: #fff; color: var(--redL); border: 1px solid rgba(200,68,60,.35); box-shadow: none; }
+.btnL:active { transform: translateY(1px); }
+
+/* ---- 首页 ---- */
+.home-hero {
+  position: relative; padding: 6px 18px 22px; color: #fff; overflow: hidden;
+  background: linear-gradient(150deg, #C8443C 0%, #A8322B 55%, #8A2A25 100%);
+  border-radius: 0 0 22px 22px;
+}
+.home-hero .kk { font-size: 10.5px; letter-spacing: 3px; opacity: .82; }
+.home-hero h2 { font-family: var(--serif); font-size: 27px; margin: 8px 0 4px; letter-spacing: 1px; }
+.home-hero .sl { font-size: 12px; opacity: .88; margin: 0 0 16px; }
+.home-hero .bloom { position: absolute; right: -14px; top: -6px; opacity: .17; }
+.count {
+  background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.24);
+  border-radius: 14px; padding: 11px 14px; display: flex; align-items: center; justify-content: space-between;
+}
+.count .lb { font-size: 11.5px; opacity: .9; }
+.count .lb b { display: block; font-size: 13.5px; opacity: 1; font-family: var(--serif); margin-bottom: 2px; }
+.count .num { font-family: var(--serif); font-size: 30px; line-height: 1; }
+.count .num small { font-size: 12px; margin-left: 2px; opacity: .85; }
+
+.grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
+.entry { text-align: center; padding: 12px 2px; border-radius: 14px; cursor: pointer; }
+.entry:active { background: rgba(43,35,32,.04); }
+.entry .ic { width: 42px; height: 42px; margin: 0 auto 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 19px; font-family: var(--serif); font-weight: 700; }
+.entry .nm { font-size: 11.5px; color: var(--inkL2); }
+
+.banner {
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+  background: linear-gradient(120deg, #F6E9D7, #FBF3E7);
+  border: 1px solid rgba(185,141,62,.28); border-radius: 14px; padding: 12px 14px; margin-top: 12px;
+}
+.banner .ic { width: 36px; height: 36px; border-radius: 11px; background: rgba(185,141,62,.16); display: flex; align-items: center; justify-content: center; font-size: 17px; flex: 0 0 auto; }
+.banner .tx b { display: block; font-size: 13.5px; color: var(--inkL); font-family: var(--serif); }
+.banner .tx span { font-size: 11.5px; color: var(--inkL3); }
+
+.li { display: flex; gap: 11px; align-items: center; padding: 11px 0; border-bottom: 1px dashed var(--lineL); cursor: pointer; }
+.li:last-child { border-bottom: 0; padding-bottom: 3px; }
+.li .thumb { width: 52px; height: 52px; border-radius: 11px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.li .tx b { display: block; font-size: 13.4px; color: var(--inkL); margin-bottom: 3px; font-weight: 600; }
+.li .tx span { font-size: 11.5px; color: var(--inkL3); }
+
+/* ---- 文化馆 ---- */
+.segs { display: flex; gap: 6px; padding: 12px 16px 10px; position: sticky; top: 42px; background: var(--paper); z-index: 5; }
+.segs span {
+  font-size: 12.5px; padding: 6px 13px; border-radius: 999px; cursor: pointer;
+  background: #fff; border: 1px solid var(--lineL); color: var(--inkL2);
+  transition: background .18s, color .18s, border-color .18s;
+  -webkit-user-select: none; user-select: none;
+}
+.segs span:hover { color: var(--redL); border-color: rgba(200,68,60,.3); }
+.segs span.on { background: var(--inkL); color: #fff; border-color: var(--inkL); }
+
+/* 点击分段跳转后，目标区块闪一下，明确"跳到这了" */
+@keyframes segFlash {
+  0%   { background: rgba(200,68,60,.20); }
+  100% { background: transparent; }
+}
+.flash { animation: segFlash 1.15s ease-out; border-radius: 9px; }
+
+.quote { font-family: var(--serif); font-size: 15px; color: var(--redL); text-align: center; padding: 6px 0 4px; letter-spacing: .5px; }
+
+.tline { padding-left: 18px; border-left: 2px solid rgba(185,141,62,.35); margin: 6px 0 0; }
+.tline .n { position: relative; padding: 0 0 15px; }
+.tline .n:last-child { padding-bottom: 2px; }
+.tline .n::before { content: ""; position: absolute; left: -24px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--paper); border: 2px solid var(--goldL); }
+.tline .n b { font-family: var(--serif); font-size: 13.4px; color: var(--goldL); display: block; }
+.tline .n span { font-size: 12.3px; color: var(--inkL2); }
+
+.sym { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.sym .s { background: #fff; border: 1px solid var(--lineL); border-radius: 13px; padding: 11px 8px; text-align: center; }
+.sym .s .e { font-size: 24px; display: block; margin-bottom: 5px; }
+.sym .s .n { font-size: 11.8px; font-weight: 600; color: var(--inkL); }
+.sym .s .d { font-size: 10.4px; color: var(--inkL3); line-height: 1.45; }
+
+/* ---- 仪式体验 ---- */
+.rit-top { background: linear-gradient(160deg, #2B2320, #3D322C); color: #F4ECE2; padding: 16px 18px 18px; }
+.rit-top .k { font-size: 10.5px; letter-spacing: 3px; color: rgba(230,197,131,.85); }
+.rit-top h2 { font-family: var(--serif); font-size: 21px; margin: 6px 0 12px; }
+.pdot { display: flex; gap: 5px; align-items: center; }
+.pdot i { flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,.18); }
+.pdot i.f { background: linear-gradient(90deg, #E6C583, #C8443C); }
+.rit-card { background: #fff; border-radius: 16px; padding: 18px 17px; margin: 14px 16px; border: 1px solid var(--lineL); box-shadow: 0 4px 18px rgba(43,35,32,.06); }
+.rit-card .no { font-family: var(--serif); font-size: 40px; line-height: 1; color: rgba(185,141,62,.32); font-weight: 700; }
+.rit-card h3 { font-family: var(--serif); font-size: 21px; margin: 4px 0 12px; }
+.rit-card .lb { font-size: 11px; letter-spacing: 1.5px; color: var(--inkL3); margin: 12px 0 4px; }
+.rit-card p { font-size: 13.2px; color: var(--inkL2); margin: 0; line-height: 1.75; }
+.rit-card .mean { background: rgba(200,68,60,.06); border-left: 3px solid var(--redL); border-radius: 0 9px 9px 0; padding: 9px 12px; font-size: 12.6px; color: var(--redL); margin-top: 12px; }
+
+/* ---- 闯关 ---- */
+.q-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 6px; }
+.q-top .lv { font-size: 12px; color: var(--inkL3); }
+.q-bar { height: 6px; border-radius: 3px; background: rgba(43,35,32,.08); margin: 0 16px 4px; overflow: hidden; }
+.q-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--goldL), var(--redL)); border-radius: 3px; }
+.q-q { font-family: var(--serif); font-size: 17px; line-height: 1.6; margin: 14px 0 14px; }
+.opt {
+  display: flex; align-items: center; gap: 10px; padding: 13px 14px; border-radius: 13px;
+  background: #fff; border: 1.4px solid var(--lineL); margin-bottom: 9px; cursor: pointer; font-size: 13.4px;
+}
+.opt .k { width: 22px; height: 22px; border-radius: 50%; background: rgba(43,35,32,.06); font-size: 11.5px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: var(--inkL2); }
+.opt.ok { border-color: var(--jadeL); background: rgba(63,140,118,.07); }
+.opt.ok .k { background: var(--jadeL); color: #fff; }
+.opt.no { border-color: var(--redL); background: rgba(200,68,60,.06); }
+.opt.no .k { background: var(--redL); color: #fff; }
+.exp { background: rgba(63,140,118,.08); border-radius: 12px; padding: 11px 13px; font-size: 12.5px; color: var(--inkL2); margin-top: 4px; display: none; }
+.exp.show { display: block; }
+
+/* ---- 服务预约 ---- */
+.chipsL { display: flex; gap: 7px; overflow-x: auto; padding: 12px 16px 2px; }
+.chipsL::-webkit-scrollbar { display: none; }
+.chipsL span { flex: 0 0 auto; font-size: 12.3px; padding: 6px 13px; border-radius: 999px; background: #fff; border: 1px solid var(--lineL); color: var(--inkL2); }
+.chipsL span.on { background: rgba(200,68,60,.1); color: var(--redL); border-color: rgba(200,68,60,.3); font-weight: 600; }
+.shop { display: flex; gap: 11px; align-items: center; }
+.shop .pic { width: 58px; height: 58px; border-radius: 13px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.shop .info { min-width: 0; flex: 1; }
+.shop .info b { font-size: 13.8px; display: block; margin-bottom: 3px; }
+.shop .info .m { font-size: 11.4px; color: var(--inkL3); }
+.shop .go { font-size: 12px; padding: 6px 13px; border-radius: 999px; background: var(--redL); color: #fff; flex: 0 0 auto; }
+
+/* ---- 社区 ---- */
+.topic { display: flex; align-items: center; gap: 9px; padding: 13px 16px 4px; }
+.topic .t { font-family: var(--serif); font-size: 16px; font-weight: 700; }
+.post .ph { display: flex; align-items: center; gap: 8px; }
+.post .av { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#E6C583,#C8443C); flex: 0 0 auto; }
+.post .ph b { font-size: 12.6px; }
+.post .ph span { font-size: 11px; color: var(--inkL3); margin-left: auto; }
+.post .ct { font-size: 13px; color: var(--inkL2); margin: 9px 0; }
+.post .imgs { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
+.post .imgs i { display: block; aspect-ratio: 1; border-radius: 9px; }
+.post .acts { display: flex; gap: 18px; font-size: 11.6px; color: var(--inkL3); margin-top: 10px; }
+
+/* ---- 我的 ---- */
+.mine-top { background: linear-gradient(150deg, #C8443C, #8A2A25); color: #fff; padding: 18px 18px 26px; border-radius: 0 0 22px 22px; }
+.mine-top .rw { display: flex; align-items: center; gap: 12px; }
+.mine-top .av { width: 54px; height: 54px; border-radius: 50%; background: rgba(255,255,255,.2); border: 1.5px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 21px; }
+.mine-top b { font-size: 17px; font-family: var(--serif); }
+.mine-top .sb { font-size: 11.5px; opacity: .85; }
+.mine-top .stats { display: flex; gap: 0; margin-top: 16px; }
+.mine-top .stats div { flex: 1; text-align: center; }
+.mine-top .stats b { display: block; font-size: 19px; font-family: var(--serif); }
+.mine-top .stats span { font-size: 10.8px; opacity: .82; }
+.badges { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.badge { text-align: center; padding: 10px 4px; border-radius: 13px; background: #fff; border: 1px solid var(--lineL); }
+.badge .e { font-size: 22px; display: block; }
+.badge .n { font-size: 10.5px; color: var(--inkL2); }
+.badge.lock { opacity: .42; }
+.plist .r { display: flex; align-items: center; gap: 11px; padding: 13px 0; border-bottom: 1px solid var(--lineL); font-size: 13.4px; cursor: pointer; }
+.plist .r:last-child { border-bottom: 0; }
+.plist .r .e { width: 26px; text-align: center; font-size: 16px; }
+.plist .r .v { margin-left: auto; font-size: 11.8px; color: var(--inkL3); }
+
+/* 右下说明栏 */
+.sidenote h3 { font-family: var(--serif); font-size: 16px; color: var(--gold-2); margin: 0 0 10px; }
+.sidenote h3::before { content: none; }
+.sidenote .blk { border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; margin-bottom: 12px; background: rgba(255,255,255,.02); }
+.sidenote .blk h4 { margin: 0 0 8px; font-size: 13.5px; color: var(--ink); font-family: var(--serif); }
+.sidenote ul { margin: 0; padding-left: 0; list-style: none; }
+.sidenote li { font-size: 12.6px; color: var(--ink-2); padding-left: 14px; position: relative; margin-bottom: 5px; }
+.sidenote li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+.sidenote .kbd { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 5px; background: rgba(201,160,85,.14); color: var(--gold-2); border: 1px solid var(--line-2); }
+
+@media (max-width: 980px) {
+  .stage { grid-template-columns: 1fr; }
+  .device { margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+<div class="pwrap">
+
+  <div class="phead">
+    <div>
+      <h1>「出花园」潮汕成人礼小程序 · 高保真原型</h1>
+      <p>7 屏可点击原型：点击下方切换屏、点手机内的入口按钮可跳转。手机屏为浅色小程序界面，外部为方案站深色背景。</p>
+    </div>
+    <a class="backlink" href="index.html">← 返回策划方案与项目架构</a>
+  </div>
+
+  <div class="chips" id="chips">
+    <button class="chip on" data-go="home">① 首页</button>
+    <button class="chip" data-go="culture">② 文化科普馆</button>
+    <button class="chip" data-go="ritual">③ 七步仪式体验</button>
+    <button class="chip" data-go="quiz">④ 知识闯关</button>
+    <button class="chip" data-go="service">⑤ 服务预约</button>
+    <button class="chip" data-go="community">⑥ 社区广场</button>
+    <button class="chip" data-go="mine">⑦ 我的花园</button>
+  </div>
+
+  <div class="stage">
+
+    <!-- ================= 手机 ================= -->
+    <div class="device">
+      <div class="screen">
+
+        <div class="viewport" id="viewport">
+
+          <!-- ============ ① 首页 ============ -->
+          <section class="page active" data-page="home">
+            <div class="home-hero">
+              <div class="sbar-strip"><span>9:41</span><span class="dots"><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:.35"></i></span><span class="bat"></span></div>
+              <div class="kk">潮汕 · 成人礼</div>
+              <h2>出花園</h2>
+              <p class="sl">十五成丁，十六成人 · 一出花园，便是大人</p>
+              <svg class="bloom" width="132" height="132" viewBox="0 0 100 100" aria-hidden="true">
+                <g fill="#FFFFFF">
+                  <circle cx="50" cy="26" r="12"/><circle cx="72" cy="42" r="12"/><circle cx="64" cy="68" r="12"/>
+                  <circle cx="36" cy="68" r="12"/><circle cx="28" cy="42" r="12"/>
+                </g>
+                <circle cx="50" cy="48" r="8" fill="#F2C14E"/>
+              </svg>
+              <div class="count">
+                <div class="lb"><b>农历七月初七 · 出花园正日</b>距下一个吉日</div>
+                <div class="num" id="cdNum">--<small>天</small></div>
+              </div>
+              <div style="font-size:10px;opacity:.7;margin-top:8px">倒计时为演示数据，上线时接入农历库自动换算</div>
+            </div>
+
+            <div class="pad">
+              <div class="grid4">
+                <div class="entry" data-go="culture">
+                  <div class="ic" style="background:rgba(201,160,85,.15);color:#B98D3E">文</div>
+                  <div class="nm">文化科普</div>
+                </div>
+                <div class="entry" data-go="ritual">
+                  <div class="ic" style="background:rgba(200,68,60,.12);color:#C8443C">礼</div>
+                  <div class="nm">七步仪式</div>
+                </div>
+                <div class="entry" data-go="quiz">
+                  <div class="ic" style="background:rgba(63,140,118,.13);color:#3F8C76">答</div>
+                  <div class="nm">知识闯关</div>
+                </div>
+                <div class="entry" data-go="service">
+                  <div class="ic" style="background:rgba(120,110,200,.13);color:#6A5FC0">约</div>
+                  <div class="nm">服务预约</div>
+                </div>
+              </div>
+
+              <div class="banner" data-go="community">
+                <div class="ic">🌸</div>
+                <div class="tx"><b>社区广场 · #我的出花园</b><span>1,286 位潮汕人在这里留下他们的出花园</span></div>
+              </div>
+
+              <div class="hd">今日一签</div>
+              <div class="box" style="background:linear-gradient(120deg,#FFF9EF,#FFFDF8);border-color:rgba(185,141,62,.28)">
+                <div style="font-size:12px;color:#B98D3E;letter-spacing:1px;margin-bottom:5px">农历 · 民俗小知识</div>
+                <div style="font-family:var(--serif);font-size:15.5px;color:#2B2320;line-height:1.7">
+                  「咬鸡头，富雅贤；咬鸡嘴，大富贵。」——出花园宴上最热闹的一环，就藏在这句俗语里。
+                </div>
+                <div style="margin-top:10px"><span class="tagL g">点击了解咬鸡头的由来 →</span></div>
+              </div>
+
+              <div class="hd">大家都在看</div>
+              <div class="box">
+                <div class="li" data-go="culture">
+                  <div class="thumb" style="background:rgba(201,160,85,.14)">🪵</div>
+                  <div class="tx"><b>为什么出花园要穿红木屐？</b><span>明嘉靖状元林大钦的传说 · 4.2 万阅读</span></div>
+                </div>
+                <div class="li" data-go="culture">
+                  <div class="thumb" style="background:rgba(200,68,60,.11)">🌺</div>
+                  <div class="tx"><b>十二花水到底是哪十二种花</b><span>各地略有差异 · 3.1 万阅读</span></div>
+                </div>
+                <div class="li" data-go="ritual">
+                  <div class="thumb" style="background:rgba(63,140,118,.12)">🐔</div>
+                  <div class="tx"><b>头彩食十二碗，每碗都有彩头</b><span>猪肚换肠肚 · 2.7 万阅读</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ ② 文化馆 ============ -->
+          <section class="page" data-page="culture">
+            <div class="sbar-strip light"><span>9:41</span><span class="dots"><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:.35"></i></span><span class="bat"></span></div>
+            <div class="navbar">
+              <div class="bk" data-go="home">‹</div>
+              <div class="tt">文化科普馆</div>
+              <div class="sp"></div>
+              <div style="font-size:15px;color:#A0937F">☆</div>
+            </div>
+            <div class="segs" id="cultureSegs">
+              <span class="on" data-target="ct-1">典故</span><span data-target="ct-2">时间轴</span><span data-target="ct-3">符号图鉴</span><span data-target="ct-4">三地差异</span>
+            </div>
+            <div class="pad" style="padding-top:4px">
+              <div class="quote" id="ct-1">「一枝今已出花园」</div>
+              <div class="box">
+                <p style="font-size:13.3px;color:#6B5D52;margin:0 0 10px;line-height:1.8">
+                  <b style="color:#2B2320">出花园</b>是潮汕地区独有的成人礼俗，由古代冠笄之礼演变而来。潮汕人认为十五虚岁前孩子受「公婆母」庇佑，生活在花园里；举行出花园仪式，即拜谢神恩、跨出花园墙，正式成人。
+                </p>
+                <div style="display:flex;gap:6px;flex-wrap:wrap">
+                  <span class="tagL">十五虚岁</span><span class="tagL g">农历七月初七</span><span class="tagL j">省级非遗 2018</span>
+                </div>
+              </div>
+
+              <div class="hd" id="ct-2">由来时间轴</div>
+              <div class="box">
+                <div class="tline">
+                  <div class="n"><b>周代 · 冠笄之礼</b><span>男子二十而冠、女子十五而笄，标志由家庭走向社会</span></div>
+                  <div class="n"><b>明嘉靖 · 林大钦传说</b><span>穿红木屐获赠公鸡，父以鸡头奖励，后高中状元 —— 遂成咬鸡头、穿红屐之俗</span></div>
+                  <div class="n"><b>明清以降 · 民间普及</b><span>仪式环节日益完备，随潮人足迹传至东南亚</span></div>
+                  <div class="n"><b>2014 / 2018 · 非遗认定</b><span>入选汕头市级、广东省第七批省级非物质文化遗产名录</span></div>
+                  <div class="n"><b>近年 · 三地联动 + 线上化</b><span>汕潮揭各具特色办集体成人礼；已有线上「出花园」先例</span></div>
+                </div>
+              </div>
+
+              <div class="hd" id="ct-3">文化符号图鉴</div>
+              <div class="sym">
+                <div class="s"><span class="e">🪵</span><div class="n">红木屐</div><div class="d">脚踏实地 前程开阔</div></div>
+                <div class="s"><span class="e">🌺</span><div class="n">石榴花</div><div class="d">多籽多福 平安吉祥</div></div>
+                <div class="s"><span class="e">💧</span><div class="n">十二花水</div><div class="d">洗去稚气 去秽纳新</div></div>
+                <div class="s"><span class="e">🐓</span><div class="n">公鸡</div><div class="d">独占鳌头 朝气勃发</div></div>
+                <div class="s"><span class="e">🍑</span><div class="n">红桃粿</div><div class="d">桃形长寿 喜庆吉粿</div></div>
+                <div class="s"><span class="e">🧧</span><div class="n">腰兜</div><div class="d">桂圆铜钱 贴身祝福</div></div>
+              </div>
+
+              <div class="hd" id="ct-4">汕潮揭三地各有亮点</div>
+              <div class="box">
+                <div class="li"><div class="thumb" style="background:rgba(200,68,60,.12)">汕</div><div class="tx"><b>汕头 · 规模化集体传承</b><span>老妈宫戏台，单场 60 组家庭、跨城参与</span></div></div>
+                <div class="li"><div class="thumb" style="background:rgba(201,160,85,.15)">潮</div><div class="tx"><b>潮州 · 侨乡 + 歌册「做四句」</b><span>海阳县儒学宫，面向海内外潮籍青少年</span></div></div>
+                <div class="li"><div class="thumb" style="background:rgba(63,140,118,.12)">揭</div><div class="tx"><b>揭阳 · 学宫文明实践</b><span>挽面插花、敬先贤拜孔子、击鼓明志</span></div></div>
+              </div>
+              <div style="font-size:10.8px;color:#A0937F;margin-top:12px;line-height:1.6">
+                各地礼俗细节差异较大，部分内容需进一步核实；正式上线前经文化馆或民俗专家审校。
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ ③ 七步仪式 ============ -->
+          <section class="page" data-page="ritual">
+            <div class="rit-top">
+              <div class="sbar-strip"><span>9:41</span><span class="dots"><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:.35"></i></span><span class="bat"></span></div>
+              <div class="k">仪 式 体 验</div>
+              <h2>走一遍出花园</h2>
+              <div class="pdot" id="pdot"></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:8px;opacity:.85">
+                <span>第 <b id="stepNow">1</b> / 7 步</span>
+                <span id="stepName">择吉</span>
+              </div>
+            </div>
+            <div class="rit-card" id="ritCard"></div>
+            <div class="pad" style="padding-top:0">
+              <div class="row">
+                <button class="btnL ghost" id="btnPrev">上一步</button>
+                <button class="btnL" id="btnNext">下一步</button>
+              </div>
+              <div style="text-align:center;font-size:11.5px;color:#A0937F;margin-top:14px">
+                走完七步可解锁「出花园纪念证书」
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ ④ 知识闯关 ============ -->
+          <section class="page" data-page="quiz">
+            <div class="sbar-strip light"><span>9:41</span><span class="dots"><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:.35"></i></span><span class="bat"></span></div>
+            <div class="navbar">
+              <div class="bk" data-go="home">‹</div>
+              <div class="tt">知识闯关</div>
+              <div class="sp"></div>
+              <span class="tagL g">青少年版</span>
+            </div>
+            <div class="q-top">
+              <span class="lv">第 <b id="qNow">1</b> / 8 题</span>
+              <span class="lv">🏅 已答对 <b id="qRight">0</b> 题</span>
+            </div>
+            <div class="q-bar"><i id="qBar" style="width:12.5%"></i></div>
+            <div class="pad" style="padding-top:12px">
+              <div class="q-q" id="qText">加载中…</div>
+              <div id="qOpts"></div>
+              <div class="exp" id="qExp"></div>
+              <button class="btnL" id="qNext" style="margin-top:16px;display:none">下一题</button>
+              <div style="text-align:center;font-size:11.5px;color:#A0937F;margin-top:12px">
+                答对 5 题解锁「花园小达人」徽章
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ ⑤ 服务预约 ============ -->
+          <section class="page" data-page="service">
+            <div class="sbar-strip light"><span>9:41</span><span class="dots"><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:.35"></i></span><span class="bat"></span></div>
+            <div class="navbar">
+              <div class="bk" data-go="home">‹</div>
+              <div class="tt">服务预约</div>
+              <div class="sp"></div>
+              <div style="font-size:15px;color:#A0937F">☰</div>
+            </div>
+            <div class="chipsL">
+              <span class="on">全部</span><span>仪式操办</span><span>司仪</span><span>用品</span><span>旅拍</span><span>场地</span>
+            </div>
+            <div class="pad" style="padding-top:14px">
+              <div class="box">
+                <div class="shop">
+                  <div class="pic" style="background:rgba(200,68,60,.1)">🎎</div>
+                  <div class="info"><b>潮俗礼仪 · 出花园全套操办</b><div class="m">汕头市区 · 含司仪与流程指导 · 已服务 260+ 家庭</div></div>
+                  <div class="go">预约</div>
+                </div>
+              </div>
+              <div class="box">
+                <div class="shop">
+                  <div class="pic" style="background:rgba(201,160,85,.15)">🪵</div>
+                  <div class="info"><b>老手艺木屐坊 · 红皮木屐定制</b><div class="m">手工制作 · 可刻名字 · 支持寄海外</div></div>
+                  <div class="go">预约</div>
+                </div>
+              </div>
+              <div class="box">
+                <div class="shop">
+                  <div class="pic" style="background:rgba(63,140,118,.13)">📷</div>
+                  <div class="info"><b>厝边摄影 · 出花园纪实旅拍</b><div class="m">仪式跟拍 + 全家福 · 3 个工作日出片</div></div>
+                  <div class="go">预约</div>
+                </div>
+              </div>
+              <div class="box">
+                <div class="shop">
+                  <div class="pic" style="background:rgba(120,110,200,.13)">🏛</div>
+                  <div class="info"><b>集体成人礼 · 官方活动报名</b><div class="m">与文化馆联合举办 · 农历七月初七场次</div></div>
+                  <div class="go">报名</div>
+                </div>
+              </div>
+
+              <div class="hd">预约流程</div>
+              <div class="box" style="font-size:12.6px;color:#6B5D52">
+                提交意向 → 商家电话/微信确认 → 线下沟通细节 → 完成服务 → 双方互评<br>
+                <span style="color:#A0937F;font-size:11.5px">首版为信息撮合，不收取线上款项；商家均经人工审核入驻。</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ ⑥ 社区广场 ============ -->
+          <section class="page" data-page="community">
+            <div class="sbar-strip light"><span>9:41</span><span class="dots"><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:.35"></i></span><span class="bat"></span></div>
+            <div class="navbar">
+              <div class="bk" data-go="home">‹</div>
+              <div class="tt">社区广场</div>
+              <div class="sp"></div>
+              <div style="font-size:15px;color:#A0937F">🔔</div>
+            </div>
+            <div class="topic">
+              <span class="tagL">#话题</span>
+              <div class="t">我的出花园</div>
+            </div>
+            <div class="pad" style="padding-top:8px">
+              <div class="box post">
+                <div class="ph"><div class="av"></div><b>阿澄</b><span>2 小时前 · 汕头</span></div>
+                <div class="ct">今天轮到我出花园了。奶奶剪了石榴枝插在我头上，说「出了花园就是大人了」，突然有点想哭。</div>
+                <div class="imgs">
+                  <i style="background:linear-gradient(135deg,#F0D9C0,#D9A96F)"></i>
+                  <i style="background:linear-gradient(135deg,#E8B7B0,#C8443C)"></i>
+                  <i style="background:linear-gradient(135deg,#CFE3DA,#3F8C76)"></i>
+                </div>
+                <div class="acts"><span>♡ 328</span><span>💬 46</span><span>↗ 分享</span></div>
+              </div>
+              <div class="box post">
+                <div class="ph"><div class="av" style="background:linear-gradient(135deg,#CFE3DA,#3F8C76)"></div><b>阿玲姨</b><span>昨天 · 揭阳</span></div>
+                <div class="ct">给女儿办的出花园，十二碗头一样都没少。她说咬鸡头那一下最好玩，笑到不行。</div>
+                <div class="acts"><span>♡ 512</span><span>💬 88</span><span>↗ 分享</span></div>
+              </div>
+              <div class="box post">
+                <div class="ph"><div class="av" style="background:linear-gradient(135deg,#D7D2F0,#6A5FC0)"></div><b>槟城 · 阿豪</b><span>3 天前 · 马来西亚</span></div>
+                <div class="ct">在海外长大，第一次知道原来 15 岁还有这样的仪式。谢谢小程序让我看懂了家里的根。</div>
+                <div class="acts"><span>♡ 1,204</span><span>💬 173</span><span>↗ 分享</span></div>
+              </div>
+              <div style="text-align:center;font-size:11.5px;color:#A0937F;margin-top:14px">
+                发布内容须遵守《社区公约》，所有内容经审核后展示
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ ⑦ 我的花园 ============ -->
+          <section class="page" data-page="mine">
+            <div class="mine-top">
+              <div class="sbar-strip"><span>9:41</span><span class="dots"><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:1"></i><i style="height:12px;opacity:.35"></i></span><span class="bat"></span></div>
+              <div class="rw">
+                <div class="av">澄</div>
+                <div>
+                  <b>阿澄</b>
+                  <div class="sb">2009 年生 · 2024 年出花园 · 汕头</div>
+                </div>
+              </div>
+              <div class="stats">
+                <div><b>7</b><span>走过仪式步骤</span></div>
+                <div><b>3</b><span>获得徽章</span></div>
+                <div><b>12</b><span>收到祝福</span></div>
+              </div>
+            </div>
+            <div class="pad">
+              <div class="hd">我的花园 · 成长档案</div>
+              <div class="box">
+                <div style="display:flex;justify-content:space-between;font-size:12.5px;color:#6B5D52;margin-bottom:7px">
+                  <span>仪式进度</span><span><b style="color:#C8443C">7 / 7</b> 已完成</span>
+                </div>
+                <div style="height:7px;border-radius:4px;background:rgba(43,35,32,.08);overflow:hidden">
+                  <i style="display:block;height:100%;width:100%;background:linear-gradient(90deg,#B98D3E,#C8443C);border-radius:4px"></i>
+                </div>
+                <div style="margin-top:12px;font-size:12.5px;color:#6B5D52">
+                  出花园纪念证书已生成　<span style="color:#C8443C;font-weight:600">查看 / 保存 →</span>
+                </div>
+              </div>
+
+              <div class="hd">徽章收藏</div>
+              <div class="badges">
+                <div class="badge"><span class="e">🌺</span><div class="n">初识花园</div></div>
+                <div class="badge"><span class="e">🐔</span><div class="n">咬鸡头</div></div>
+                <div class="badge"><span class="e">📜</span><div class="n">礼成</div></div>
+                <div class="badge lock"><span class="e">🏆</span><div class="n">花园达人</div></div>
+              </div>
+
+              <div class="hd">我的</div>
+              <div class="box plist">
+                <div class="r" data-go="service"><span class="e">📋</span>我的预约<span class="v">1 条进行中 ›</span></div>
+                <div class="r"><span class="e">⭐</span>我的收藏<span class="v">18 ›</span></div>
+                <div class="r" data-go="community"><span class="e">🌸</span>我发布的<span class="v">2 条 ›</span></div>
+                <div class="r" data-go="quiz"><span class="e">🎯</span>闯关记录<span class="v">正确率 88% ›</span></div>
+                <div class="r"><span class="e">⚙️</span>设置与隐私<span class="v">›</span></div>
+              </div>
+              <div style="text-align:center;font-size:10.8px;color:#A0937F;margin-top:16px">
+                未成年人信息按最小化原则收集 · 可一键删除全部数据
+              </div>
+            </div>
+          </section>
+
+        </div><!-- /viewport -->
+
+        <!-- 底部 Tab -->
+        <nav class="tabbar" id="tabbar">
+          <button class="on" data-go="home">
+            <svg viewBox="0 0 24 24"><path class="st" d="M3.5 10.5 12 3.5l8.5 7v9a1.5 1.5 0 0 1-1.5 1.5h-4v-6h-6v6H5a1.5 1.5 0 0 1-1.5-1.5z"/></svg>
+            <span>首页</span>
+          </button>
+          <button data-go="culture">
+            <svg viewBox="0 0 24 24"><path class="st" d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM13 4h5.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H13z"/><path class="st" d="M12 4v16"/></svg>
+            <span>文化</span>
+          </button>
+          <button data-go="ritual">
+            <svg viewBox="0 0 24 24"><circle class="st" cx="12" cy="12" r="3"/><path class="st" d="M12 3.5a8.5 8.5 0 0 1 6 2.5M12 20.5a8.5 8.5 0 0 1-6-2.5M20.5 12a8.5 8.5 0 0 1-2.5 6M3.5 12A8.5 8.5 0 0 1 6 6"/></svg>
+            <span>体验</span>
+          </button>
+          <button data-go="mine">
+            <svg viewBox="0 0 24 24"><circle class="st" cx="12" cy="8.5" r="3.6"/><path class="st" d="M4.8 20.5c0-3.6 3.2-6 7.2-6s7.2 2.4 7.2 6"/></svg>
+            <span>我的</span>
+          </button>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- ================= 右侧说明 ================= -->
+    <aside class="sidenote">
+      <div class="blk">
+        <h3>这套原型演示了什么</h3>
+        <ul>
+          <li>完整用户旅程：从「看懂」→「玩到」→「约上」→「留下」</li>
+          <li>三类用户各有关口：游客看科普、学生玩闯关、家长走预约</li>
+          <li>唯一天然带传播的功能是<strong>祝福卡 + 纪念证书</strong>，是 MVP 的增长支点</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <h3>怎么操作</h3>
+        <ul>
+          <li>点上方 <span class="kbd">①–⑦</span> 切换屏</li>
+          <li>点手机内的入口（四宫格 / 社区横幅 / 列表项）可跳转</li>
+          <li>底部 Tab 固定「首页 / 文化 / 体验 / 我的」四项</li>
+          <li>「七步仪式」可上下步切换；「知识闯关」可点选答案看解析</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <h3>与方案的对应</h3>
+        <ul>
+          <li>①首页 → 功能分层图 MVP 层</li>
+          <li>②文化馆 → 内容分级「成年版/深读」</li>
+          <li>③七步仪式 → 文化知识库 2.3 节</li>
+          <li>④闯关 → 内容体系 4.3 题库</li>
+          <li>⑤预约 → V2 期服务闭环</li>
+          <li>⑥社区 → V2 期 UGC 与审核</li>
+          <li>⑦我的花园 → 用户旅程「传播」段</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <h3>说明</h3>
+        <ul>
+          <li>原型为<strong>视觉与交互示意</strong>，非可上线代码</li>
+          <li>倒计时、阅读量、点赞数均为演示数据</li>
+          <li>涉及民俗细节均标注「需进一步核实」</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<script>
+/* ================= 屏幕切换 ================= */
+var viewport = document.getElementById('viewport');
+var chips = Array.prototype.slice.call(document.querySelectorAll('#chips .chip'));
+var tabs  = Array.prototype.slice.call(document.querySelectorAll('#tabbar button'));
+
+var TABMAP = { quiz: 'ritual', service: 'home', community: 'home' };
+
+function go(name) {
+  var pages = document.querySelectorAll('.page');
+  var found = false;
+  for (var i = 0; i < pages.length; i++) {
+    var on = pages[i].getAttribute('data-page') === name;
+    pages[i].classList.toggle('active', on);
+    if (on) found = true;
+  }
+  if (!found) return;
+  viewport.scrollTop = 0;
+  chips.forEach(function (c) { c.classList.toggle('on', c.getAttribute('data-go') === name); });
+  var tabTarget = TABMAP[name] || name;
+  tabs.forEach(function (t) { t.classList.toggle('on', t.getAttribute('data-go') === tabTarget); });
+}
+
+document.addEventListener('click', function (e) {
+  var el = e.target.closest ? e.target.closest('[data-go]') : null;
+  if (!el) return;
+  go(el.getAttribute('data-go'));
+});
+
+/* ================= 首页倒计时（演示数据） ================= */
+(function () {
+  // 演示用目标日：七夕（农历七月初七）示例日期。上线时接入农历库换算。
+  var TARGET = new Date('2027-08-08T00:00:00');
+  var now = new Date();
+  var days = Math.ceil((TARGET - now) / 86400000);
+  if (days < 0) days = 0;
+  var el = document.getElementById('cdNum');
+  if (el) el.innerHTML = days + '<small>天</small>';
+})();
+
+/* ================= 七步仪式 ================= */
+var STEPS = [
+  { n:'择吉',        do:'择定吉日吉时。传统多在农历七月初七（乞巧节），也有人家选三月、五月，现代多择正月或由家庭商定。', mean:'以礼启新，郑重其事' },
+  { n:'十二花水浴',  do:'采十二种寓意吉祥的花草——石榴花、芙蓉花、春草、状元竹、榕树叶、百日红等，煮水给孩子沐浴。', mean:'洗去稚气，净身迎新' },
+  { n:'换新衣 · 着红木屐', do:'穿外婆（舅家）送的新衣新鞋，系上母亲亲手缝的红肚兜——兜内压十二颗桂圆与两枚古铜钱，脚着红皮木屐。', mean:'脱胎换骨，一帆风顺' },
+  { n:'拜公婆母',    do:'于床上设浅沿大笸箩，供十二碗甜薯粉圆、十二盅乌豆酒、红桃粿、发粿与三牲——男孩供公鸡，女孩供母鸡。跪拜辞谢多年庇佑。', mean:'感恩守护，正式「离园」' },
+  { n:'咬鸡头 · 头彩食', do:'整鸡上桌、鸡头对准孩子，象征性咬一口；十二碗「花园菜」每样都吃一点：猪肚换肠肚、芹菜勤劳、葱聪明、蒜会算、豆干做官、韭菜长久。', mean:'独占鳌头，事事有好彩头' },
+  { n:'敬茶感恩',    do:'孩子向父母长辈敬茶，长辈回赠红包或饰品，叮嘱「志在四方」。孩子破例坐上席大位，象征已成家中栋梁。', mean:'孝亲责任，家风传续' },
+  { n:'躲花园',      do:'当日不外出、不见天、不串门，静守家中完成身份转换；亦有「行巷」之说，寓意行四方、处处有得食。', mean:'收心立志，成人自持' }
+];
+var si = 0;
+var pdot = document.getElementById('pdot');
+var ritCard = document.getElementById('ritCard');
+
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+function renderStep() {
+  var s = STEPS[si];
+  var dots = '';
+  for (var i = 0; i < STEPS.length; i++) dots += '<i class="' + (i <= si ? 'f' : '') + '"></i>';
+  pdot.innerHTML = dots;
+  document.getElementById('stepNow').textContent = si + 1;
+  document.getElementById('stepName').textContent = s.n;
+  ritCard.innerHTML =
+    '<div class="no">' + pad2(si + 1) + '</div>' +
+    '<h3>' + s.n + '</h3>' +
+    '<div class="lb">做 法</div><p>' + s.do + '</p>' +
+    '<div class="mean">寓意：' + s.mean + '</div>';
+  document.getElementById('btnPrev').style.opacity = si === 0 ? '.45' : '1';
+  document.getElementById('btnNext').textContent = si === STEPS.length - 1 ? '礼成 · 生成证书' : '下一步';
+}
+document.getElementById('btnPrev').onclick = function () { if (si > 0) { si--; renderStep(); } };
+document.getElementById('btnNext').onclick = function () { if (si < STEPS.length - 1) { si++; renderStep(); } else { go('mine'); } };
+renderStep();
+
+/* ================= 知识闯关 ================= */
+var QUIZ = [
+  { q:'「出花园」通常在孩子几岁时举行？', o:['十虚岁','十五虚岁','十八虚岁'], a:1,
+    e:'潮汕俗语「十五成丁，十六成人」，孩子满十五虚岁举行出花园仪式。' },
+  { q:'传统上「出花园」最常选在哪一天？', o:['正月初一','五月初五','七月初七'], a:2,
+    e:'多选农历七月初七（乞巧节），也有三月、五月或另择吉日。' },
+  { q:'沐浴用的「十二花水」，「十二」主要象征什么？', o:['十二生肖与一年十二月，寓意圆满','家里有十二口人','十二岁开始准备'], a:0,
+    e:'十二应合一年十二月与十二生肖，取圆满、去秽纳新之意。' },
+  { q:'「咬鸡头」这一习俗与哪位人物有关？', o:['唐代韩愈','明代状元林大钦','宋代包拯'], a:1,
+    e:'明嘉靖潮州状元林大钦少时获赠公鸡，父亲以鸡头奖励，寄望「独占鳌头」，后果然高中。' },
+  { q:'「出花园」的孩子穿的木屐是什么颜色？', o:['红色','黑色','白色'], a:0,
+    e:'红皮木屐。源自林大钦穿红屐上学的传说，寓意前程开阔。' },
+  { q:'孩子腰兜里通常会压着什么？', o:['十二颗桂圆与两枚铜钱','一把米','一张红纸'], a:0,
+    e:'十二颗桂圆加两枚古铜钱（旧说用「顺治」铜钱），由母亲亲手缝制。' },
+  { q:'「出花园」在哪一年入选省级非物质文化遗产名录？', o:['2008 年','2014 年','2018 年'], a:2,
+    e:'2014 年入选汕头市级非遗，2018 年入选广东省第七批省级非遗名录。' },
+  { q:'仪式当天孩子不宜做的事是？', o:['外出串门、跑出去玩','向父母敬茶','吃头彩食'], a:0,
+    e:'「躲花园」——当日不外出、不串门，寓意收心立志。' }
+];
+var qi = 0, qRight = 0, answered = false;
+var qText = document.getElementById('qText'), qOpts = document.getElementById('qOpts'),
+    qExp = document.getElementById('qExp'), qNext = document.getElementById('qNext');
+
+function renderQ() {
+  answered = false;
+  var item = QUIZ[qi];
+  qText.textContent = (qi + 1) + '. ' + item.q;
+  var html = '';
+  for (var i = 0; i < item.o.length; i++) {
+    html += '<div class="opt" data-i="' + i + '"><span class="k">' + 'ABC'[i] + '</span><span>' + item.o[i] + '</span></div>';
+  }
+  qOpts.innerHTML = html;
+  qExp.className = 'exp';
+  qExp.textContent = '';
+  qNext.style.display = 'none';
+  document.getElementById('qNow').textContent = qi + 1;
+  document.getElementById('qRight').textContent = qRight;
+  document.getElementById('qBar').style.width = ((qi + 1) / QUIZ.length * 100) + '%';
+}
+
+qOpts.addEventListener('click', function (e) {
+  var el = e.target.closest ? e.target.closest('.opt') : null;
+  if (!el || answered) return;
+  answered = true;
+  var pick = parseInt(el.getAttribute('data-i'), 10);
+  var item = QUIZ[qi];
+  var nodes = qOpts.querySelectorAll('.opt');
+  for (var i = 0; i < nodes.length; i++) {
+    var idx = parseInt(nodes[i].getAttribute('data-i'), 10);
+    if (idx === item.a) nodes[i].classList.add('ok');
+    else if (idx === pick) nodes[i].classList.add('no');
+  }
+  if (pick === item.a) qRight++;
+  document.getElementById('qRight').textContent = qRight;
+  qExp.textContent = (pick === item.a ? '✓ 答对了。' : '✗ 正确答案是 ' + 'ABC'[item.a] + '。') + item.e;
+  qExp.classList.add('show');
+  qNext.style.display = 'block';
+  qNext.textContent = qi === QUIZ.length - 1 ? '查看结果' : '下一题';
+});
+
+qNext.onclick = function () {
+  if (qi < QUIZ.length - 1) { qi++; renderQ(); }
+  else { go('mine'); }
+};
+renderQ();
+
+/* ================= 文化馆：分段标题点击跳转 + 滚动同步 ================= */
+(function () {
+  var bar = document.getElementById('cultureSegs');
+  if (!bar) return;
+  var segs = Array.prototype.slice.call(bar.querySelectorAll('span[data-target]'));
+  var OFFSET = 96;   // 导航栏(42) + 分段条(约 54)
+
+  function targetOf(seg) {
+    var id = seg.getAttribute('data-target');
+    return id ? document.getElementById(id) : null;
+  }
+
+  function setActive(seg) {
+    segs.forEach(function (s) { s.classList.toggle('on', s === seg); });
+  }
+
+  function flash(el) {
+    el.classList.remove('flash');
+    void el.offsetWidth;              // 强制重排，保证动画可重复触发
+    el.classList.add('flash');
+    window.setTimeout(function () { el.classList.remove('flash'); }, 1200);
+  }
+
+  function sync() {
+    var y = viewport.scrollTop + OFFSET + 24;
+    var idx = 0;
+    for (var i = 0; i < segs.length; i++) {
+      var t = targetOf(segs[i]);
+      if (t && t.offsetTop > 0 && t.offsetTop <= y) idx = i;
+    }
+    setActive(segs[idx]);
+  }
+
+  /* 点击分段 → 滚动到对应区块 + 高亮 */
+  bar.addEventListener('click', function (e) {
+    var seg = e.target.closest ? e.target.closest('span[data-target]') : null;
+    if (!seg) return;
+    var t = targetOf(seg);
+    if (!t) return;
+    var top = t.offsetTop - OFFSET;
+    viewport.scrollTo({ top: top > 0 ? top : 0, behavior: 'smooth' });
+    setActive(seg);
+    flash(t);
+  });
+
+  /* 手动滚动时，分段条同步高亮 */
+  var ticking = false;
+  viewport.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () { ticking = false; sync(); });
+  }, { passive: true });
+
+  /* 切屏后重新同步（避免从别的页面切回来时分段高亮错位） */
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('[data-go]')) {
+      window.setTimeout(sync, 80);
+    }
+  });
+
+  sync();
+})();
+</script>
+</body>
+</html>

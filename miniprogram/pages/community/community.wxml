@@ -1,0 +1,43 @@
+<!-- 社区广场 · 对应原型 ⑥ 社区广场
+     ⚠️ 本功能尚未开放。原因：社区发帖属「社交类目」，个人主体小程序不予开放；
+        且 UGC 必须接入内容安全检测与举报入口，否则提交审核会被驳回。
+     处理方式：不假装能用 —— 顶部说明条声明「以下为界面示例」，互动按钮灰显并给说明。
+     下方人物、内容、时间均为设计示意，不是真实用户发布。 -->
+
+<view class="pad-top">
+  <view class="plan-bar">
+    <text class="pi">🚧</text>
+    <view class="pb">
+      <text class="pt">该功能规划中 · 尚未开放发帖</text>
+      <text class="ps">社区发帖属社交类目，个人主体小程序不予开放；开放前还需接入内容安全检测与举报入口。下方为界面示例，人物与内容均为虚构，非真实用户发布。</text>
+    </view>
+  </view>
+</view>
+
+<view class="topic">
+  <text class="tagL">#话题</text>
+  <view class="t serif">我的出花园</view>
+</view>
+
+<view class="pad">
+  <view class="box post" wx:for="{{posts}}" wx:key="who">
+    <view class="ph">
+      <view class="av" style="background:{{item.av}}"></view>
+      <text class="who">{{item.who}}</text>
+      <text class="when">{{item.when}}</text>
+    </view>
+    <view class="ct">{{item.text}}</view>
+    <view class="imgs" wx:if="{{item.imgs}}">
+      <view class="im" wx:for="{{item.imgs}}" wx:for-item="bg" wx:key="*this" style="background:{{bg}}"></view>
+    </view>
+
+    <!-- 互动按钮一律灰显并给说明：不显示点赞/评论数，避免被误当成真实数据 -->
+    <view class="acts-plan">
+      <view class="ap" data-a="点赞" bindtap="onPlanTap">♡ 点赞</view>
+      <view class="ap" data-a="评论" bindtap="onPlanTap">💬 评论</view>
+      <view class="ap" data-a="分享" bindtap="onPlanTap">↗ 分享</view>
+    </view>
+  </view>
+
+  <view class="notice center">开放后发布内容须遵守《社区公约》，所有内容经审核后展示</view>
+</view>

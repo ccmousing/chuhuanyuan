@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "note": "RAG 检索评估集：20 题。expect = 期望 top1 命中的文章 id；expect=null 表示应当拒答。type: normal 正常问题 / out 超纲 / edge 边界（易误判）。",
+  "cases": [
+    { "id": 1, "q": "出花园到底是什么？", "expect": "what-is", "type": "normal" },
+    { "id": 2, "q": "孩子到几岁要出花园？", "expect": "what-is", "type": "normal" },
+    { "id": 3, "q": "出花园那天都要做什么？", "expect": "what-is", "type": "normal" },
+    { "id": 4, "q": "为什么出花园要穿红木屐？", "expect": "why-clogs", "type": "normal" },
+    { "id": 5, "q": "出花园的木屐是谁买的？", "expect": "why-clogs", "type": "normal" },
+    { "id": 6, "q": "现在出花园还穿木屐吗？", "expect": "why-clogs", "type": "normal" },
+    { "id": 7, "q": "十二花水到底是哪十二种花？", "expect": "twelve-flowers", "type": "normal" },
+    { "id": 8, "q": "十二花水洗的是什么？", "expect": "twelve-flowers", "type": "normal" },
+    { "id": 9, "q": "为什么花水里要有石榴花？", "expect": "twelve-flowers", "type": "normal" },
+    { "id": 10, "q": "头彩食十二碗都有什么？", "expect": "head-dish", "type": "normal" },
+    { "id": 11, "q": "为什么要咬鸡头？", "expect": "head-dish", "type": "normal" },
+    { "id": 12, "q": "女孩出花园供母鸡还是公鸡？", "expect": "head-dish", "type": "normal" },
+    { "id": 13, "q": "公婆母是谁？", "expect": "gongpopo", "type": "normal" },
+    { "id": 14, "q": "潮州和揭阳的出花园有什么不一样？", "expect": "three-cities", "type": "normal" },
+
+    { "id": 15, "q": "量子力学的基本原理是什么？", "expect": null, "type": "out" },
+    { "id": 16, "q": "帮我写一首关于春天的诗", "expect": null, "type": "out" },
+    { "id": 17, "q": "今天广州天气怎么样？", "expect": null, "type": "out" },
+
+    { "id": 18, "q": "出花园要买什么食材？", "expect": "head-dish", "type": "edge", "note": "知识库里有十二碗菜的描述，应命中" },
+    { "id": 19, "q": "出花园的英文怎么说？", "expect": null, "type": "edge", "note": "知识库无英文对照，应拒答" },
+    { "id": 20, "q": "潮汕还有什么别的民俗？", "expect": null, "type": "edge", "note": "知识库只覆盖出花园，超出范围应拒答" }
+  ]
+}

@@ -1,0 +1,42 @@
+<!-- 服务预约 · 对应原型 ⑤ 服务预约
+     ⚠️ 本功能尚未开放。原因：预约撮合属「经营性功能」，个人主体小程序不予开放，
+        需先注册个体工商户或企业主体（见交付目录 deploy-guide.html 第 2 章）。
+     处理方式：不假装能用 —— 顶部说明条 + 灰色「规划中」按钮 + 点击给如实说明。
+     页面上的服务类型仅为界面形态示意，不含真实商家与经营数据。 -->
+
+<view class="pad-top">
+  <view class="plan-bar">
+    <text class="pi">🚧</text>
+    <view class="pb">
+      <text class="pt">该功能规划中 · 尚未开放预约</text>
+      <text class="ps">预约撮合属经营性功能，个人主体小程序不予开放，需先注册个体工商户或企业主体。下方为界面形态示意，暂不含真实商家。</text>
+    </view>
+  </view>
+</view>
+
+<scroll-view class="chipsL" scroll-x="true" enable-flex="true">
+  <view class="chip {{cur === index ? 'on' : ''}}"
+        wx:for="{{cats}}" wx:key="*this"
+        data-i="{{index}}" bindtap="onCat">{{item}}</view>
+</scroll-view>
+
+<view class="pad">
+  <view class="box" wx:for="{{services}}" wx:key="title">
+    <view class="shop">
+      <view class="pic" style="background:{{item.bg}}">{{item.icon}}</view>
+      <view class="info">
+        <text class="shop-b">{{item.title}}</text>
+        <view class="shop-m">{{item.sub}}</view>
+      </view>
+      <view class="go-plan" data-t="{{item.title}}" bindtap="onPlanTap">规划中</view>
+    </view>
+  </view>
+
+  <view class="hd">规划中的预约流程</view>
+  <view class="box flow">
+    <view>提交意向 → 商家联系确认 → 线下沟通细节 → 完成服务 → 双方评价</view>
+    <view class="flow-tip">以上流程尚未实现。开放前还需完成：商家资质人工审核、投诉与退款处理机制、订单与联系方式的信息保护方案。</view>
+  </view>
+
+  <view class="notice">服务类目与主体资质要求会随平台规则调整，以微信官方最新公告为准。</view>
+</view>

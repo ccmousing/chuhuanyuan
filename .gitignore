@@ -1,0 +1,40 @@
+# 微信开发者工具本地私有配置（含个人 AppID、编译设置），不要提交
+miniprogram/project.private.config.json
+
+# 密钥与环境变量 —— 一律不入库，只保留 .env.example 占位模板
+.env
+.env.local
+.env.*.local
+rag/.env
+miniprogram/.env
+
+# 依赖与缓存
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.chroma/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# AI Agent 技能包本地落盘 —— 第三方内容，不属于本项目的产出
+# 说明：`npx skills add <repo>` 会把技能文档写进这些目录（本项目实测 194 个文件 / 2MB），
+#       且 .claude/skills/* 是指向 .agents/skills/* 的符号链接，提交会变成重复条目。
+#       用 `npx skills add` 可随时重装，因此不入库。
+.agents/
+.claude/
+
+# 配图原图（1024×1024，共 13 MB）—— 压缩成品在 miniprogram/images/，原图可由脚本重新生成
+# 注意：assets/styles.css 是方案站样式，必须入库，所以只忽略这两个子目录
+assets/ai-gen/
+assets/ai-gen-sym/
+
+# 仓库迁移备份 / 工具锁文件
+.git.bak*/
+skills-lock.json
