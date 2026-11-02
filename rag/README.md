@@ -8,13 +8,32 @@ RAG 项目失败大多不是因为模型笨，而是检索不到正确上下文�
 
 ```
 rag/
-├── knowledge_base.json   结构化知识库（31 chunks / 6 篇 / 11 条来源）
+├── knowledge_base.json   结构化知识库（46 chunks / 6 篇 / 26 条来源）
+├── field-notes.json      田野整理稿切块（15 chunks，来自《出花园科普文档》）
 ├── retrieve.py           检索器：字二元组 + 单字回退 + BM25 + 地域加权
+├── eval-set.json         20 题评估集（14 应答 + 3 超纲 + 3 边界）
+├── eval-report.md        评估报告（tools/eval-rag.js 生成）
 └── README.md             本文件
 ```
 
-`knowledge_base.json` 由 `miniprogram/utils/content.js` **派生**（不是手抄的），
-所以小程序里改正文，重跑一次派生脚本即可同步——内容只有一份源头。
+知识库现在有**两个来源**：
+
+1. `miniprogram/utils/content.js` —— 派生主体（31 chunks），与小程序正文同源，
+   改正文后重跑派生脚本即同步
+2. `rag/field-notes.json` —— 项目组田野整理稿（15 chunks），细节更密（择日禁忌、
+   三牲男女之别、请先生、地区差异等），全部标 `needVerify`
+
+合并田野笔记：
+
+```bash
+python tools/merge-field-notes.py   # 幂等：先移除 origin=field-notes 的旧块再写入
+python tools/gen-kb-data.py         # 再生成小程序端 kb-data.js
+```
+
+⚠️ 田野笔记里的 articleId **必须**是 `content.js` 已有的 6 个之一，否则问答页的
+来源胶囊会跳到「文章不存在」——合并脚本会强制校验这一点。
+
+⚠️ 原稿末节「产品与服务（项目组提供）」属于商业方案，不是民俗知识，**未收录**。
 
 ## 怎么跑
 

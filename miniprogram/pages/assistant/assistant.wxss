@@ -73,6 +73,44 @@
   display: block;
 }
 
+/* —— 回答排版：首段当结论，其余段落 / 列表项分开 —— */
+.blk {
+  display: block;
+}
+
+.blk-p + .blk-p,
+.blk-p + .blk-li,
+.blk-li + .blk-p,
+.blk-li + .blk-li {
+  margin-top: 12rpx;
+}
+
+.blk-li {
+  display: flex;
+  align-items: flex-start;
+}
+
+.li-dot {
+  flex: none;
+  width: 7rpx;
+  height: 7rpx;
+  border-radius: 50%;
+  background: #C8443C;
+  opacity: 0.55;
+  margin: 19rpx 14rpx 0 4rpx;
+}
+
+.blk-tx {
+  flex: 1;
+  line-height: 1.85;
+  word-break: break-word;
+}
+
+.blk-lead {
+  font-weight: 600;
+  letter-spacing: 0.2rpx;
+}
+
 /* —— 打字态：三点跳动 —— */
 .typing {
   display: flex;
@@ -102,6 +140,13 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 12rpx;
+}
+
+/* —— 通用知识模式标记（库里没有，模型自己答的） —— */
+.general-tip {
+  margin-top: 10rpx;
+  font-size: 21rpx;
+  color: #B0A494;
 }
 .pill {
   font-size: 22rpx;

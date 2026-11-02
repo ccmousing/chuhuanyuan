@@ -16,6 +16,13 @@
             <view class="dot d2"></view>
             <view class="dot d3"></view>
           </view>
+          <view class="b-tx" wx:elif="{{item.blocks.length}}" user-select>
+            <view class="blk {{b.type === 'li' ? 'blk-li' : 'blk-p'}}"
+                  wx:for="{{item.blocks}}" wx:for-item="b" wx:key="k">
+              <view class="li-dot" wx:if="{{b.type === 'li'}}"></view>
+              <text class="blk-tx {{b.lead ? 'blk-lead' : ''}}">{{b.text}}</text>
+            </view>
+          </view>
           <text class="b-tx" wx:else user-select>{{item.content}}</text>
         </view>
 
@@ -23,6 +30,9 @@
           <view class="pill" wx:for="{{item.sources}}" wx:for-item="src" wx:key="id"
                 data-id="{{src.id}}" bindtap="onSourceTap">{{src.label}}</view>
         </view>
+
+        <!-- 通用知识模式：库里没有这条，模型凭自己的知识回答，必须如实标记 -->
+        <view class="general-tip" wx:if="{{item.general && !item.typing}}">未经知识库核实，仅供参考</view>
       </view>
 
     </view>

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedFrom": "miniprogram/utils/content.js",
+  "generatedFrom": "miniprogram/utils/content.js + rag/field-notes.json",
   "note": "由小程序内容库派生。切块规则：按 section 聚合，单 chunk 超 320 字按段落再拆。regions 用于地域匹配检索。",
   "constraints": [
     "每个 chunk 必须带 sources（无来源不收录）——本次已补齐 6 篇共 11 个来源",
@@ -9,9 +9,9 @@
   ],
   "stats": {
     "articles": 6,
-    "chunks": 31,
-    "sources": 11,
-    "needVerify": 25,
+    "chunks": 46,
+    "sources": 72,
+    "needVerify": 38,
     "noSource": 0
   },
   "chunks": [
@@ -1140,6 +1140,368 @@
       "tags": [
         "三地"
       ]
+    },
+    {
+      "id": "what-is#f1",
+      "articleId": "what-is",
+      "articleTitle": "出花园到底是什么？",
+      "sectionTitle": "历史：从「束带」到成人礼",
+      "text": "历史：从「束带」到成人礼\n出花园是潮汕地区孩子虚岁 15 岁时举行的成人礼，寓意告别童年、步入成年，学会独立和担当。明清时期的地方志已有相关记载——《潮州府志》称「子弟十五而束带，示有成人之志」，说明这一礼俗至迟在明清已具雏形。\n古代出花园是孩子 15 岁「脱稚」的大日子：仪式当天要踩碎旧屐、换上新屐，取「破旧立新」之意；明代《澄海县志》有「屐声呱哒，邪祟避散」之说，认为木屐声能驱邪。\n⚠️ 上述方志引文出自项目组整理稿，未见原书影印，引用前宜核对原文。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "历史"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》（引《潮州府志》《澄海县志》）",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 229,
+      "sourceCount": 1
+    },
+    {
+      "id": "what-is#f2",
+      "articleId": "what-is",
+      "articleTitle": "出花园到底是什么？",
+      "sectionTitle": "女子及笄礼：挽面、插银笄",
+      "text": "女子及笄礼：挽面、插银笄\n女子出花园要行「及笄礼」（女子成人之礼）：挽面——用线绞去脸上的汗毛；插银笄（银簪），并由长辈念四句：「金簪插端正，一世好名声。」寓意女子从此端庄守礼。\n此外，仪式上要挂「十二文太平钱」，对应十二时辰。这串钱不能花，要压在床底保存到结婚，源自旧时潮商「压钱守财」的讲究，也含「量入为出」的告诫。\n⚠️ 挽面与银笄的具体做法各地不一；太平钱的数量与形制随地区、随先生所开单子而变，此处只是常见说法。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "仪式",
+        "女子"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 211,
+      "sourceCount": 1
+    },
+    {
+      "id": "what-is#f3",
+      "articleId": "what-is",
+      "articleTitle": "出花园到底是什么？",
+      "sectionTitle": "为什么办：效仿自然与三重意义",
+      "text": "为什么办：效仿自然与三重意义\n出花园的本质是「效仿自然」：像稻谷育秧，苗子挤在一起，到一定时候要移栽到更广阔的天地——寓意孩子从此独立成长，拥有自己的一方天地。\n核心教育意义常被概括为三条：一谢父母恩，二明责任心，三立鸿鹄志。\n形式可以随时代变化，文化基因不变：现在有家庭用皮鞋代替木屐、用智能手表代替铜钱挂饰，只要不忘「告别旧我」「计时守约」的本意，就算得上传得下去。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": false,
+      "tags": [
+        "意义"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 185,
+      "sourceCount": 1
+    },
+    {
+      "id": "what-is#f4",
+      "articleId": "what-is",
+      "articleTitle": "出花园到底是什么？",
+      "sectionTitle": "择日：七月初七是「最晚」也是「最省事」",
+      "text": "择日：七月初七是「最晚」也是「最省事」\n出花园一般在孩子开学前举办。不特意择日时，农历七月初七就是固定日子——这天是「公婆生」，直接用，不必另挑；民间说法里，七月初七同时也是办仪式的最晚期限。\n两条例外（各地做法不一）：家里有人属猴的，孩子不在正月办；也有地方忌某些特定月份。\n选定日期后，先生会列出所需供品和费用明细，家人照单准备即可。择不择日、择哪一天，最终由各家与先生的判断决定。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "择日",
+        "禁忌"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 193,
+      "sourceCount": 1
+    },
+    {
+      "id": "what-is#f5",
+      "articleId": "what-is",
+      "articleTitle": "出花园到底是什么？",
+      "sectionTitle": "较齐全的流程：十二步",
+      "text": "较齐全的流程：十二步\n① 择日：请先生择吉日，或直接用七月初七；② 备物：按单备供品、钱财、衣物；③ 沐浴：清晨用十二种花草泡的「花水」洗身；④ 换装：红上衣、红肚兜、红木屐；⑤ 系腰带：红绸带束腰，象征「缚住魂魄」、告别散漫；⑥ 祭拜：拜公婆神或司命公；⑦ 咬鸡头/鸭头：男孩咬鸡头、女孩咬鸭头，寓意出人头地；⑧ 吃猪肝、葱：煮成甜汤，寓意做官、聪明；⑨ 跨花园墙：跨过一张红色小矮凳，象征跨出花园围墙；⑩ 敬茶：向父母敬茶谢恩，父母回赠祝福与红包；⑪ 食出花园桌：吃五碗头等吉祥菜；⑫ 礼成。\n⚠️ 这是把各地做法拼在一起的较全版本，实际操办常有简化；小程序「体验」页展示的是归纳后的七步。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "流程"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 297,
+      "sourceCount": 1
+    },
+    {
+      "id": "what-is#f6",
+      "articleId": "what-is",
+      "articleTitle": "出花园到底是什么？",
+      "sectionTitle": "请先生：做什么、要多少钱",
+      "text": "请先生：做什么、要多少钱\n出花园可以请先生（民俗先生）择日、开单：由生辰八字决定拜公婆还是司命公，以及供品数量、钱财式样。请先生看一次的花费，民间说法从两三百到一两千不等，视地方与先生名气。\n每个地方都有几位出名的先生，长美一带的人过去常去古巷福庆村找某位有名的先生。先生会给一张贡品清单和费用明细，家人照单准备即可。\n⚠️ 涉及生辰八字的具体判断（孩子属猴能否在正月办、供品要几份、钱财用哪种式样），只有当地先生能给准话，此处不作结论；费用数字也只是民间说法，不作报价依据。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "先生",
+        "择日"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 238,
+      "sourceCount": 1
+    },
+    {
+      "id": "gongpopo#f1",
+      "articleId": "gongpopo",
+      "articleTitle": "公婆母是谁，为什么要拜？",
+      "sectionTitle": "拜谁：公婆神、司命公，还是土地公婆",
+      "text": "拜谁：公婆神、司命公，还是土地公婆\n出花园拜的神明主要有两位：公婆神（花公花婆）和司命公（灶神）。具体拜哪位，按孩子的生辰八字定；按老一辈传下来的习惯，拜公婆的居多。\n如果孩子从小被庙里或宫里的土地公婆认作「契仔」（契子），出花园时一定要去庙里答谢护佑之恩；当时没去的，日后结婚也一定要补上。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "神明",
+        "契仔"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 146,
+      "sourceCount": 1
+    },
+    {
+      "id": "twelve-flowers#f1",
+      "articleId": "twelve-flowers",
+      "articleTitle": "十二花水，到底是哪十二种花？",
+      "sectionTitle": "常见搭配：以潮安龙湖的鲜花包为例",
+      "text": "常见搭配：以潮安龙湖的鲜花包为例\n十二花指十二种吉祥花草，常见的有竹叶、榕树叶、仙草、石榴花、柑叶等。各地搭配略有差异，例如潮安龙湖镇是用竹叶、榕树叶、仙草、石榴花、柑叶等 12 样鲜花扎成一包（当地叫「鲜花包」），买回来直接泡水即可。\n仪式当天清晨，用十二种花草浸泡的「花水」为孩子沐浴，洗去一身污秽与稚气，寓意带着干净的身心进入成人世界。石榴花在潮汕民俗中象征多子多福，是对孩子的祝福。",
+      "regions": [
+        "general",
+        "chaozhou"
+      ],
+      "needVerify": true,
+      "tags": [
+        "十二花",
+        "花水"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 195,
+      "sourceCount": 1
+    },
+    {
+      "id": "why-clogs#f1",
+      "articleId": "why-clogs",
+      "articleTitle": "为什么出花园要穿红木屐？",
+      "sectionTitle": "竹底、白兜、五色线：一套行头的讲究",
+      "text": "竹底、白兜、五色线：一套行头的讲究\n潮汕传统木屐以竹为底（潮汕话「竹」与「德」同音），屐板厚实，暗合「厚德载物」之意——既是脚下之物，也是处世之道。红屐寓意「踏出前程」。\n配套还有：红肚兜要红白分明，白色兜身、红线缝制，内放铜钱，象征「兜住福气」；仪式当天穿红色上衣，裤子颜色不限；此外常见五色线、竹箭、红书包、文具套装。\n⚠️ 「竹＝德」是民间谐音说法，不是文献定论。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "木屐",
+        "肚兜"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 185,
+      "sourceCount": 1
+    },
+    {
+      "id": "head-dish#f1",
+      "articleId": "head-dish",
+      "articleTitle": "头彩食十二碗，每碗都有彩头",
+      "sectionTitle": "必备物品与供品清单",
+      "text": "必备物品与供品清单\n必备物品：红肚兜、红木屐、五色线、石榴花、竹箭、红书包、文具套装等。\n供品：十二杯茶、十二杯黑豆酒、十二碗圆仔、三个斋碗、一盘大吉（柑）、一盘三牲。黑豆酒和圆仔多要自家制作或买原料置办。\n器具：米筒和公婆椅在仪式后仍可继续用（公婆椅小规格用于出花园，大规格用于婚嫁）；花箭是竹编器具，用来装钱财和供品，一个不够可用两个——一个放钱财、一个放吃食，里面要放两副碗筷，供品含猪肝、鱼、鸡蛋等。\n⚠️ 具体份数与品类随地区和先生所开单子而变。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "供品",
+        "器物"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 228,
+      "sourceCount": 1
+    },
+    {
+      "id": "head-dish#f2",
+      "articleId": "head-dish",
+      "articleTitle": "头彩食十二碗，每碗都有彩头",
+      "sectionTitle": "三牲：男孩用雄鸡，女孩用菜鸭母",
+      "text": "三牲：男孩用雄鸡，女孩用菜鸭母\n三牲一般指鸡、鱼、鹅（或用猪肉）。男孩用雄鸡（小公鸡）、猪肉、鱼；女孩用雌鸭（潮汕叫「菜鸭母」，即会生蛋的母鸭）、猪肉、鱼。\n鸡公是男孩出花园的「主角」，不能少；女孩的鸭母必须是菜鸭母，不用杂交的半菜鸭。想办得丰盛些，可再加一只鹅。\n鱼多用草鱼、大头鱼或鲮鱼（兰鱼），条件有限时可用干鱿鱼替代。猪肝要煮成甜汤、放点葱——吃猪肝寓意「做官」，吃葱寓意聪明、通情达理。供品还包括福圆（汤圆）、红桃粿（摆满一盘）、发粿（寓意发财）。拜公婆一定要放两副碗筷。",
+      "regions": [
+        "general"
+      ],
+      "needVerify": true,
+      "tags": [
+        "三牲",
+        "供品"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 241,
+      "sourceCount": 1
+    },
+    {
+      "id": "head-dish#f3",
+      "articleId": "head-dish",
+      "articleTitle": "头彩食十二碗，每碗都有彩头",
+      "sectionTitle": "钱财与花纸：各地式样不同",
+      "text": "钱财与花纸：各地式样不同\n拜神的钱财数量一般由先生按生辰八字算好、写在单子上。常见的是准备十六套花纸，但具体仍看先生开单。\n不同地方的钱财式样有差异，例如枫溪镇与浮洋镇就不一样；传统上习惯用本地常用的样式，不必强求统一。",
+      "regions": [
+        "general",
+        "chaozhou"
+      ],
+      "needVerify": true,
+      "tags": [
+        "钱财",
+        "花纸"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 110,
+      "sourceCount": 1
+    },
+    {
+      "id": "three-cities#f1",
+      "articleId": "three-cities",
+      "articleTitle": "汕潮揭三地，办得哪里不一样",
+      "sectionTitle": "禁忌：当天能不能出门见天",
+      "text": "禁忌：当天能不能出门见天\n潮州部分地区有「出花园当天不能出门见天」的禁忌——怕孩子往后不沉稳，也怕冲撞外头的晦气事（如出殡、吵架、泼脏水）。但同属潮州的枫溪没有这个说法，可以见天；揭阳的受访者也表示当天可以见太阳，没有避光讲究。\n其他讲究：出花园当天孩子不用干活；男孩女孩的仪式除三牲不同外，基本一样。长辈会念老话：「腰肚白白，肚内白白，穿屐有穿有食。」",
+      "regions": [
+        "chaozhou",
+        "jieyang"
+      ],
+      "needVerify": true,
+      "tags": [
+        "禁忌",
+        "三地"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 177,
+      "sourceCount": 1
+    },
+    {
+      "id": "three-cities#f2",
+      "articleId": "three-cities",
+      "articleTitle": "汕潮揭三地，办得哪里不一样",
+      "sectionTitle": "揭阳、长美、枫溪的细节差异",
+      "text": "揭阳、长美、枫溪的细节差异\n各地细节不同，但核心都是长辈对孩子平安顺遂的期许：\n· 揭阳：男孩去大爷宫庙拜三位大老爷，女孩在家拜司命公；\n· 长美：有「跨过东浦沟」的口头说法，讨个彩头；\n· 枫溪：没有「不能见天」的禁忌。",
+      "regions": [
+        "jieyang",
+        "chaozhou"
+      ],
+      "needVerify": true,
+      "tags": [
+        "三地",
+        "地域"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 111,
+      "sourceCount": 1
+    },
+    {
+      "id": "three-cities#f3",
+      "articleId": "three-cities",
+      "articleTitle": "汕潮揭三地，办得哪里不一样",
+      "sectionTitle": "海外潮人与当下的断层",
+      "text": "海外潮人与当下的断层\n马来西亚、泰国、印度尼西亚等地的潮人社群也保留出花园，有的华侨专门回大陆请「老爷」香火过去供奉。\n另一面是断层：现在年轻人对出花园了解不多，不少卖民俗用品的店铺也说不清讲究，这也是很多家庭想办却不知从何办起的原因。",
+      "regions": [
+        "general",
+        "overseas"
+      ],
+      "needVerify": false,
+      "tags": [
+        "海外",
+        "传承"
+      ],
+      "sources": [
+        {
+          "title": "项目组田野整理《出花园科普文档》",
+          "type": "field"
+        }
+      ],
+      "origin": "field-notes",
+      "chars": 118,
+      "sourceCount": 1
     }
   ]
 }

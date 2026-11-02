@@ -13,11 +13,11 @@
 | 交付物 | 5 份 HTML（方案站 / 案例研究 / 7 屏原型 / 上线路线图 / RAG 方案） |
 | 小程序 | **12 页**（**5 Tab** + 7 二级）· 7 个 utils 模块 · 自定义 TabBar |
 | 内容量 | 6 篇科普 **4428 字** · 题库 **30 题**（三档）· 祝福卡文案 **12 条** · 每日一签 7 条 |
-| 校验 | **10 套脚本全过**（约 270 项断言） |
-| 代码包 | **约 280 KB / 2048 KB（14%）**（含 12 张配图 74 KB） |
-| RAG | 知识库 **31 chunks / 11 条来源** + BM25（标题加权 / 地域加权 / 覆盖率+库外词双拒答）；**20 题评估 85%**（`tools/eval-rag.js`） |
+| 校验 | **11 套脚本全过**（约 285 项断言） |
+| 代码包 | **约 525 KB / 2048 KB（26%）**（含 12 张配图 74 KB + kb-data 47 KB） |
+| RAG | 知识库 **46 chunks / 6 篇 / 26 条来源**（31 条派生自 content.js + 15 条田野笔记）+ BM25（标题加权 / 地域加权 / 覆盖率+库外词双拒答）；**20 题评估 80%**（`tools/eval-rag.js`） |
 | TODO | 已完成 19 / 未完成 17 |
-| 版本控制 | 仓库根在 **`chuhuayuan/miniprogram`**（已推 GitHub `ccmousing/chuhuanyuan`）；根目录旧 `.git` 空壳已归档为 `.git.bak-empty-shell` |
+| 版本控制 | 仓库根在 **`chuhuayuan/`**（已推 GitHub `ccmousing/chuhuanyuan`，`--force` 重写过一次历史）；`miniprogram/.git` 已备份到 `chy/.git.bak-miniprogram` |
 
 ---
 
@@ -44,11 +44,12 @@
 | 状态 | 仪式进度 / 答题 / 收藏 / 徽章 / 阅读次数 / 错题集 / 昵称 / 卡片文件路径，共 12 个字段 |
 | 祝福卡 | canvas 绘制 + 导出图片 + **永久文件保存（重启可恢复）** + 保存相册 / 分享 |
 | 倒计时 | 接真实农历日期表（2005–2049，多源核对 + 6 项自动校验） |
-| RAG | 知识库结构化（地域元数据 / 来源标注）+ BM25 + 标题加权 + 单字回退 + 地域加权 + 覆盖率&库外词双拒答 |
+| RAG | 知识库结构化（地域元数据 / 来源标注）+ BM25 + 标题加权 + 单字回退 + 地域加权 + 覆盖率&库外词双拒答；**知识库有两个来源**：`content.js` 派生（31 条）+ `rag/field-notes.json` 田野笔记（15 条，`tools/merge-field-notes.py` 幂等合并） |
 | AI 问答 | **底部第 4 个 Tab「AI 科普」**（索引 3）：`kb-search.js` → 命中拼 prompt → `wx.cloud.extend.AI`（`hunyuan-exp/hy3`）流式回答；**支持最近 2 轮多轮追问**；地域取自「我的 → 我的地区」；未命中拒答给建议；精致聊天 UI（头像/胶囊来源可跳文章/建议问题） |
+| 三段兜底 | ① 命中且答得出 → 正常回答带来源；② **命中但模型说「资料里没讲到」（如问英文译法）→ 自动切通用模式重答一次，撤掉来源胶囊并标「未经核实」**；③ 完全无关（写诗/天气）→ 不调模型直接拒答。见 `tools/verify-fallback.js` |
 | 配图 | 12 张 AI 生成插画：6 张文章缩略图（208²）+ 6 张仪式用品（200²），合计 74 KB；`tools/prep-images.py` / `prep-symbols.py` 可重跑 |
-| 评估 | `tools/eval-rag.js` 跑 20 题：总正确率 **85%**、应答命中 100%、拒答正确 80%（报告 `rag/eval-report.md`） |
-| 校验 | **10 套**：日期表 / 存储 / 页面集成 / 盒模型 / 事件绑定 / WXSS 一致性 / 内容约束 / 祝福卡 / 素材 / 降级 |
+| 评估 | `tools/eval-rag.js` 跑 20 题：总正确率 **80%**、应答命中 100%、拒答正确 60%（报告 `rag/eval-report.md`）。⚠️ 并入 15 条田野笔记后从 85% 掉到 80%——词表变大，「出花园的英文怎么说」这类超纲问法重新被判为可答；扫 OOV_MAX 0.35~0.5 无法两全 |
+| 校验 | **11 套**：日期表 / 存储 / 页面集成 / 盒模型 / 事件绑定 / WXSS 一致性 / 内容约束 / 祝福卡 / 素材 / 降级 / 问答兜底 |
 
 ⚠️ = 主动标注为「规划中」，因为个人主体做不了（经营类目 / 社交类目）。**不是没做完，是故意不做。**
 
@@ -116,7 +117,7 @@
 ```bash
 cd chuhuayuan
 
-# 十套校验（全部应通过）
+# 十一套校验（全部应通过）
 node tools/verify-qixi.js      # 农历日期表 6 项
 node tools/verify-store.js     # 存储模块 45 项（含地区字段）
 node tools/verify-flow.js      # 页面集成 133 项
@@ -127,6 +128,7 @@ node tools/check-copy.js       # 内容约束（断行 / 题量 / 篇幅 / 每�
 node tools/verify-card.js      # 祝福卡持久化 18 项
 node tools/check-images.js     # 素材命名 / 体积 / sym 目录 / 引用一致性
 node tools/verify-img.js       # 图片降级 16 项
+node tools/verify-fallback.js  # 问答兜底链路 15 项（假模型，不联网不烧 token）
 
 # RAG 检索 baseline（Python，仅开发期）
 python rag/retrieve.py
@@ -134,7 +136,8 @@ python rag/retrieve.py
 # RAG 20 题评估（检索层，输出 rag/eval-report.md）
 node tools/eval-rag.js
 
-# 知识库变更后，重新生成小程序端检索数据（不要手改 kb-data.js）
+# 田野笔记变更后：先合并进知识库，再生成小程序端检索数据（不要手改 kb-data.js）
+python tools/merge-field-notes.py
 python tools/gen-kb-data.py
 
 # 重新压缩配图（原图放 assets/ai-gen* 下）

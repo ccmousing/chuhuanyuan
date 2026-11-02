@@ -1,7 +1,9 @@
 // assistant.js —— 文化问答 · AI 助手（精致聊天风格）
 //
 // 链路：本地检索(kb-search.js) → 命中拼 prompt → wx.cloud.extend.AI 流式回答
-// 未命中：直接拒答 + 给建议（不浪费 token、不硬编答案 —— 诚实原则）
+// 未命中时分两种（2026-11-02 调整）：
+//   ① 问的是潮汕礼俗、只是库里没写 → 走「通用知识模式」，回答带「未经核实」标记
+//   ② 完全无关的话题（写诗/天气/其他学科）→ 直接拒答，不调模型（省钱也不跑偏）
 //
 // ⚠️ 依赖前置（用户需在控制台完成）：
 //   1. 云开发环境已开通（app.js 里 wx.cloud.init 已配 envId）
@@ -31,6 +33,60 @@ function regionOf(label) {
   return map[label] || null
 }
 
+// 话题判断：问题含这些词才允许「通用知识模式」，否则直接拒答。
+// 目的不是精确分类，而是别让这个页面变成通用聊天工具（写诗、查天气一律挡掉）。
+const TOPIC_WORDS = [
+  '潮汕', '潮州', '汕头', '揭阳', '出花园', '礼俗', '礼仪', '仪式', '习俗', '民俗',
+  '木屐', '公婆母', '花公花妈', '花水', '石榴', '粿', '十五', '成人礼',
+  '七夕', '七月初七', '外婆', '舅舅', '敬茶', '拜', '供', '红包', '花园'
+]
+
+// 通用知识模式的 system prompt：允许用模型自己的知识，但必须自我设限并说明不确定
+const GENERAL_PROMPT = [
+  '你是「出花园」潮汕成人礼俗科普助手。',
+  '【本次情况】知识库里没有能回答这个问题的资料，请用你的通用知识回答，但必须遵守：',
+  '1. 只要大致知道，就先给答案（例如英文译法就给出译法），再用一句话说明哪里不确定；确实不知道才说不知道，不要一上来就推脱。',
+  '2. 只回答与潮汕民俗、成人礼相关的内容；写诗、闲聊、其他学科等请求，用一句话说明「这不在我的回答范围」后停止。',
+  '3. 具体细节（年份、数量、人名、地名、流程顺序）不确定就直说「不确定」，不要编。',
+  '4. 各地做法有差异时，明确提醒「各地可能不同」。',
+  '5. 100-180 字，口语化，可分点。'
+].join('\n')
+
+// 模型在知识库模式下的「答不出」标志：命中这些就自动切通用模式重答一次
+const INSUFFICIENT_MARKS = [
+  '资料里没讲到', '资料里没写到', '资料没讲到', '资料没写到',
+  '资料未提及', '资料中未', '资料里没有', '没有提到', '未提及'
+]
+
+// 把纯文本回答切成可排版的块：首段当结论、以「- / · / 1.」开头的行当列表项。
+// 不引第三方 markdown 解析，300 字以内这点规则足够，也不占包体积。
+const BULLET_RE = /^\s*(?:[-*·•]\s*|\d+[.、)]\s*)/
+const MD_MARKS = /\*\*|__|^#{1,6}\s*/g
+
+function toBlocks(text) {
+  const out = []
+  const lines = String(text || '').split(/\r?\n/)
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i].replace(MD_MARKS, '').trim()
+    if (!raw) continue
+    if (BULLET_RE.test(raw)) {
+      out.push({ k: out.length, type: 'li', text: raw.replace(BULLET_RE, '') })
+    } else {
+      out.push({ k: out.length, type: 'p', text: raw })
+    }
+  }
+  // 第一段（非列表）当结论：字号略大、加粗
+  if (out.length && out[0].type === 'p') out[0].lead = true
+  return out
+}
+
+function isCultureTopic(q) {
+  for (let i = 0; i < TOPIC_WORDS.length; i++) {
+    if (q.indexOf(TOPIC_WORDS[i]) > -1) return true
+  }
+  return false
+}
+
 Page({
   data: {
     messages: [],
@@ -54,23 +110,25 @@ Page({
 
   onInput(e) { this.setData({ input: e.detail.value }) },
 
-  /** 追加一条消息，返回消息 id。typing=true 时显示三点动画而非文字 */
-  push(role, content, typing) {
+  /** 追加一条消息，返回消息 id。typing=true 显示三点动画；general=true 表示通用知识模式回答 */
+  push(role, content, typing, general) {
     const id = this.data.lastId + 1
     const messages = this.data.messages.concat({
       id: id,
       role: role,
       side: role === 'user' ? 'right' : 'left',
       content: content,
+      blocks: [],
       sources: [],
-      typing: !!typing
+      typing: !!typing,
+      general: !!general
     })
     this.setData({ messages: messages, lastId: id })
     return id
   },
 
-  /** 更新某条消息内容（onText 逐字刷新用）；typing 不传则保持原值 */
-  setMsg(id, content, typing) {
+  /** 更新某条消息内容（onText 逐字刷新用）；typing / general 不传则保持原值 */
+  setMsg(id, content, typing, general) {
     const messages = this.data.messages.map(function (m) {
       if (m.id !== id) return m
       return {
@@ -78,8 +136,10 @@ Page({
         role: m.role,
         side: m.side,
         content: content,
+        blocks: toBlocks(content),
         sources: m.sources,
-        typing: typing === undefined ? m.typing : typing
+        typing: typing === undefined ? m.typing : typing,
+        general: general === undefined ? m.general : general
       }
     })
     this.setData({ messages: messages })
@@ -89,7 +149,22 @@ Page({
   attachSources(id, sources) {
     const messages = this.data.messages.map(function (m) {
       if (m.id !== id) return m
-      return { id: m.id, role: m.role, side: m.side, content: m.content, sources: sources, typing: m.typing }
+      return {
+        id: m.id, role: m.role, side: m.side, content: m.content, blocks: m.blocks,
+        sources: sources, typing: m.typing, general: m.general
+      }
+    })
+    this.setData({ messages: messages })
+  },
+
+  /** 把某条消息标记为「通用知识模式」（UI 上显示「未经核实」） */
+  markGeneral(id) {
+    const messages = this.data.messages.map(function (m) {
+      if (m.id !== id) return m
+      return {
+        id: m.id, role: m.role, side: m.side, content: m.content, blocks: m.blocks,
+        sources: m.sources, typing: m.typing, general: true
+      }
     })
     this.setData({ messages: messages })
   },
@@ -135,6 +210,7 @@ Page({
       .filter(function (m) {
         if (!m.role || !m.content || m.typing) return false
         if (m.content.indexOf('知识库还没覆盖') === 0) return false
+        if (m.content.indexOf('我只回答潮汕出花园相关的礼俗问题') === 0) return false
         if (m.content.indexOf('调用失败') === 0) return false
         if (m.content.indexOf('模型未启用') === 0) return false
         return true
@@ -151,12 +227,16 @@ Page({
     const region = regionOf(store.getProfile().region)
     const result = kb.search(q, region)
 
-    // 知识库未覆盖 → 拒答，不调 LLM（诚实原则：答不上就答不上）
+    // 知识库未覆盖时，先判断话题再决定怎么办
     if (!result.reached) {
-      const hint = result.hits.length
-        ? '\n（最接近的是「' + result.hits[0].chunk.sectionTitle + '」，但相关度不够，不硬答）'
-        : ''
-      this.setMsg(aiId, '知识库还没覆盖到这个问题' + hint + '。\n换个问法试试，比如问木屐、十二花水、公婆母。', false)
+      // ① 完全无关（写诗 / 天气 / 其他学科）→ 直接拒答，不调模型
+      if (!isCultureTopic(q)) {
+        this.setMsg(aiId, '我只回答潮汕出花园相关的礼俗问题。\n可以试试：' + SUGGESTS.join(' / '), false)
+        return
+      }
+      // ② 是潮汕话题、只是库里没写 → 通用知识模式（UI 会标「未经核实」）
+      this.markGeneral(aiId)
+      await this.stream(GENERAL_PROMPT, q, history, aiId)
       return
     }
 
@@ -166,8 +246,29 @@ Page({
     })
     this.attachSources(aiId, sources)
 
-    const sys = this.buildPrompt(result.hits)
-    // system 在前；中间是最近 2 轮历史；最后是本轮问题
+    const answer = await this.stream(this.buildPrompt(result.hits), q, history, aiId)
+
+    // 命中但模型仍答不出（问的是资料之外的东西，如「出花园的英文怎么说」）：
+    // 撤掉来源胶囊（它们没帮上忙，留着会误导），改走通用知识模式重答一次。
+    if (this.isInsufficient(answer) && isCultureTopic(q)) {
+      this.attachSources(aiId, [])
+      this.markGeneral(aiId)
+      this.setMsg(aiId, '', true)
+      await this.stream(GENERAL_PROMPT, q, history, aiId)
+    }
+  },
+
+  /** 判断模型是否在说「资料里没有」：只看开头，避免误伤正文里的正常免责句 */
+  isInsufficient(text) {
+    const head = (text || '').slice(0, 80)
+    for (let i = 0; i < INSUFFICIENT_MARKS.length; i++) {
+      if (head.indexOf(INSUFFICIENT_MARKS[i]) > -1) return true
+    }
+    return false
+  },
+
+  /** 统一流式调用：system 在前，中间最近 2 轮历史，最后本轮问题。返回完整回答文本 */
+  async stream(sys, q, history, aiId) {
     const msgs = [{ role: 'system', content: sys }]
       .concat(history || [])
       .concat([{ role: 'user', content: q }])
@@ -175,8 +276,17 @@ Page({
     const model = wx.cloud.extend.AI.createModel(PROVIDER)
     // ⚠️ onText 可能给的是「增量片段」而不是累积全文，必须自己累加，
     //    否则每次 setData 覆盖 → 界面上只剩最后一段（已踩过）。
-    //    这里同时兼容两种实现，并用 onFinish 的完整文本兜底。
     let acc = ''
+    let full = ''
+    let closed = false
+    let release = null
+    const done = new Promise(function (r) { release = r })
+    const close = function () {
+      if (closed) return
+      closed = true
+      if (release) release()
+    }
+
     await model.streamText({
       data: { model: MODEL, messages: msgs },
       onText: (t) => {
@@ -189,17 +299,33 @@ Page({
         this.setMsg(aiId, acc, false)
       },
       onFinish: (fullText) => {
-        if (fullText) this.setMsg(aiId, fullText, false)
+        if (fullText) {
+          full = fullText
+          this.setMsg(aiId, fullText, false)
+        }
+        close()
       }
     })
+
+    // ⚠️ 有的版本 streamText 的 Promise 会早于 onFinish 回调 resolve。
+    //    若此时直接返回，acc 可能还是空的 → 「答不出」判定失效（曾表现为
+    //    界面上明明写着「资料里没讲到」，来源胶囊却没被撤掉）。
+    //    所以这里等 onFinish 一次，最多 1 秒（旧版本不发 onFinish 时不至于卡住）。
+    if (!closed) {
+      await Promise.race([done, new Promise(function (r) { setTimeout(r, 1000) })])
+    }
+    return full || acc
   },
 
   /** 组装 system 提示词：角色约束 + 命中的知识片段（含「各地略有差异」标注） */
   buildPrompt(hits) {
     let s = '你是「出花园」潮汕成人礼俗问答助手，面向对潮汕文化感兴趣的用户。\n'
-    s += '规则：只依据下面资料回答，不要补充资料之外的事实；资料没写到的，直接说「资料里没写到」。\n'
-    s += '格式：第一句先给结论；然后分 2-4 点展开，总长 200-300 字；不要复述资料标题，不要写「根据资料」这类套话。\n'
-    s += '资料标注〔各地略有差异〕的，结尾用一句话提醒各地做法可能不同。\n\n【资料】\n'
+    s += '规则：只依据下面资料回答，不要补充资料之外的事实。\n'
+    s += '如果资料完全没有回答这个问题（例如问的是资料的英文译法、价格、外部数据），'
+    s += '只输出一句「资料里没讲到。」然后立刻停下——不要解释资料覆盖了什么，不要说明你为什么不知道。\n'
+    s += '格式：第一句单独成段给出结论（不要加「结论：」前缀）；需要展开时另起一行，用「- 」开头分 2-4 条，'
+    s += '每一条只占一行、不要在条目内换行，总长 200-300 字；不要复述资料标题，不要写「根据资料」这类套话。\n'
+    s += '资料标注〔各地略有差异〕的，结尾用一句自然的话提醒各地做法可能不同——不要把「〔各地略有差异〕」原样抄进回答。\n\n【资料】\n'
     hits.forEach(function (h, i) {
       // chunk.text 首行常是 sectionTitle（与标题重复），拼 prompt 时去掉，减少噪声
       let body = h.chunk.text
